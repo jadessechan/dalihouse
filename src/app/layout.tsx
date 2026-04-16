@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Lato } from "next/font/google";
+import JsonLd from "@/components/JsonLd";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -16,9 +17,16 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: "Dali House — Coliving for Women in Dallas",
+  metadataBase: new URL("https://dalihouse.co"),
+  title: {
+    default: "Dali House — Coliving for Women in Dallas",
+    template: "%s | Dali House",
+  },
   description:
-    "A co-living space in Dallas for young female professionals who value comfort and intentional living. Fully furnished, flexible lease, built-in community.",
+    "A co-living space in Dallas for young female professionals who value comfort and intentional living. Fully furnished, flexible lease, built-in community. $900/month.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Dali House — Coliving for Women in Dallas",
     description:
@@ -26,6 +34,17 @@ export const metadata: Metadata = {
     url: "https://dalihouse.co",
     siteName: "Dali House",
     type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dali House — Coliving for Women in Dallas",
+    description:
+      "A co-living space in Dallas for young female professionals who value comfort and intentional living.",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -36,7 +55,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${playfair.variable} ${lato.variable}`}>
-      <body>{children}</body>
+      <body>
+        <JsonLd />
+        {children}
+      </body>
     </html>
   );
 }

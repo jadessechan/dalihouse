@@ -1,7 +1,10 @@
 import Hero from "@/components/Hero";
+import ValueProposition from "@/components/ValueProposition";
 import Features from "@/components/Features";
 import TheSpace from "@/components/TheSpace";
+import GoodHands from "@/components/GoodHands";
 import HowItWorks from "@/components/HowItWorks";
+import Philosophy from "@/components/Philosophy";
 import MeetYourHost from "@/components/MeetYourHost";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
@@ -13,9 +16,12 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
+        <ValueProposition />
         <Features />
         <TheSpace />
+        <GoodHands />
         <HowItWorks />
+        <Philosophy />
         <MeetYourHost />
         <FAQ />
       </main>

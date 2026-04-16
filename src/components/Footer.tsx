@@ -24,6 +24,12 @@ export default function Footer() {
         >
           FAQ
         </a>
+        <a
+          href="/blog"
+          className="text-sm text-cream/60 transition-colors hover:text-tan"
+        >
+          Blog
+        </a>
       </div>
       <p className="mt-8 text-xs text-cream/30">
         &copy; {new Date().getFullYear()} Dali House. All rights reserved.
