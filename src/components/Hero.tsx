@@ -21,8 +21,9 @@ export default function Hero() {
 
       <p className="mx-auto mt-8 max-w-xl text-base leading-relaxed text-cream/80 md:text-lg">
         A co-living space in Dallas for young female professionals who value
-        comfort and intentional living. Whether relocating or building your
-        career, Dali House offers a refined, welcoming environment.
+        comfort and intentional living. Whether you&apos;re relocating or
+        building your career, Dali House offers a refined and welcoming
+        environment to live and grow.
       </p>
 
       <p className="mx-auto mt-6 max-w-md font-serif text-lg italic text-tan/90 md:text-xl">

@@ -7,6 +7,7 @@ import HowItWorks from "@/components/HowItWorks";
 import Philosophy from "@/components/Philosophy";
 import MeetYourHost from "@/components/MeetYourHost";
 import FAQ from "@/components/FAQ";
+import SoftLanding from "@/components/SoftLanding";
 import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
 
@@ -18,12 +19,13 @@ export default function Home() {
         <Hero />
         <ValueProposition />
         <Features />
-        <TheSpace />
         <GoodHands />
+        <TheSpace />
         <HowItWorks />
         <Philosophy />
         <MeetYourHost />
         <FAQ />
+        <SoftLanding />
       </main>
       <Footer />
     </>

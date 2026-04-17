@@ -13,7 +13,7 @@ export default function ValueProposition() {
 
         <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-brown/80 md:text-lg">
           Whether you&apos;re relocating or building your career, Dali House
-          offers a refined, welcoming environment.
+          offers a refined and welcoming environment to live and grow.
         </p>
 
         <p className="mx-auto mt-8 max-w-md font-serif text-lg italic text-brown-deep/80 md:text-xl">

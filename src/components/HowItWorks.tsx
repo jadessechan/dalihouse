@@ -1,15 +1,15 @@
 const steps = [
   {
     number: "1",
-    title: "Tour the Space",
-    description:
-      "Visit in person or virtually to see if Dali House feels like home.",
-  },
-  {
-    number: "2",
     title: "Get to Know You",
     description:
       "Share your lifestyle and what you're looking for\u2014we're intentional about creating the right fit.",
+  },
+  {
+    number: "2",
+    title: "Tour the Space",
+    description:
+      "Visit in person or virtually to see if Dali House feels like home.",
   },
   {
     number: "3",

@@ -16,7 +16,8 @@ export default function GoodHands() {
         </h2>
 
         <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/90 md:text-lg">
-          Each room has everything you need to feel at home from day one.
+          Each room has a full size bed, work station, TV, full-length mirror,
+          closet space, and original artwork.
         </p>
 
         <div className="mt-12 flex flex-wrap justify-center gap-4">
