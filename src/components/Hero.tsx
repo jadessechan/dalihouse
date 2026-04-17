@@ -1,21 +1,25 @@
+import Image from "next/image";
+
 export default function Hero() {
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center bg-charcoal px-6 text-center text-cream">
-      {/* Large decorative type */}
-      <div className="mb-6 select-none">
-        <span className="font-serif text-[clamp(3rem,12vw,8rem)] font-light leading-none tracking-tight text-cream/20">
-          Dali
-        </span>
-        <br />
-        <span className="font-serif text-[clamp(3rem,12vw,8rem)] font-light leading-none tracking-tight text-cream/20">
-          House
-        </span>
-      </div>
+      <p className="mb-4 text-xs font-light tracking-[0.3em] uppercase text-cream/50">
+        Welcome to
+      </p>
 
-      <h1 className="font-serif text-4xl font-semibold md:text-6xl">
+      <Image
+        src="/dali-house-title.png"
+        alt="Dali House"
+        width={760}
+        height={240}
+        priority
+        className="h-auto w-full max-w-[min(90vw,640px)] select-none"
+      />
+
+      <h1 className="sr-only">
         Welcome to Dali House
       </h1>
-      <p className="mt-4 text-lg font-light tracking-[0.2em] uppercase text-tan">
+      <p className="mt-6 text-lg font-light tracking-[0.2em] uppercase text-tan">
         Coliving for women in Dallas
       </p>
 

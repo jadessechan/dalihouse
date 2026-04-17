@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function MeetYourHost() {
   return (
     <section
@@ -40,8 +42,14 @@ export default function MeetYourHost() {
             </div>
 
             {/* Cats */}
-            <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-brown/15 px-6 py-3 text-sm text-brown/60">
-              <span className="text-xl">🐱🐱</span>
+            <div className="mt-8 flex items-center gap-4 rounded-2xl border border-brown/15 bg-white/40 px-5 py-3 text-sm text-brown/70">
+              <Image
+                src="/dali-house-cats.png"
+                alt="Pookie and Spooky, the resident cats"
+                width={72}
+                height={72}
+                className="h-16 w-16 shrink-0 object-contain"
+              />
               <span>Permanent residents: Pookie &amp; Spooky</span>
             </div>
           </div>
