@@ -25,11 +25,11 @@ const faqs = [
   },
   {
     q: "What makes Dali House different from a typical roommate situation?",
-    a: "Dali House is designed as an intentional living experience\u2014not just a shared home. Rather than a random mix of roommates, each resident is thoughtfully selected to create a respectful, aligned, and supportive environment. The experience is also tailored to the individuals who live here. Some seasons may include shared dinners or outings, while others remain quiet and restorative, depending on the needs of the home. At its core, Dali House offers the balance of community and personal space\u2014so you can feel both connected and fully at ease.",
+    a: "Dali House is designed as an intentional living experience — not just a shared home. Each resident is thoughtfully selected to create a respectful, aligned, and supportive environment, offering the balance of community and personal space.",
   },
   {
-    q: "Who is the ideal resident for Dali House?",
-    a: "Dali House is designed for young professional women who work in-office or hybrid roles and value a healthy work-life balance. She values meaningful connection, respects shared living, and is open to building genuine relationships within the home.",
+    q: "Who is the ideal resident?",
+    a: "Young professional women who work in-office or hybrid roles and value a healthy work-life balance. She values meaningful connection, respects shared living, and is open to building genuine relationships within the home.",
   },
   {
     q: "When should I apply?",
@@ -45,12 +45,14 @@ function FAQItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border-b border-brown/10">
+    <div className="border-b border-[rgba(124,92,62,0.11)]">
       <button
-        onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between py-6 text-left"
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className="flex w-full items-center justify-between gap-4 py-5 text-left"
+        aria-expanded={open}
       >
-        <span className="font-serif text-lg font-semibold text-brown-deep">
+        <span className="font-serif text-base leading-[1.45] font-medium text-brown-deep">
           {q}
         </span>
         <svg
@@ -58,18 +60,25 @@ function FAQItem({ q, a }: { q: string; a: string }) {
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
-          className={`h-5 w-5 shrink-0 text-brown transition-transform ${open ? "rotate-180" : ""}`}
+          className={`h-[17px] w-[17px] shrink-0 text-brown transition-transform duration-300 ${
+            open ? "rotate-180" : ""
+          }`}
+          aria-hidden
         >
-          <path d="M19 9l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round" />
+          <path
+            d="M19 9l-7 7-7-7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </button>
       <div
-        className={`grid transition-all duration-300 ${
-          open ? "grid-rows-[1fr] pb-6" : "grid-rows-[0fr]"
+        className={`grid transition-all duration-[380ms] ease-out ${
+          open ? "grid-rows-[1fr] pb-[22px]" : "grid-rows-[0fr]"
         }`}
       >
         <div className="overflow-hidden">
-          <p className="text-sm leading-relaxed text-brown/70">{a}</p>
+          <p className="text-sm leading-[1.78] font-light text-brown">{a}</p>
         </div>
       </div>
     </div>
@@ -78,16 +87,14 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 
 export default function FAQ() {
   return (
-    <section id="faq" className="bg-cream px-6 py-24">
-      <div className="mx-auto max-w-2xl">
-        <h2 className="text-center font-serif text-4xl font-semibold text-brown-deep md:text-5xl">
-          FAQs
-        </h2>
-        <div className="mt-12">
-          {faqs.map((f) => (
-            <FAQItem key={f.q} q={f.q} a={f.a} />
-          ))}
-        </div>
+    <section id="faq" className="bg-cream px-8 pt-14 pb-24">
+      <h2 className="text-center font-serif text-[clamp(30px,4vw,44px)] leading-[1.2] font-medium text-brown-deep">
+        FAQs
+      </h2>
+      <div className="mx-auto mt-12 max-w-[660px]">
+        {faqs.map((f) => (
+          <FAQItem key={f.q} q={f.q} a={f.a} />
+        ))}
       </div>
     </section>
   );

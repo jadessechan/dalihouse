@@ -4,55 +4,58 @@ export default function MeetYourHost() {
   return (
     <section
       id="meet-your-host"
-      className="bg-cream px-6 py-24"
+      className="bg-cream px-8 pt-24 pb-14"
     >
-      <div className="mx-auto max-w-5xl">
-        <h2 className="text-center font-serif text-4xl font-semibold text-brown-deep md:text-5xl">
-          Meet Your Host
-        </h2>
+      <p className="text-center text-[10px] font-medium tracking-[0.22em] uppercase text-tan">
+        Your host
+      </p>
 
-        <div className="mt-14 grid items-center gap-12 md:grid-cols-2">
-          {/* Image placeholder — will be replaced with real photo */}
-          <div className="flex items-center justify-center">
-            <div className="flex h-72 w-72 items-center justify-center rounded-2xl bg-charcoal font-serif text-6xl text-cream/60">
-              J
-            </div>
+      <div className="mx-auto mt-14 grid max-w-[980px] items-start gap-9 md:grid-cols-[300px_1fr] md:gap-16">
+        <div className="pl-0 md:pl-6">
+          <div className="relative aspect-[3/4] w-full overflow-hidden rounded-[18px]">
+            <Image
+              src="/dali-house-host.jpeg"
+              alt="Jadesse, host of Dali House"
+              fill
+              sizes="(max-width: 768px) 100vw, 300px"
+              className="object-cover object-[center_20%]"
+            />
           </div>
+          <Image
+            src="/dali-house-cats.png"
+            alt="Pookie and Spooky"
+            width={200}
+            height={200}
+            className="mx-auto mt-5 block h-[110px] w-[110px] object-contain"
+          />
+          <p className="mt-2 text-center text-xs italic text-brown/55">
+            Permanent residents: Pookie &amp; Spooky 🐱
+          </p>
+        </div>
 
-          {/* Bio */}
-          <div>
-            <h3 className="font-serif text-2xl font-semibold text-tan">
-              Hi, I&apos;m Jadesse
-            </h3>
-
-            <div className="mt-6 space-y-4 text-base leading-relaxed text-brown/80">
-              <p>
-                Even though I grew up in Dallas, it took me years after moving
-                back to truly feel a sense of belonging. I know firsthand that
-                finding your people and your rhythm takes time, and it&apos;s
-                hard to do that when you&apos;re also dealing with the stress of
-                getting settled.
-              </p>
-              <p>
-                That&apos;s why I created Dali House. Dali House is designed to
-                give you a soft landing&mdash;so you can skip the friction of
-                moving and focus your energy on what actually matters: building
-                community, exploring the city, and creating your dream life.
-              </p>
-            </div>
-
-            {/* Cats */}
-            <div className="mt-8 flex items-center gap-4 rounded-2xl border border-brown/15 bg-white/40 px-5 py-3 text-sm text-brown/70">
-              <Image
-                src="/dali-house-cats.png"
-                alt="Pookie and Spooky, the resident cats"
-                width={72}
-                height={72}
-                className="h-16 w-16 shrink-0 object-contain"
-              />
-              <span>Permanent residents: Pookie &amp; Spooky</span>
-            </div>
+        <div>
+          <p className="mb-[22px] font-serif text-2xl font-medium text-tan">
+            Hi, I&rsquo;m Jadesse
+          </p>
+          <div className="text-[15px] leading-[1.82] font-light text-brown">
+            <p className="mb-[18px]">
+              Even though I grew up in Dallas, it took me years after moving
+              back to truly feel a sense of belonging. I know firsthand that
+              finding your people and your rhythm takes time &mdash; and
+              it&rsquo;s hard to do that when you&rsquo;re also dealing with
+              the stress of getting settled.
+            </p>
+            <p>
+              That&rsquo;s why I created Dali House. Dali House is designed to
+              give you a soft landing &mdash; so you can skip the friction of
+              moving and focus your energy on what actually matters: building
+              community, exploring the city, and creating your dream life.
+            </p>
           </div>
+          <blockquote className="mt-7 border-l-2 border-tan pl-5 font-serif text-[21px] leading-[1.6] italic text-brown-deep">
+            &ldquo;Home isn&rsquo;t just about where you live &mdash; it&rsquo;s
+            about the people and the life you build.&rdquo;
+          </blockquote>
         </div>
       </div>
     </section>

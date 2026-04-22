@@ -1,9 +1,27 @@
 import Image from "next/image";
 
+const GRAIN =
+  "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")";
+
 export default function Hero() {
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center bg-charcoal px-6 text-center text-cream">
-      <p className="mb-4 text-xs font-light tracking-[0.3em] uppercase text-cream/50">
+    <section
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-charcoal bg-cover bg-[center_85%] px-6 pt-[120px] pb-20 text-center text-cream"
+      style={{ backgroundImage: "url(/dali-house-hero.jpg)" }}
+    >
+      {/* Dark overlay */}
+      <div
+        aria-hidden
+        className="absolute inset-0 z-0 bg-[rgba(10,7,5,0.58)]"
+      />
+      {/* Grain overlay */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-[1] opacity-[0.06]"
+        style={{ backgroundImage: GRAIN, backgroundSize: "180px" }}
+      />
+
+      <p className="relative z-[2] mb-6 text-[11px] font-normal tracking-[0.4em] uppercase text-cream/35">
         Welcome to
       </p>
 
@@ -13,48 +31,41 @@ export default function Hero() {
         width={760}
         height={240}
         priority
-        className="h-auto w-full max-w-[min(90vw,640px)] select-none"
+        className="relative z-[2] block h-auto w-[min(88vw,520px)] select-none"
       />
 
-      <h1 className="sr-only">
-        Welcome to Dali House
-      </h1>
-      <p className="mt-6 text-lg font-light tracking-[0.2em] uppercase text-tan">
+      <h1 className="sr-only">Welcome to Dali House</h1>
+
+      <p className="relative z-[2] mt-[22px] text-[12px] tracking-[0.28em] uppercase text-tan">
         Coliving for women in Dallas
-      </p>
-
-      <p className="mx-auto mt-8 max-w-xl text-base leading-relaxed text-cream/80 md:text-lg">
-        A co-living space in Dallas for young female professionals who value
-        comfort and intentional living. Whether you&apos;re relocating or
-        building your career, Dali House offers a refined and welcoming
-        environment to live and grow.
-      </p>
-
-      <p className="mx-auto mt-6 max-w-md font-serif text-lg italic text-tan/90 md:text-xl">
-        Not just a place to live&mdash;but a space to land, connect, and grow.
       </p>
 
       <a
         href="https://form.typeform.com/to/J9BtSauc"
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-10 rounded-full bg-cream-light px-10 py-3.5 text-sm font-semibold tracking-widest text-charcoal uppercase shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+        className="relative z-[2] mt-10 inline-block rounded-full bg-cream-light px-11 py-[15px] text-[11px] font-medium tracking-[0.2em] uppercase text-brown-deep shadow-[0_4px_28px_rgba(0,0,0,0.22)] transition-transform hover:-translate-y-0.5 hover:shadow-[0_8px_36px_rgba(0,0,0,0.3)]"
       >
-        Apply
+        Apply Now
       </a>
 
-      {/* Scroll hint */}
-      <div className="absolute bottom-10 animate-bounce">
+      <div
+        aria-hidden
+        className="absolute bottom-10 left-1/2 z-[2] -translate-x-1/2 animate-bounce text-cream/30"
+      >
         <svg
-          width="24"
-          height="24"
+          width="20"
+          height="20"
           fill="none"
           stroke="currentColor"
-          strokeWidth="2"
+          strokeWidth="1.5"
           viewBox="0 0 24 24"
-          className="text-cream/40"
         >
-          <path d="M19 9l-7 7-7-7" />
+          <path
+            d="M19 9l-7 7-7-7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </div>
     </section>
