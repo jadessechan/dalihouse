@@ -2,6 +2,7 @@
 title: "Relocating to Dallas as a Woman: What I Wish Someone Had Told Me"
 date: "2026-04-04"
 description: "A practical guide to relocating to Dallas — cost, neighborhoods, safety, and social life — plus the part people don't talk about enough: how it actually feels to land here."
+tag: "Featured"
 ---
 
 *By Jadesse · 12 min read*

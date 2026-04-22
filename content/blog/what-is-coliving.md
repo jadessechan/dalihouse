@@ -2,6 +2,7 @@
 title: "What Is Coliving? A Guide for Women Relocating to Dallas"
 date: "2026-04-15"
 description: "Coliving is more than just shared housing. Here's what it means, why it's growing among young professional women, and how Dali House does it differently."
+tag: "Coliving"
 ---
 
 If you're moving to a new city, the word "coliving" might sound unfamiliar — or worse, like it means cramming into a house with strangers and hoping for the best. But coliving in 2026 looks nothing like that.

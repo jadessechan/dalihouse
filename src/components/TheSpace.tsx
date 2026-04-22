@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const highlights = [
   "Utilities included",
-  "Fully stocked shared essentials",
+  "Fully stocked essentials",
   "Monthly cleaning",
   "Safe & central location",
   "Curated interiors",

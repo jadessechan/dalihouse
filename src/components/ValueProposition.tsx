@@ -7,20 +7,18 @@ export default function ValueProposition() {
             About Dali House
           </p>
           <h2 className="font-serif text-[clamp(34px,4.5vw,52px)] leading-[1.18] font-medium text-brown-deep">
-            The <em className="font-serif italic text-tan">relocation oasis</em>
-            <br />
-            for women
-            <br />
-            in Dallas.
+            Your{" "}
+            <em className="font-serif italic text-tan">relocation oasis</em> in
+            Dallas.
           </h2>
         </div>
 
         <div className="pt-2">
           <p className="mb-5 text-base leading-[1.8] font-light text-brown">
-            A co-living space in Dallas for young female professionals who value
-            comfort and intentional living. Whether you&rsquo;re relocating or
-            building your career, Dali House offers a refined and welcoming
-            environment to live and grow.
+            A co-living space for young female professionals who value comfort
+            and intentional living. Whether you&rsquo;re relocating or building
+            your career, Dali House offers a refined, welcoming environment to
+            land and grow.
           </p>
           <p className="text-base leading-[1.8] font-light text-brown">
             We handle the friction of moving &mdash; furnished rooms, flexible

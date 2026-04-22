@@ -22,6 +22,26 @@ function InstagramIcon() {
   );
 }
 
+function EmailIcon() {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="mr-[5px] inline-block shrink-0 align-middle"
+      aria-hidden
+    >
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <polyline points="2,4 12,13 22,4" />
+    </svg>
+  );
+}
+
 export default function Footer() {
   return (
     <footer className="border-t border-cream/5 bg-charcoal px-8 py-14">
@@ -42,6 +62,7 @@ export default function Footer() {
               href="mailto:dalihouse.dtx@gmail.com"
               className="flex items-center text-[13px] text-cream/55 transition-colors hover:text-tan"
             >
+              <EmailIcon />
               dalihouse.dtx@gmail.com
             </a>
             <a
@@ -60,6 +81,9 @@ export default function Footer() {
           <span className="mb-1 text-[10px] font-medium tracking-[0.16em] uppercase text-cream/35">
             Navigate
           </span>
+          <Link href="/" className="text-[13px] text-cream/55 transition-colors hover:text-tan">
+            Home
+          </Link>
           <Link href="/#the-space" className="text-[13px] text-cream/55 transition-colors hover:text-tan">
             The Space
           </Link>
@@ -76,7 +100,7 @@ export default function Footer() {
 
         <div className="flex flex-col gap-2.5">
           <span className="mb-1 text-[10px] font-medium tracking-[0.16em] uppercase text-cream/35">
-            Connect
+            Resources
           </span>
           <Link href="/blog" className="text-[13px] text-cream/55 transition-colors hover:text-tan">
             Blog

@@ -2,6 +2,7 @@
 title: "Why Community Matters When You're Starting Over in a New City"
 date: "2026-04-05"
 description: "Relocating is exciting — but loneliness is real. Here's why having a built-in community makes all the difference when you're starting fresh."
+tag: "Community"
 ---
 
 You got the job. You signed the lease. You packed your bags and drove (or flew) to a brand new city. The first week is exciting — everything is new, everything is possible.

@@ -11,7 +11,15 @@ export interface BlogPost {
   title: string;
   date: string;
   description: string;
+  tag: string;
+  readTime: string;
   content: string;
+}
+
+function estimateReadTime(text: string): string {
+  const words = text.trim().split(/\s+/).length;
+  const minutes = Math.max(1, Math.round(words / 200));
+  return `${minutes} min read`;
 }
 
 export function getAllPosts(): BlogPost[] {
@@ -20,13 +28,15 @@ export function getAllPosts(): BlogPost[] {
   const posts = files.map((file) => {
     const slug = file.replace(/\.md$/, "");
     const raw = fs.readFileSync(path.join(blogDir, file), "utf-8");
-    const { data } = matter(raw);
+    const { data, content } = matter(raw);
 
     return {
       slug,
       title: data.title,
       date: data.date,
       description: data.description,
+      tag: data.tag ?? "Journal",
+      readTime: data.readTime ?? estimateReadTime(content),
       content: "",
     };
   });
@@ -47,6 +57,8 @@ export async function getPostBySlug(slug: string): Promise<BlogPost> {
     title: data.title,
     date: data.date,
     description: data.description,
+    tag: data.tag ?? "Journal",
+    readTime: data.readTime ?? estimateReadTime(content),
     content: result.toString(),
   };
 }
