@@ -21,10 +21,10 @@ Consistency beats variety!
 
 Some of my favorite social clubs are:
 
-- Don't Be Strangers (@dontbestrangers)
-- Dallas Matcha Club (@dallasmatcha)
-- Dreeam Girls (@dreeamgirlsclub)
-- Autumn Moon (@shopautumnmoon)
+- [Don't Be Strangers](https://dontbestrangers.club/) ([Instagram @dontbestrangers](https://www.instagram.com/dontbestrangers/))
+- Dallas Matcha Club ([events](https://luma.com/dallasmatcha) | [Instagram @dallasmatcha](https://www.instagram.com/dallasmatcha/))
+- [Dreeam Girls](https://www.instagram.com/dreeamgirlsclub/) ([Instagram @dreeamgirlsclub](https://www.instagram.com/dreeamgirlsclub/))
+- [Autumn Moon](https://www.instagram.com/shopautumnmoon/) ([Instagram @shopautumnmoon](https://www.instagram.com/shopautumnmoon/))
 
 ## 2. Fitness communities
 
@@ -34,14 +34,14 @@ You don't need to be a "fitness person" for this to work. You just need an activ
 
 In Dallas, good options include:
 
-- 214 Run Club (@the214runclub)
-- Oak Cliff Run Crew (@oakcliffruncrew)
-- City Girls Walk Dallas (@citygirlswalkdallas)
-- We're Not Really Runners (@wnnr_dallas)
-- Dallas Sports and Social Club
-- John Reed
-- Wesley
-- Fit Social Club
+- 214 Run Club ([Instagram @the214runclub](https://www.instagram.com/the214runclub/))
+- Oak Cliff Run Crew ([Instagram @oakcliffruncrew](https://www.instagram.com/oakcliffruncrew/))
+- City Girls Walk Dallas ([Instagram @citygirlswalkdallas](https://www.instagram.com/citygirlswalkdallas/))
+- We're Not Really Runners ([Instagram @wnrr_dallas](https://www.instagram.com/wnrr_dallas/))
+- [Dallas Sport & Social Club](https://www.dallassocialclub.com/) ([Instagram @dalsportsocial](https://www.instagram.com/dalsportsocial/))
+- [JOHN REED Dallas](https://us.johnreed.fitness/clubs/dallas-tx/)
+- Wesley Wellness Club ([site](https://www.wesleywellnessclub.com/) | [Instagram @wesleywellness](https://www.instagram.com/wesleywellness/))
+- Fit Social Club ([site](https://www.fit-socialclub.com/) | [Instagram @fit.socialclub](https://www.instagram.com/fit.socialclub/))
 
 ## 3. Where you live affects how easy it is to build a social life
 
@@ -57,7 +57,14 @@ That's one reason coliving makes sense for newcomers. It doesn't replace going o
 
 At Dali House, that part is intentional. It's not just about having a furnished room. It's about living with women who are also building a life here and want more than an anonymous apartment experience.
 
-Another alternative is The Village. You get the perks of being in your own apartment, but have community-organized events and amenities like a sand volleyball court, pickleball, and resort-style pool within walking distance.
+Another alternative is [The Village](https://www.thevillagedallas.com/). You get the perks of being in your own apartment, but have community-organized events, restaurants, and amenities like [Sandy Pickle](https://www.thevillagedallas.com/eat/sandy-pickle/) for sand volleyball and pickleball within walking distance. It's one of the few apartment communities in Dallas that can feel socially alive without being full-on coliving.
+
+If you're still deciding where to base yourself, here's the fast version:
+
+- **Uptown:** most walkable, easiest for nightlife, bars, and meeting people quickly, but also the priciest and most high-energy.
+- **Lower Greenville:** more neighborhood feel, strong restaurant and patio scene, a little more relaxed and local than Uptown.
+- **Bishop Arts District:** more character, indie shops, coffee spots, and date-night energy, but less central to the rest of Dallas.
+- **Suburban options like Plano or Frisco:** quieter, safer-feeling, and easier for parking and routine, but more car-dependent and less spontaneous socially.
 
 ## A better strategy than "just put yourself out there"
 
