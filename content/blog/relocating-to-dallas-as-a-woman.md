@@ -46,7 +46,7 @@ Each neighborhood in Dallas offers a different version of the city.
 - **Average rent:** $1,800–$2,400 for a 1BR
 - **Vibe:** Busy, social, young professional crowd
 
-This is where a lot of 20-somethings land when they first move here. It's one of the most walkable pockets of Dallas, centered around McKinney Avenue, West Village, and easy access to Katy Trail. The free McKinney Avenue Trolley also makes it easier to move between Uptown and downtown without hopping in your car. The downside: it's pricey and can feel a bit "bro-y" on weekend nights. If you want to be in the middle of things and have the budget, it works.
+This is where a lot of 20-somethings land when they first move here. Bars and restaurants everywhere, walkable, easy to meet people. The downside: it's pricey and can feel a bit "bro-y" on weekend nights. If you want to be in the middle of things and have the budget, it works.
 
 ### Knox-Henderson
 
@@ -62,7 +62,7 @@ Right next to Uptown but feels different. More established restaurants, better b
 - **Average rent:** $1,300–$1,700 for a 1BR
 - **Vibe:** Artsy, local, less polished
 
-Lower Greenville feels more neighborhood-y than Uptown. The Greenville Avenue strip is lined with restaurants, patios, bars, coffee shops, and live music spots, but the surrounding streets still feel residential. It's a good fit if you want energy and walkability without feeling like you're living in the middle of a luxury high-rise scene.
+"Walkable, green, and safe haven smack dab in the middle of Dallas" is how one Niche reviewer described it. I agree. It's got character that Uptown lacks, and the rent is more reasonable.
 
 ### Oak Lawn
 
@@ -78,19 +78,11 @@ If inclusivity matters to you, Oak Lawn is the move. It's Dallas's historically 
 - **Average rent:** $1,100–$1,600 for a 1BR
 - **Vibe:** Artsy, local boutiques, Oak Cliff charm
 
-South of downtown in North Oak Cliff, Bishop Arts is one of the most character-filled parts of Dallas. It's packed with independent boutiques, coffee shops, restaurants, bars, and galleries in a walkable historic district. One of my favorite parts of Dallas, especially if you want charm and personality over polished high-rise living, though you will need a car to get to other areas.
-
-### The Village
-
-- **Good for:** Built-in social scene, amenities, apartment living with more community
-- **Average rent:** Varies a lot by building and finish level
-- **Vibe:** Active, amenity-heavy, socially oriented
-
-If you like the idea of meeting people where you live but don't necessarily want full coliving, [The Village](https://www.thevillagedallas.com/) is worth knowing about. It's a massive apartment community with restaurants, events, green space, fitness options, and a more social on-site atmosphere than a typical apartment complex. It can be a nice middle ground if you want more activity around you, but still prefer a traditional apartment setup.
+South of downtown in Oak Cliff. Over 60 independent boutiques and restaurants concentrated in a walkable historic shopping district. One of my favorite parts of Dallas, though you will need a car to get to other areas.
 
 ### Safest suburban options
 
-If safety, space, and a quieter day-to-day life matter most, suburban options like Plano, Frisco, Preston Hollow, and Lake Highlands are worth looking at. They're more car-dependent and less spontaneous socially, but you usually get easier parking, newer developments, and a calmer pace of life. Good option if you're working from home, want more routine, or don't care about being close to nightlife.
+If safety is your top priority or you want a quieter life: Preston Hollow, Lake Highlands, Plano West, and Frisco consistently rank as the safest areas in the DFW metro. They're more suburban, less walkable, but crime rates are significantly lower than urban Dallas. Good option if you're working from home and don't need nightlife.
 
 ## Making friends
 
@@ -98,15 +90,15 @@ This is the hardest part. Dallas is friendly, but it's also a car city. You don'
 
 ### Social clubs
 
-There are groups for everything: hiking, book clubs, young professionals, new-to-Dallas women. Don't Be Strangers ([site](https://dontbestrangers.club/) | [Instagram @dontbestrangers](https://www.instagram.com/dontbestrangers/)), We're Not Really Runners Dallas ([Instagram @wnrr_dallas](https://www.instagram.com/wnrr_dallas/)), and Dallas Matcha Club ([events](https://luma.com/dallasmatcha) | [Instagram @dallasmatcha](https://www.instagram.com/dallasmatcha/)) are great for a variety of activities.
+There are groups for everything: hiking, book clubs, young professionals, new-to-Dallas women. Don't Be Strangers (@dontbestrangers), We're Not Really Runners (@wnnr_dallas), and Dallas Matcha Club (@dallasmatcha) are great for a variety of activities.
 
 ### Fitness communities
 
-Run clubs and boutique fitness studios all build community fast. 214 Run Club ([Instagram @the214runclub](https://www.instagram.com/the214runclub/)) is one of the most visible run clubs in Dallas and usually meets near Katy Trail and Cole Avenue. Some of my favorite fitness studios are Fit Social Club ([site](https://www.fit-socialclub.com/) | [Instagram @fit.socialclub](https://www.instagram.com/fit.socialclub/)), Wesley Wellness Club ([site](https://www.wesleywellnessclub.com/) | [Instagram @wesleywellness](https://www.instagram.com/wesleywellness/)), and [JOHN REED Dallas](https://us.johnreed.fitness/clubs/dallas-tx/).
+Run clubs and boutique fitness studios all build community fast. 214 Run Club (@the214runclub) is the largest in Dallas and meets at Katy Trail. Some of my favorite fitness studios are Fit Social Club, Wesley, and John Reed.
 
 ### Sports leagues
 
-[Dallas Sport & Social Club](https://www.dallassocialclub.com/) ([Instagram @dalsportsocial](https://www.instagram.com/dalsportsocial/)) runs beach volleyball (my fave), soccer, softball, and more for adults. It's a bit like college intramurals but with beer afterwards. You don't need any experience either and can sign up solo for a team.
+Dallas Sports & Social Club runs beach volleyball (my fave), soccer, softball, etc. leagues for adults. It's a bit like college intramurals but with beer afterwards. You don't need any experience either and can sign up solo for a team!
 
 ### Coliving
 
@@ -119,8 +111,6 @@ Most people default to a traditional apartment. And while that works, it often l
 An alternative that's growing quickly in major cities is **coliving**.
 
 Coliving offers a more intentional approach to shared living — where the environment, the people, and the experience are all considered. The flexible lease also allows you time to explore areas of Dallas before committing to a certain area.
-
-If you want a more traditional apartment but still care about social energy, [The Village](https://www.thevillagedallas.com/) is probably the best-known apartment community in Dallas for that. It's not as intimate as coliving, but it does offer a more built-in community feel than most standard apartment complexes.
 
 ### Why coliving works
 
