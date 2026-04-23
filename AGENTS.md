@@ -80,3 +80,10 @@ When turning blog content into social content:
 - use a strong hook, a clean story arc, and one clear CTA
 - avoid cramming too much text into a slide
 - optimize for mobile readability first
+
+### Supporting docs
+
+When relevant, load and follow:
+- `BRAND-KIT.md` for brand voice, positioning, and visual direction
+- `CONTENT-WORKFLOW.md` for blog strategy and repurposing logic
+- `SOCIALS.md` for Instagram / carousel structure and social content rules
