@@ -87,4 +87,5 @@ When relevant, load and follow:
 - `docs/brand/BRAND-KIT.md` for brand voice, positioning, and visual direction
 - `docs/workflows/CONTENT-WORKFLOW.md` for blog strategy and repurposing logic
 - `docs/workflows/SEO-BLOG-WORKFLOW.md` for SEO-oriented blog production guidance
+- `docs/workflows/BLOG-AUTOMATION.md` for the agentic blog workflow and HITL state machine
 - `docs/social/SOCIALS.md` for Instagram / carousel structure and social content rules

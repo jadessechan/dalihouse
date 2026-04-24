@@ -1,0 +1,22 @@
+{
+  "slug": "coliving-vs-random-roommates-dallas-women",
+  "state": "awaiting_topic_approval",
+  "topic": "Coliving vs random roommates for women moving to Dallas",
+  "primaryKeyword": "coliving vs random roommates",
+  "secondaryKeywords": [
+    "women moving to dallas",
+    "coliving dallas women",
+    "moving to dallas roommates"
+  ],
+  "assignedPillar": "Coliving explained",
+  "workingBranch": "blog-content",
+  "publishTargetBranch": "dev",
+  "socialPackage": {
+    "enabled": true,
+    "state": "pending_after_publish"
+  },
+  "createdAt": "2026-04-24T06:40:00Z",
+  "updatedAt": "2026-04-24T06:40:00Z",
+  "needsHuman": true,
+  "nextAction": "Approve, revise, or reject topic"
+}
