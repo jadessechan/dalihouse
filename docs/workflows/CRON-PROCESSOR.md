@@ -1,0 +1,185 @@
+# CRON-PROCESSOR.md - Dali House Blog Pipeline Cron Runbook
+
+_Status: MVP spec. Companion to `BLOG-AUTOMATION.md`._
+
+## Purpose
+
+A scheduled agent that advances `content/pipeline/active/*/` posts through their state machine without Jadesse prompting each step. Pauses at HITL gates, announces once per gate, resumes when approval arrives.
+
+## Cadence
+
+- Default: every 15 minutes
+- Sweet spot: short enough to feel responsive, long enough to avoid noise
+- Human approvals come through chat, not a tool call, so the gap between approval and pickup is at most one cron tick
+
+## Where it runs
+
+- An OpenClaw cron agent with its own session (isolated from the main Dali House chat)
+- Runs headless, only speaks up when action is needed or a milestone completes
+- The main Dali House agent stays in charge of chat conversation; the cron agent handles quiet repo progression
+
+## Working copy strategy
+
+Each tick the cron agent:
+
+1. Ensures a working clone at a persistent path, e.g. `~/.dali/site-clone`
+2. `git fetch origin` + `git checkout blog-content` + `git reset --hard origin/blog-content`
+3. Does its work on a clean tree
+4. Commits + pushes back to `blog-content`
+
+Never keeps uncommitted state between runs. The repo is the source of truth.
+
+## Per-tick loop
+
+```
+for slug in content/pipeline/active/*/:
+  status = read(status.json)
+  if status.state in AUTOMATED_STATES:
+    run_state_handler(slug, status)
+    write(status.json)
+    commit + push if anything changed
+  elif status.state in HITL_STATES:
+    if not already_announced(status):
+      announce(slug, status)
+      mark_announced(status)
+      commit + push
+    # otherwise stay silent
+```
+
+## State handlers
+
+| State | Automated? | Handler action |
+|---|---|---|
+| `proposed` | yes | run SEO viability eval, write to `notes.md`, advance to `awaiting_topic_approval` |
+| `awaiting_topic_approval` | no | HITL: announce once, wait |
+| `approved_for_draft` | yes | write `draft.md` + compute checksum, advance to `awaiting_human_edit` |
+| `awaiting_human_edit` | mixed | check draft checksum drift; if drifted, advance to `edited_by_human` |
+| `edited_by_human` | yes | re-evaluate, append to `notes.md`, advance to `awaiting_final_approval` |
+| `awaiting_final_approval` | no | HITL: announce once, wait |
+| `approved_for_publish` | yes | copy to `content/blog/<slug>.md`, advance to `published` |
+| `published` | yes | generate Instagram package into `socials.md`, advance to `socials_generated` |
+| `socials_generated` | yes | announce once, move folder to `content/pipeline/archive/<year>/<slug>/` |
+| `rejected` | yes | archive folder, no announcement |
+
+## Drift / human-edit detection
+
+- After the agent writes `draft.md`, it stores `draftChecksum` (sha256) in `status.json`
+- Each tick, recompute the checksum
+- If it differs AND `state == awaiting_human_edit`, advance to `edited_by_human`
+- If it differs in any other state, log a warning and leave state unchanged (don't auto-revert human work)
+
+## Anti-spam announcements
+
+`status.json` tracks:
+
+```json
+"announcedStates": ["awaiting_topic_approval"]
+```
+
+Rules:
+- Announce only once per state entry
+- If state changes and returns (e.g. revise → re-approve cycle), clear the old entry so the new gate can announce again
+- Completion milestones (`published`, `socials_generated`) also announce once
+
+## Announcement format
+
+Single message, chat surface of the main Dali House agent topic. Template:
+
+```
+[Dali House blog cron]
+slug: <slug>
+state: <state>
+next action: <status.nextAction>
+path: content/pipeline/active/<slug>/
+```
+
+Keep it terse. The main agent can expand on it when Jadesse asks.
+
+## Approval language → state transitions
+
+Jadesse's approvals are picked up by the main agent, not the cron processor. The main agent is responsible for translating chat commands into `status.json` edits + commits on `blog-content`. The cron processor only reads state; it does not parse chat.
+
+Chat command → main agent update:
+
+| Command | Updates |
+|---|---|
+| `approve topic <slug>` | state → `approved_for_draft` |
+| `revise topic <slug>: <guidance>` | append guidance to `notes.md`, state → `proposed` |
+| `reject topic <slug>` | state → `rejected` |
+| `approve draft <slug>` | state → `approved_for_publish` |
+| `revise draft <slug>: <guidance>` | append guidance, state → `edited_by_human` |
+| `hold <slug>` | state unchanged, `needsHuman=false`, processor leaves it alone |
+
+If slug is omitted and there is exactly one active post, it applies to that one.
+
+## Commit conventions
+
+Cron processor commit subjects:
+
+- `pipeline(<slug>): evaluate topic`
+- `pipeline(<slug>): draft post`
+- `pipeline(<slug>): detect human edit`
+- `pipeline(<slug>): re-evaluate edited draft`
+- `pipeline(<slug>): publish to content/blog/`
+- `pipeline(<slug>): generate social package`
+- `pipeline(<slug>): archive completed workflow`
+
+Main agent (HITL) commit subjects:
+
+- `pipeline(<slug>): approve topic`
+- `pipeline(<slug>): approve publish`
+- `pipeline(<slug>): reject / hold`
+
+## Guardrails
+
+- Never auto-publish without `approved_for_publish`
+- Never overwrite `draft.md` after first human edit
+- Never modify `content/blog/*` for any post not in `approved_for_publish`
+- Skip any slug whose `status.json` is malformed; log a warning for the main agent
+- If two ticks produce identical output, do not commit
+- If push fails (non-fast-forward), re-fetch and retry once; if still failing, stop and announce
+
+## Failure handling
+
+- Any exception: mark `status.lastError` with `{ at, state, message }`, push, surface in next announcement
+- Repeated errors (3 consecutive ticks in same state): announce once and stop progressing that slug until cleared
+
+## Extended `status.json` fields
+
+Fields the processor adds on top of the base shape:
+
+```json
+{
+  "draftChecksum": "sha256:...",
+  "lastProcessedAt": "2026-04-24T07:15:00Z",
+  "announcedStates": ["awaiting_topic_approval"],
+  "lastError": null
+}
+```
+
+## First-run health check
+
+On first execution the processor should:
+
+1. Verify write access to `origin/blog-content` (dry run push)
+2. Verify `content/pipeline/active/` exists
+3. Announce once: `cron processor online, sweeping every 15 min`
+4. Proceed with the normal loop
+
+## Open decisions before scheduling
+
+These need a human call, not a spec:
+
+- **Cadence**: 15 min default. Tighter (10) or looser (30)?
+- **Announce surface**: Beet HQ topic 296, or a quieter Dali-only topic?
+- **Auto-archive on publish**: move to `archive/` immediately, or keep in `active/` until socials are done? (Currently: keep until `socials_generated`, then archive.)
+- **PR creation**: after publish, open PR from `blog-content` into `dev` automatically, or leave that manual for MVP?
+
+## Next implementation step
+
+After these decisions:
+
+1. Register the cron via OpenClaw
+2. Script the per-state handlers as skill or agent prompt
+3. Dry-run against the existing sample slug
+4. Promote to live when the dry-run cycle produces expected transitions

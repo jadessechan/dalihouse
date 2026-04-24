@@ -88,4 +88,5 @@ When relevant, load and follow:
 - `docs/workflows/CONTENT-WORKFLOW.md` for blog strategy and repurposing logic
 - `docs/workflows/SEO-BLOG-WORKFLOW.md` for SEO-oriented blog production guidance
 - `docs/workflows/BLOG-AUTOMATION.md` for the agentic blog workflow and HITL state machine
+- `docs/workflows/CRON-PROCESSOR.md` for the scheduled pipeline processor runbook
 - `docs/social/SOCIALS.md` for Instagram / carousel structure and social content rules
