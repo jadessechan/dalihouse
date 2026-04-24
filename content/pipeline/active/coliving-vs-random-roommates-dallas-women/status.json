@@ -16,11 +16,13 @@
     "state": "pending_after_publish"
   },
   "createdAt": "2026-04-24T06:40:00Z",
-  "updatedAt": "2026-04-24T06:40:00Z",
+  "updatedAt": "2026-04-24T09:31:00Z",
   "needsHuman": true,
   "nextAction": "Approve, revise, or reject topic",
   "draftChecksum": null,
-  "lastProcessedAt": null,
-  "announcedStates": [],
+  "lastProcessedAt": "2026-04-24T09:31:00Z",
+  "announcedStates": [
+    "awaiting_topic_approval"
+  ],
   "lastError": null
 }
