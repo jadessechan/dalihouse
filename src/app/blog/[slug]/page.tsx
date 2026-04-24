@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { getPostBySlug, getAllSlugs } from "@/lib/blog";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import SoftLanding from "@/components/SoftLanding";
 
 export async function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -31,6 +33,14 @@ export async function generateMetadata({
   };
 }
 
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
 export default async function BlogPost({
   params,
 }: {
@@ -42,28 +52,79 @@ export default async function BlogPost({
   return (
     <>
       <Nav />
-      <main className="min-h-screen bg-cream px-6 pt-28 pb-24">
-        <article className="mx-auto max-w-3xl">
-          <Link
-            href="/blog"
-            className="text-sm text-brown/50 transition-colors hover:text-tan"
-          >
-            &larr; Back to blog
-          </Link>
+      <main className="min-h-screen bg-cream">
+        <article>
+          <div className="mx-auto max-w-[720px] px-6 pt-32 pb-10 md:pt-36">
+            <Link
+              href="/blog"
+              className="text-[12px] font-medium tracking-[0.12em] uppercase text-brown/50 transition-colors hover:text-tan"
+            >
+              &larr; Back to journal
+            </Link>
 
-          <header className="mt-6">
-            <time className="text-sm text-brown/50">{post.date}</time>
-            <h1 className="mt-2 font-serif text-3xl font-semibold text-brown-deep md:text-4xl">
-              {post.title}
-            </h1>
-          </header>
+            <header className="mt-8">
+              <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-tan">
+                {post.tag} &middot; {post.readTime}
+              </p>
+              <h1 className="mt-5 font-serif text-[clamp(34px,5.4vw,52px)] leading-[1.14] font-medium tracking-[-0.01em] text-brown-deep">
+                {post.title}
+              </h1>
+              <p className="mt-6 text-[18px] leading-[1.55] font-light text-brown/85 md:text-[19px]">
+                {post.description}
+              </p>
 
-          <div
-            className="prose prose-lg mt-10 max-w-none text-brown/80 prose-headings:font-serif prose-headings:text-brown-deep prose-a:text-tan prose-strong:text-brown-deep"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
+              <div className="mt-10 flex items-center gap-4 border-t border-b border-brown/10 py-5">
+                <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full">
+                  <Image
+                    src="/dali-house-host.jpeg"
+                    alt="Jadesse"
+                    fill
+                    sizes="44px"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[14px] font-medium text-brown-deep">
+                    Jadesse
+                  </span>
+                  <span className="text-[12px] font-light text-brown/60">
+                    Founder of Dali House
+                  </span>
+                </div>
+                <div className="ml-auto text-right">
+                  <span className="block text-[11px] font-medium tracking-[0.12em] uppercase text-brown/45">
+                    Published
+                  </span>
+                  <time className="block text-[13px] font-light text-brown/80">
+                    {formatDate(post.date)}
+                  </time>
+                </div>
+              </div>
+            </header>
+          </div>
+
+          <div className="mx-auto max-w-[960px] px-6">
+            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[18px] bg-cream-light shadow-[0_8px_40px_rgba(61,35,20,0.08)]">
+              <Image
+                src="/dali-house-hero.jpg"
+                alt={post.title}
+                fill
+                sizes="(min-width: 960px) 960px, 100vw"
+                priority
+                className="object-cover"
+              />
+            </div>
+          </div>
+
+          <div className="mx-auto max-w-[720px] px-6 pt-14 pb-20">
+            <div
+              className="post-content"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
+          </div>
         </article>
       </main>
+      <SoftLanding />
       <Footer />
     </>
   );
