@@ -8,8 +8,8 @@ A scheduled agent that advances `content/pipeline/active/*/` posts through their
 
 ## Cadence
 
-- **Locked: every 60 minutes**
-- Rationale: 1 post/week means low urgency; hourly is quiet enough to avoid noise while still keeping lag under an hour between human approval and next step
+- **Locked: every 15 minutes**
+- Rationale: 1 post/week means low urgency, but 15 min keeps pickup fast after Jadesse approves a gate — she never waits more than ~15 min for the next step to start
 - Human approvals come through chat, not a tool call, so the gap between approval and pickup is at most one cron tick
 
 ## Where it runs
@@ -184,12 +184,12 @@ On first execution the processor should:
 
 1. Verify write access to `origin/blog-content` (dry run push)
 2. Verify `content/pipeline/active/` exists
-3. Announce once: `cron processor online, sweeping every 60 min`
+3. Announce once: `cron processor online, sweeping every 15 min`
 4. Proceed with the normal loop
 
 ## Next implementation step
 
-1. Register the cron via OpenClaw (60 min cadence, Dali Socials topic)
+1. Register the cron via OpenClaw (15 min cadence, Dali Socials topic)
 2. Script the per-state handlers as a skill or agent prompt
 3. Dry-run against the existing sample slug
 4. Promote to live when the dry-run cycle produces expected transitions
