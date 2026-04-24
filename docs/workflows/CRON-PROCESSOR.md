@@ -8,8 +8,8 @@ A scheduled agent that advances `content/pipeline/active/*/` posts through their
 
 ## Cadence
 
-- Default: every 15 minutes
-- Sweet spot: short enough to feel responsive, long enough to avoid noise
+- **Locked: every 60 minutes**
+- Rationale: 1 post/week means low urgency; hourly is quiet enough to avoid noise while still keeping lag under an hour between human approval and next step
 - Human approvals come through chat, not a tool call, so the gap between approval and pickup is at most one cron tick
 
 ## Where it runs
@@ -56,7 +56,7 @@ for slug in content/pipeline/active/*/:
 | `awaiting_human_edit` | mixed | check draft checksum drift; if drifted, advance to `edited_by_human` |
 | `edited_by_human` | yes | re-evaluate, append to `notes.md`, advance to `awaiting_final_approval` |
 | `awaiting_final_approval` | no | HITL: announce once, wait |
-| `approved_for_publish` | yes | copy to `content/blog/<slug>.md`, advance to `published` |
+| `approved_for_publish` | yes | copy to `content/blog/<slug>.md`, open PR `blog-content` → `dev`, advance to `published` |
 | `published` | yes | generate Instagram package into `socials.md`, advance to `socials_generated` |
 | `socials_generated` | yes | announce once, move folder to `content/pipeline/archive/<year>/<slug>/` |
 | `rejected` | yes | archive folder, no announcement |
@@ -81,9 +81,15 @@ Rules:
 - If state changes and returns (e.g. revise → re-approve cycle), clear the old entry so the new gate can announce again
 - Completion milestones (`published`, `socials_generated`) also announce once
 
+## Announcement surface
+
+- **Locked: Dali Socials topic** in the Beet HQ supergroup (separate from the main build-chat topic)
+- Rationale: keeps the content/social workflow visible without cluttering the main dev chat
+- Topic ID is resolved at cron registration time and stored in the cron job config, not in this repo
+
 ## Announcement format
 
-Single message, chat surface of the main Dali House agent topic. Template:
+Single message. Template:
 
 ```
 [Dali House blog cron]
@@ -130,11 +136,26 @@ Main agent (HITL) commit subjects:
 - `pipeline(<slug>): approve publish`
 - `pipeline(<slug>): reject / hold`
 
+## Auto-PR on publish
+
+- **Locked: yes**
+- When `approved_for_publish` is handled, after copying the finalized post into `content/blog/<slug>.md`, the processor opens a PR from `blog-content` into `dev` via `gh pr create`
+- PR title: `blog: publish <slug>`
+- PR body: summary + link to `content/blog/<slug>.md`
+- If a PR for `blog-content` → `dev` already exists (because multiple posts are in flight), update that PR's description instead of opening a new one
+- Jadesse still owns the final `dev` → `master` merge
+
+## Archive timing
+
+- **Locked: archive only after `socials_generated`** (current spec)
+- Rationale: keeps the full pipeline artifacts together while the social package is still being produced; single clean sweep at the end
+
 ## Guardrails
 
 - Never auto-publish without `approved_for_publish`
 - Never overwrite `draft.md` after first human edit
 - Never modify `content/blog/*` for any post not in `approved_for_publish`
+- Never merge the auto-opened PR; creation only
 - Skip any slug whose `status.json` is malformed; log a warning for the main agent
 - If two ticks produce identical output, do not commit
 - If push fails (non-fast-forward), re-fetch and retry once; if still failing, stop and announce
@@ -163,23 +184,12 @@ On first execution the processor should:
 
 1. Verify write access to `origin/blog-content` (dry run push)
 2. Verify `content/pipeline/active/` exists
-3. Announce once: `cron processor online, sweeping every 15 min`
+3. Announce once: `cron processor online, sweeping every 60 min`
 4. Proceed with the normal loop
-
-## Open decisions before scheduling
-
-These need a human call, not a spec:
-
-- **Cadence**: 15 min default. Tighter (10) or looser (30)?
-- **Announce surface**: Beet HQ topic 296, or a quieter Dali-only topic?
-- **Auto-archive on publish**: move to `archive/` immediately, or keep in `active/` until socials are done? (Currently: keep until `socials_generated`, then archive.)
-- **PR creation**: after publish, open PR from `blog-content` into `dev` automatically, or leave that manual for MVP?
 
 ## Next implementation step
 
-After these decisions:
-
-1. Register the cron via OpenClaw
-2. Script the per-state handlers as skill or agent prompt
+1. Register the cron via OpenClaw (60 min cadence, Dali Socials topic)
+2. Script the per-state handlers as a skill or agent prompt
 3. Dry-run against the existing sample slug
 4. Promote to live when the dry-run cycle produces expected transitions
