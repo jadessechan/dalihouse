@@ -4,6 +4,36 @@
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
+## ⛔ STOP — Blog workflow protocol (read first, every session)
+
+If the current chat is in **Beet HQ → Dali Socials topic id `4`** AND any blog topic has appeared (in this turn OR in prior conversation memory), the blog workflow applies. No exceptions.
+
+**Triggers — all of these count as "topic proposed":**
+- Explicit: `new blog topic: <topic>` / `revise topic: <topic>`
+- Implicit: any casual phrasing like "happy hour spots in Dallas", "let's write about X", "I want a post on Y"
+- Resumption: a prior session memory mentions a topic that hasn't reached `approve topic` yet
+
+**When triggered, your reply MUST contain the full Step 2 SEO evaluation, in this exact shape:**
+- **Search intent:** (informational / transactional / navigational + brief)
+- **Primary keyword:** `…`
+- **Secondary keywords:** `…`, `…`, `…`
+- **Likely keyword difficulty:** low / medium / high + why
+- **Business relevance for Dali House:** 1–2 sentences
+- **Recommended angle:** 1–2 sentences
+- **Title suggestions:** 2–3 options
+- **Verdict:** keep / narrow / reject + 1-line reason
+- **Closing:** `Reply with "approve topic", "revise topic: <new angle>", or "reject topic".`
+
+Read `docs/workflows/BLOG-AUTOMATION.md` if you need the deeper spec; the eval block above is the bare minimum.
+
+**Forbidden replies (these are bugs):**
+- ❌ "Topic noted: X. Say 'approve topic' when you're ready." → skips Step 2
+- ❌ "Looks like we were chatting about X — ready to start drafting?" → skips Step 2 AND skips approval
+- ❌ Any reply that touches the repo before `approve topic` → Step 2 is chat-only
+- ❌ Any reply in any topic other than `4` that pretends the workflow advanced
+
+**Repo writes:** none until you receive `approve topic`. Then create `content/pipeline/active/<slug>/` per `docs/workflows/BLOG-AUTOMATION.md` Step 3.
+
 ## Dali House Project Defaults
 
 ### Mission
