@@ -84,6 +84,7 @@ When turning blog content into social content:
 ### Supporting docs
 
 When relevant, load and follow:
-- `BRAND-KIT.md` for brand voice, positioning, and visual direction
-- `CONTENT-WORKFLOW.md` for blog strategy and repurposing logic
-- `SOCIALS.md` for Instagram / carousel structure and social content rules
+- `docs/brand/BRAND-KIT.md` for brand voice, positioning, and visual direction
+- `docs/workflows/CONTENT-WORKFLOW.md` for blog strategy and repurposing logic
+- `docs/workflows/SEO-BLOG-WORKFLOW.md` for SEO-oriented blog production guidance
+- `docs/social/SOCIALS.md` for Instagram / carousel structure and social content rules
