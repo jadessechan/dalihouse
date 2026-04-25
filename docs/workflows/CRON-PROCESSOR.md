@@ -29,6 +29,15 @@ Each tick the cron agent:
 
 Never keeps uncommitted state between runs. The repo is the source of truth.
 
+## Git operations rule (LOCKED)
+
+Every state transition that mutates files MUST commit AND push to `origin/blog-content` in the same tick. Committing without pushing is a bug — the user cannot see drafts, and the next tick may double-process the same change.
+
+- After any `git commit` on `blog-content`, immediately run `git push origin blog-content`
+- This applies to ALL state handlers, not just publish: `evaluate topic`, `draft post`, `re-evaluate edited draft`, `publish`, `generate social package`, `archive`
+- If `git push` fails (non-fast-forward), `git fetch` + rebase, then push again. If it still fails, stop, write `lastError`, push the error, and announce once
+- Never leave a local-only commit at end of tick
+
 ## Per-tick loop
 
 ```
@@ -139,11 +148,12 @@ Main agent (HITL) commit subjects:
 ## Auto-PR on publish
 
 - **Locked: yes**
-- When `approved_for_publish` is handled, after copying the finalized post into `content/blog/<slug>.md`, the processor opens a PR from `blog-content` into `dev` via `gh pr create`
+- **PR target branch is `dev`. NEVER `master`. NEVER `main`.** Use `gh pr create --base dev --head blog-content`. If `gh pr create` is invoked without `--base dev`, treat it as a bug and abort.
+- When `approved_for_publish` is handled, after copying the finalized post into `content/blog/<slug>.md`, the processor opens a PR from `blog-content` into `dev`
 - PR title: `blog: publish <slug>`
 - PR body: summary + link to `content/blog/<slug>.md`
 - If a PR for `blog-content` → `dev` already exists (because multiple posts are in flight), update that PR's description instead of opening a new one
-- Jadesse still owns the final `dev` → `master` merge
+- Jadesse owns the `dev` → `master` merge. The cron processor never touches `master`.
 
 ## Archive timing
 
@@ -155,7 +165,9 @@ Main agent (HITL) commit subjects:
 - Never auto-publish without `approved_for_publish`
 - Never overwrite `draft.md` after first human edit
 - Never modify `content/blog/*` for any post not in `approved_for_publish`
+- Never open a PR with `--base master` or `--base main`. Only `--base dev`.
 - Never merge the auto-opened PR; creation only
+- Never end a tick with a local-only commit. Push or roll back.
 - Skip any slug whose `status.json` is malformed; log a warning for the main agent
 - If two ticks produce identical output, do not commit
 - If push fails (non-fast-forward), re-fetch and retry once; if still failing, stop and announce

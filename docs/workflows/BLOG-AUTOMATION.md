@@ -156,6 +156,7 @@ Agent actions:
 - include CTA
 - write to `draft.md`
 - set state to `awaiting_human_edit`
+- **commit AND push to `origin/blog-content`** in the same tick so Jadesse can read/edit the draft on GitHub. A draft that is committed but not pushed is invisible — treat that as a bug.
 
 ### Step 5: Human edit
 Human action:
@@ -180,11 +181,12 @@ Human action:
 - hold
 
 ### Step 8: Publish
-Recommended publish behavior:
+Publish behavior:
 - copy finalized draft to `content/blog/<slug>.md`
 - commit the publish-ready content on `blog-content`
+- **push to `origin/blog-content` immediately** — never leave the publish commit local-only
 - keep active workflow artifacts minimal while the post is in progress
-- optionally open a PR from `blog-content` into `dev`
+- open a PR from `blog-content` into **`dev`** — never `master`/`main`
 - only merge to the production branch after explicit approval
 
 My recommendation:
