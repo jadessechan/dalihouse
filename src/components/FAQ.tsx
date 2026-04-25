@@ -87,7 +87,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 
 export default function FAQ() {
   return (
-    <section id="faq" className="bg-cream px-8 pt-14 pb-24">
+    <section id="faq" className="scroll-mt-24 bg-cream px-8 pt-14 pb-24">
       <h2 className="text-center font-serif text-[clamp(30px,4vw,44px)] leading-[1.2] font-medium text-brown-deep">
         FAQs
       </h2>
