@@ -6,7 +6,7 @@ _Status: MVP spec. Companion to `BLOG-AUTOMATION.md`._
 
 A scheduled agent that advances `content/pipeline/active/*/` posts through their state machine without Jadesse prompting each step. Pauses at HITL gates, announces once per gate, resumes when approval arrives.
 
-The cron processor only sees posts that already have a folder under `content/pipeline/active/`. The earliest state it can ever encounter is `approved_for_draft`. Topic intake, SEO viability evaluation, and topic approval all happen in chat (Beet HQ → Dali Socials, topic id `498`) and are owned by the main agent — see `BLOG-AUTOMATION.md` Steps 1–3. The repo is not touched until a human says `approve topic` in chat.
+The cron processor only sees posts that already have a folder under `content/pipeline/active/`. The earliest state it can ever encounter is `approved_for_draft`. Topic intake, SEO viability evaluation, and topic approval all happen in chat (Beet HQ → Dali Socials, topic id `4`) and are owned by the main agent — see `BLOG-AUTOMATION.md` Steps 1–3. The repo is not touched until a human says `approve topic` in chat.
 
 ## Cadence
 
@@ -93,9 +93,10 @@ Rules:
 
 ## Announcement surface
 
-- **Locked: Beet HQ → Dali Socials topic (id `498`)** — the same topic where Jadesse types every workflow command
+- **Locked: Beet HQ → Dali Socials topic (id `4`)** — the same topic where Jadesse types every workflow command
 - Rationale: keeps announcements and approvals in one place; the main agent and cron agent both read/write here only
 - Topic ID is also configured at cron registration time so the processor routes to the right thread
+- **Telegram thread id vs message id:** in `t.me/c/<chat>/<thread>/<message>` the thread is the **second** segment, the message is the third. `4` is correct here. Do not pass a message id (e.g. the value `498` from a copied link) to `--thread-id` — Telegram will return `400: message thread not found` and the CLI will silently fall back to the General topic.
 
 ## Announcement format
 
@@ -115,7 +116,7 @@ Keep it terse. The main agent can expand on it when Jadesse asks.
 
 Jadesse's approvals are picked up by the main agent, not the cron processor. The main agent is responsible for translating chat commands into `status.json` edits + commits on `blog-content`. The cron processor only reads state; it does not parse chat.
 
-All commands are typed in **Beet HQ → Dali Socials topic (id `498`)**. The main agent ignores them anywhere else.
+All commands are typed in **Beet HQ → Dali Socials topic (id `4`)**. The main agent ignores them anywhere else.
 
 Chat command → main agent update:
 

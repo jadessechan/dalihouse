@@ -26,7 +26,7 @@ Turn Off:
 All workflow commands (`new blog topic:`, `approve topic`, `revise topic`, `reject topic`, `approve draft`, `revise draft`, `publish`, `hold`, `status`) go in:
 
 - **Telegram group:** Beet HQ
-- **Topic:** Dali Socials (topic id `498`)
+- **Topic:** Dali Socials (topic id `4`)
 
 The cron processor announces HITL gates in the same topic, and the main agent only watches Dali Socials for workflow commands. Commands typed in other topics are ignored.
 
@@ -89,7 +89,7 @@ Legend:
 ## Example
 
 ### Step 1: Topic intake (chat-only, no repo)
-Where: Dali Socials topic (id `498`).
+Where: Dali Socials topic (id `4`).
 
 Jadesse posts a message like:
 ```
@@ -105,7 +105,7 @@ Agent actions (still in chat, nothing committed):
 - proceed straight to Step 2 in the same reply
 
 ### Step 2: SEO viability evaluation (chat-only, no repo)
-Where: Dali Socials topic (id `498`).
+Where: Dali Socials topic (id `4`).
 
 The agent must NOT touch the repo at this step. It replies to Jadesse in chat with a single evaluation message that includes:
 - search intent
@@ -121,7 +121,7 @@ End of message: an explicit prompt to advance — `Reply with "approve topic", "
 This whole step lives in chat memory only. If Jadesse never replies, nothing is left in the repo. If she replies `revise topic: …`, the agent re-runs Step 2 in chat with her guidance — still no repo touch.
 
 ### Step 3: Topic approval (chat → first repo write)
-Where: Dali Socials topic (id `498`).
+Where: Dali Socials topic (id `4`).
 
 Human action: `approve topic` (or `revise topic: …` to loop back to Step 2, or `reject topic` to drop the proposal).
 
@@ -260,7 +260,7 @@ Suggested commands:
 
 ## Command cheat sheet — what to type to advance the next step
 
-**All commands go in: Beet HQ → Dali Socials topic (id `498`).** Anywhere else is ignored. If only one post is active, the slug is optional.
+**All commands go in: Beet HQ → Dali Socials topic (id `4`).** Anywhere else is ignored. If only one post is active, the slug is optional.
 
 | Where you are | Type this | What happens |
 |---|---|---|
