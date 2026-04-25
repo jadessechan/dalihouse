@@ -1,6 +1,4 @@
-# BLOG-AUTOMATION.md - Dali House Agentic Blog Workflow
-
-_Status: proposed MVP workflow with human-in-the-loop approval._
+# Agentic Blog Workflow
 
 ## Goal
 
