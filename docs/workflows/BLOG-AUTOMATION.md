@@ -7,15 +7,24 @@ _Status: proposed MVP workflow with human-in-the-loop approval._
 Create a semi-automated blog pipeline for Dali House that can advance without Jadesse manually prompting every step.
 
 Desired flow:
-1. Jadesse proposes a blog topic
-2. Agent evaluates SEO visibility and fit
-3. Agent drafts the post
+1. Jadesse proposes a blog topic in chat
+2. Agent evaluates SEO visibility and fit **in chat** — no repo touch yet
+3. Agent drafts the post (only after the topic is approved in chat)
 4. Jadesse edits the draft
 5. Agent re-evaluates the edited draft
 6. Jadesse approves the final version
 7. Agent publishes the post
 8. Agent promotes the approved post on the `blog-content` branch
 9. Agent generates the related Instagram package automatically
+
+## Where to chat with the workflow
+
+All workflow commands (`new blog topic:`, `approve topic`, `revise topic`, `reject topic`, `approve draft`, `revise draft`, `publish`, `hold`, `status`) go in **one place**:
+
+- **Telegram group:** Beet HQ
+- **Topic:** Dali Socials (topic id `498`)
+
+The cron processor announces HITL gates in the same topic, and the main agent only watches Dali Socials for workflow commands. Commands typed in other topics are ignored.
 
 ## Recommendation
 
@@ -77,15 +86,18 @@ Recommended states:
 
 ## Workflow diagram
 
+The first three states (`proposed`, `evaluated`, `awaiting_topic_approval`) are **chat-only** — the main agent handles them as a conversation in Dali Socials. No repo work happens until `approve topic`. From `approved_for_draft` onward, every state is a folder in `content/pipeline/active/<slug>/` driven by the cron processor.
+
 ```mermaid
 stateDiagram-v2
-    [*] --> proposed: chat: "new blog topic: …"
+    state "chat-only (no repo)" as ChatOnly {
+        [*] --> proposed: chat: "new blog topic: …"
+        proposed --> awaiting_topic_approval: agent — SEO eval reply in chat
+        awaiting_topic_approval --> proposed: chat: "revise topic: …"
+        awaiting_topic_approval --> ChatRejected: chat: "reject topic"
+    }
 
-    proposed --> awaiting_topic_approval: cron — SEO eval
-
-    awaiting_topic_approval --> approved_for_draft: chat: "approve topic"
-    awaiting_topic_approval --> proposed: chat: "revise topic: …"
-    awaiting_topic_approval --> rejected: chat: "reject topic"
+    awaiting_topic_approval --> approved_for_draft: chat: "approve topic" — agent creates pipeline folder
 
     approved_for_draft --> awaiting_human_edit: cron — write draft.md
 
@@ -102,12 +114,14 @@ stateDiagram-v2
 
     rejected --> archived: cron — archive
     archived --> [*]
+    ChatRejected --> [*]
 ```
 
 Legend:
 - **chat:** human action in the Dali Socials topic
+- **agent:** main agent reply in chat (no repo touch)
 - **cron:** automatic, runs on the next 15-min tick
-- HITL gates (announced once, wait for chat): `awaiting_topic_approval`, `awaiting_final_approval`, plus any human edit pass on `awaiting_human_edit`
+- HITL gates: `awaiting_topic_approval` (chat-only, agent reply waits for response), `awaiting_final_approval` (cron-announced, waits for chat), plus any human edit pass on `awaiting_human_edit`
 
 ## Human-in-the-loop checkpoints
 
@@ -142,45 +156,53 @@ Option A is easier for you.
 
 ## Step-by-step workflow
 
-### Step 1: Topic intake
-Input fields:
-- proposed topic
-- target audience
-- desired angle, optional
-- urgency or publish target date, optional
+### Step 1: Topic intake (chat-only, no repo)
+Where: Dali Socials topic (id `498`).
 
-Agent actions:
-- generate slug
-- map topic to a Dali House content pillar
-- create `brief.md`
-- set state to `proposed`
+Jadesse posts a message like:
+```
+new blog topic: <one-line topic>
+audience: <optional>
+angle: <optional>
+```
 
-### Step 2: SEO viability evaluation
-Agent actions:
-- estimate keyword opportunity
-- identify primary keyword and secondary keywords
-- judge topic fit for Dali House audience
-- recommend keep / narrow / reject
-- write the evaluation into `notes.md`
-- set state to `awaiting_topic_approval`
+Agent actions (still in chat, nothing committed):
+- hold the proposed topic, audience, and angle in conversation memory
+- generate a working slug
+- map the topic to a Dali House content pillar
+- proceed straight to Step 2 in the same reply
 
-Output should include:
+### Step 2: SEO viability evaluation (chat-only, no repo)
+Where: Dali Socials topic (id `498`).
+
+The agent must NOT touch the repo at this step. It replies to Jadesse in chat with a single evaluation message that includes:
 - search intent
+- primary keyword + 2–4 secondary keywords
 - likely keyword difficulty
-- business relevance
+- business relevance for Dali House
 - recommended angle
-- title suggestions
-- verdict
+- 2–3 title suggestions
+- verdict: keep / narrow / reject
 
-### Step 3: Topic approval
-Human action:
-- approve
-- request changes
-- reject
+End of message: an explicit prompt to advance — `Reply with "approve topic", "revise topic: <new angle>", or "reject topic".`
 
-Agent actions after approval:
-- set state to `approved_for_draft`
-- generate draft
+This whole step lives in chat memory only. If Jadesse never replies, nothing is left in the repo. If she replies `revise topic: …`, the agent re-runs Step 2 in chat with her guidance — still no repo touch.
+
+### Step 3: Topic approval (chat → first repo write)
+Where: Dali Socials topic (id `498`).
+
+Human action: `approve topic` (or `revise topic: …` to loop back to Step 2, or `reject topic` to drop the proposal).
+
+Agent actions ONLY upon `approve topic` — this is the first time the repo is touched for this post:
+- create `content/pipeline/active/<slug>/`
+- write `brief.md` (topic, audience, angle, slug, pillar)
+- write `notes.md` (the Step 2 evaluation, verbatim)
+- write `status.json` with state `approved_for_draft`
+- commit on `blog-content`
+- **push to `origin/blog-content`** in the same step
+- reply in Dali Socials confirming the folder was created
+
+The next 15-min cron tick picks up `approved_for_draft` and runs Step 4.
 
 ### Step 4: Draft creation
 Agent actions:
@@ -319,26 +341,19 @@ Suggested commands:
 
 ## Command cheat sheet — what to type to advance the next step
 
-Send these in the Dali Socials topic. If only one post is active, the slug is optional.
+**All commands go in: Beet HQ → Dali Socials topic (id `498`).** Anywhere else is ignored. If only one post is active, the slug is optional.
 
-| When you see this state | Type this | What happens on the next tick |
+| Where you are | Type this | What happens |
 |---|---|---|
-| `awaiting_topic_approval` | `approve topic` | Agent writes `draft.md`, pushes to `blog-content`, state → `awaiting_human_edit` |
-| `awaiting_topic_approval` | `revise topic: <new angle>` | Re-runs SEO eval with your guidance, state → `awaiting_topic_approval` again |
-| `awaiting_topic_approval` | `reject topic` | State → `rejected`, folder archived |
-| `awaiting_human_edit` | _(edit `draft.md` on GitHub or locally and push)_ | Cron detects drift, state → `edited_by_human`, then auto-advances to `awaiting_final_approval` |
-| `awaiting_final_approval` | `approve draft` | Copies to `content/blog/<slug>.md`, pushes, opens PR `blog-content` → `dev`, state → `published` |
-| `awaiting_final_approval` | `revise draft: <guidance>` | Appends guidance to `notes.md`, state → `edited_by_human` |
-| `awaiting_final_approval` | `hold` | Processor stops touching it until you send a new approval |
-| _any state_ | `status` | Main agent reports current state, last action, and the path to the active folder |
-
-Kicking off a new post:
-```
-new blog topic: <one-line topic>
-audience: <optional>
-angle: <optional>
-```
-Agent creates the pipeline folder and starts at `proposed`.
+| You haven't started a post yet | `new blog topic: <one-line topic>` (+ optional `audience:` / `angle:` lines) | Agent runs SEO eval **in chat** (no repo write) and asks you to approve, revise, or reject |
+| Agent just posted SEO eval in chat | `approve topic` | Agent **creates** `content/pipeline/active/<slug>/` (brief.md, notes.md, status.json), commits + pushes to `blog-content`, state → `approved_for_draft`. Next cron tick writes `draft.md`. |
+| Agent just posted SEO eval in chat | `revise topic: <new angle>` | Agent re-runs SEO eval in chat with your guidance — still no repo write |
+| Agent just posted SEO eval in chat | `reject topic` | Agent drops the proposal in chat — nothing is committed |
+| Repo state `awaiting_human_edit` | _(edit `draft.md` on GitHub or locally and push)_ | Cron detects drift, state → `edited_by_human`, then auto-advances to `awaiting_final_approval` |
+| Cron announces `awaiting_final_approval` | `approve draft` | Copies to `content/blog/<slug>.md`, pushes, opens PR `blog-content` → `dev`, state → `published` |
+| Cron announces `awaiting_final_approval` | `revise draft: <guidance>` | Appends guidance to `notes.md`, state → `edited_by_human` |
+| Cron announces `awaiting_final_approval` | `hold` | Processor stops touching it until you send a new approval |
+| _any time_ | `status` | Main agent reports current state, last action, and (if past topic approval) the path to the active folder |
 
 ## Guardrails
 

@@ -6,6 +6,8 @@ _Status: MVP spec. Companion to `BLOG-AUTOMATION.md`._
 
 A scheduled agent that advances `content/pipeline/active/*/` posts through their state machine without Jadesse prompting each step. Pauses at HITL gates, announces once per gate, resumes when approval arrives.
 
+The cron processor only sees posts that already have a folder under `content/pipeline/active/`. The earliest state it can ever encounter is `approved_for_draft`. Topic intake, SEO viability evaluation, and topic approval all happen in chat (Beet HQ → Dali Socials, topic id `498`) and are owned by the main agent — see `BLOG-AUTOMATION.md` Steps 1–3. The repo is not touched until a human says `approve topic` in chat.
+
 ## Cadence
 
 - **Locked: every 15 minutes**
@@ -34,7 +36,7 @@ Never keeps uncommitted state between runs. The repo is the source of truth.
 Every state transition that mutates files MUST commit AND push to `origin/blog-content` in the same tick. Committing without pushing is a bug — the user cannot see drafts, and the next tick may double-process the same change.
 
 - After any `git commit` on `blog-content`, immediately run `git push origin blog-content`
-- This applies to ALL state handlers, not just publish: `evaluate topic`, `draft post`, `re-evaluate edited draft`, `publish`, `generate social package`, `archive`
+- This applies to ALL state handlers, not just publish: `draft post`, `detect human edit`, `re-evaluate edited draft`, `publish`, `generate social package`, `archive`. (`evaluate topic` does not apply — that step is chat-only and never commits.)
 - If `git push` fails (non-fast-forward), `git fetch` + rebase, then push again. If it still fails, stop, write `lastError`, push the error, and announce once
 - Never leave a local-only commit at end of tick
 
@@ -59,8 +61,7 @@ for slug in content/pipeline/active/*/:
 
 | State | Automated? | Handler action |
 |---|---|---|
-| `proposed` | yes | run SEO viability eval, write to `notes.md`, advance to `awaiting_topic_approval` |
-| `awaiting_topic_approval` | no | HITL: announce once, wait |
+| _`proposed` / `awaiting_topic_approval`_ | n/a | **chat-only** — no folder exists yet, cron never sees these |
 | `approved_for_draft` | yes | write `draft.md` + compute checksum, advance to `awaiting_human_edit` |
 | `awaiting_human_edit` | mixed | check draft checksum drift; if drifted, advance to `edited_by_human` |
 | `edited_by_human` | yes | re-evaluate, append to `notes.md`, advance to `awaiting_final_approval` |
@@ -92,9 +93,9 @@ Rules:
 
 ## Announcement surface
 
-- **Locked: Dali Socials topic** in the Beet HQ supergroup (separate from the main build-chat topic)
-- Rationale: keeps the content/social workflow visible without cluttering the main dev chat
-- Topic ID is resolved at cron registration time and stored in the cron job config, not in this repo
+- **Locked: Beet HQ → Dali Socials topic (id `498`)** — the same topic where Jadesse types every workflow command
+- Rationale: keeps announcements and approvals in one place; the main agent and cron agent both read/write here only
+- Topic ID is also configured at cron registration time so the processor routes to the right thread
 
 ## Announcement format
 
@@ -114,24 +115,26 @@ Keep it terse. The main agent can expand on it when Jadesse asks.
 
 Jadesse's approvals are picked up by the main agent, not the cron processor. The main agent is responsible for translating chat commands into `status.json` edits + commits on `blog-content`. The cron processor only reads state; it does not parse chat.
 
+All commands are typed in **Beet HQ → Dali Socials topic (id `498`)**. The main agent ignores them anywhere else.
+
 Chat command → main agent update:
 
 | Command | Updates |
 |---|---|
-| `approve topic <slug>` | state → `approved_for_draft` |
-| `revise topic <slug>: <guidance>` | append guidance to `notes.md`, state → `proposed` |
-| `reject topic <slug>` | state → `rejected` |
+| `new blog topic: …` | **no repo write** — main agent runs SEO eval as a chat reply and waits for approval |
+| `revise topic: <guidance>` | **no repo write** — main agent re-runs SEO eval in chat with the guidance |
+| `reject topic` | **no repo write** — proposal dropped in chat |
+| `approve topic` | **first repo write**: create `content/pipeline/active/<slug>/` with `brief.md`, `notes.md`, `status.json` (state `approved_for_draft`), commit + push to `blog-content` |
 | `approve draft <slug>` | state → `approved_for_publish` |
 | `revise draft <slug>: <guidance>` | append guidance, state → `edited_by_human` |
 | `hold <slug>` | state unchanged, `needsHuman=false`, processor leaves it alone |
 
-If slug is omitted and there is exactly one active post, it applies to that one.
+If slug is omitted and there is exactly one active post, it applies to that one. (`new blog topic`, `revise topic`, `reject topic`, and `approve topic` always refer to the most recent in-chat proposal — no slug needed.)
 
 ## Commit conventions
 
 Cron processor commit subjects:
 
-- `pipeline(<slug>): evaluate topic`
 - `pipeline(<slug>): draft post`
 - `pipeline(<slug>): detect human edit`
 - `pipeline(<slug>): re-evaluate edited draft`
@@ -141,7 +144,7 @@ Cron processor commit subjects:
 
 Main agent (HITL) commit subjects:
 
-- `pipeline(<slug>): approve topic`
+- `pipeline(<slug>): create from approved topic` — first commit for a post, after `approve topic` in chat
 - `pipeline(<slug>): approve publish`
 - `pipeline(<slug>): reject / hold`
 
