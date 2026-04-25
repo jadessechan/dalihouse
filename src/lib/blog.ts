@@ -6,6 +6,12 @@ import html from "remark-html";
 
 const blogDir = path.join(process.cwd(), "content/blog");
 
+export interface Heading {
+  level: 2 | 3;
+  text: string;
+  slug: string;
+}
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -14,6 +20,40 @@ export interface BlogPost {
   tag: string;
   readTime: string;
   content: string;
+  headings: Heading[];
+}
+
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/<[^>]+>/g, "")
+    .replace(/&[a-z]+;/g, "")
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
+
+function injectHeadingIds(html: string): { html: string; headings: Heading[] } {
+  const headings: Heading[] = [];
+  const used = new Map<string, number>();
+
+  const out = html.replace(
+    /<h([23])>([\s\S]*?)<\/h\1>/g,
+    (_match, levelStr: string, inner: string) => {
+      const level = Number(levelStr) as 2 | 3;
+      const cleanedInner = inner.replace(/^\s*\d+\.\s+/, "");
+      const text = cleanedInner.replace(/<[^>]+>/g, "").trim();
+      let slug = slugify(text);
+      const count = used.get(slug) ?? 0;
+      used.set(slug, count + 1);
+      if (count > 0) slug = `${slug}-${count}`;
+      headings.push({ level, text, slug });
+      return `<h${level} id="${slug}">${cleanedInner}</h${level}>`;
+    }
+  );
+
+  return { html: out, headings };
 }
 
 function estimateReadTime(text: string): string {
@@ -38,6 +78,7 @@ export function getAllPosts(): BlogPost[] {
       tag: data.tag ?? "Journal",
       readTime: data.readTime ?? estimateReadTime(content),
       content: "",
+      headings: [],
     };
   });
 
@@ -51,6 +92,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost> {
   const { data, content } = matter(raw);
 
   const result = await remark().use(html).process(content);
+  const { html: processedHtml, headings } = injectHeadingIds(result.toString());
 
   return {
     slug,
@@ -59,7 +101,8 @@ export async function getPostBySlug(slug: string): Promise<BlogPost> {
     description: data.description,
     tag: data.tag ?? "Journal",
     readTime: data.readTime ?? estimateReadTime(content),
-    content: result.toString(),
+    content: processedHtml,
+    headings,
   };
 }
 
