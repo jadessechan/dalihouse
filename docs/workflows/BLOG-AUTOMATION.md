@@ -19,10 +19,13 @@ Desired flow:
 
 ## Where to chat with the workflow
 
-Activate when ready: `! openclaw cron enable e1d51878-6c7e-4a4c-b64a-9bf40b22bbe7`
-Deactivate when finished: `! openclaw cron disable e1d51878-6c7e-4a4c-b64a-9bf40b22bbe7`
+Turn On:
+`! openclaw cron enable e1d51878-6c7e-4a4c-b64a-9bf40b22bbe7`
 
-All workflow commands (`new blog topic:`, `approve topic`, `revise topic`, `reject topic`, `approve draft`, `revise draft`, `publish`, `hold`, `status`) go in **one place**:
+Turn Off: 
+`! openclaw cron disable e1d51878-6c7e-4a4c-b64a-9bf40b22bbe7`
+
+All workflow commands (`new blog topic:`, `approve topic`, `revise topic`, `reject topic`, `approve draft`, `revise draft`, `publish`, `hold`, `status`) go in:
 
 - **Telegram group:** Beet HQ
 - **Topic:** Dali Socials (topic id `498`)
@@ -85,30 +88,7 @@ Legend:
 - **cron:** automatic, runs on the next 15-min tick
 - HITL gates: `awaiting_topic_approval` (chat-only, agent reply waits for response), `awaiting_final_approval` (cron-announced, waits for chat), plus any human edit pass on `awaiting_human_edit`
 
-## Human-in-the-loop checkpoints
-
-### HITL 1: Topic approval
-After SEO review, the agent should pause and ask:
-- proceed
-- revise angle
-- reject topic
-
-### HITL 2: Final publish approval
-After the edited draft is re-evaluated, the agent should pause and ask:
-- publish
-- revise again
-- archive for later
-
-## Chat-triggered + cron-managed
-You send a message like:
-- `new blog topic: Is coliving safer than random roommates for women moving to Dallas?`
-
-The agent then:
-- creates the pipeline folder in `content/pipeline/active/`
-- writes the brief and initial SEO evaluation
-- advances the workflow automatically via cron and repo state
-
-## Step-by-step workflow
+## Example
 
 ### Step 1: Topic intake (chat-only, no repo)
 Where: Dali Socials topic (id `498`).
