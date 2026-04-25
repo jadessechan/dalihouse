@@ -75,6 +75,40 @@ Recommended states:
 - `socials_generated`
 - `rejected`
 
+## Workflow diagram
+
+```mermaid
+stateDiagram-v2
+    [*] --> proposed: chat: "new blog topic: …"
+
+    proposed --> awaiting_topic_approval: cron — SEO eval
+
+    awaiting_topic_approval --> approved_for_draft: chat: "approve topic"
+    awaiting_topic_approval --> proposed: chat: "revise topic: …"
+    awaiting_topic_approval --> rejected: chat: "reject topic"
+
+    approved_for_draft --> awaiting_human_edit: cron — write draft.md
+
+    awaiting_human_edit --> edited_by_human: cron — detect draft drift
+    edited_by_human --> awaiting_final_approval: cron — re-evaluate
+
+    awaiting_final_approval --> approved_for_publish: chat: "approve draft"
+    awaiting_final_approval --> edited_by_human: chat: "revise draft: …"
+    awaiting_final_approval --> awaiting_final_approval: chat: "hold"
+
+    approved_for_publish --> published: cron — copy to content/blog/, open PR → dev
+    published --> socials_generated: cron — generate socials.md
+    socials_generated --> archived: cron — move to archive/<year>/<slug>/
+
+    rejected --> archived: cron — archive
+    archived --> [*]
+```
+
+Legend:
+- **chat:** human action in the Dali Socials topic
+- **cron:** automatic, runs on the next 15-min tick
+- HITL gates (announced once, wait for chat): `awaiting_topic_approval`, `awaiting_final_approval`, plus any human edit pass on `awaiting_human_edit`
+
 ## Human-in-the-loop checkpoints
 
 ### HITL 1: Topic approval
@@ -282,6 +316,29 @@ Suggested commands:
 - `revise draft`
 - `publish`
 - `hold`
+
+## Command cheat sheet — what to type to advance the next step
+
+Send these in the Dali Socials topic. If only one post is active, the slug is optional.
+
+| When you see this state | Type this | What happens on the next tick |
+|---|---|---|
+| `awaiting_topic_approval` | `approve topic` | Agent writes `draft.md`, pushes to `blog-content`, state → `awaiting_human_edit` |
+| `awaiting_topic_approval` | `revise topic: <new angle>` | Re-runs SEO eval with your guidance, state → `awaiting_topic_approval` again |
+| `awaiting_topic_approval` | `reject topic` | State → `rejected`, folder archived |
+| `awaiting_human_edit` | _(edit `draft.md` on GitHub or locally and push)_ | Cron detects drift, state → `edited_by_human`, then auto-advances to `awaiting_final_approval` |
+| `awaiting_final_approval` | `approve draft` | Copies to `content/blog/<slug>.md`, pushes, opens PR `blog-content` → `dev`, state → `published` |
+| `awaiting_final_approval` | `revise draft: <guidance>` | Appends guidance to `notes.md`, state → `edited_by_human` |
+| `awaiting_final_approval` | `hold` | Processor stops touching it until you send a new approval |
+| _any state_ | `status` | Main agent reports current state, last action, and the path to the active folder |
+
+Kicking off a new post:
+```
+new blog topic: <one-line topic>
+audience: <optional>
+angle: <optional>
+```
+Agent creates the pipeline folder and starts at `proposed`.
 
 ## Guardrails
 
