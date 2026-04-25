@@ -6,6 +6,15 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 ## ⛔ STOP — Blog workflow protocol (read first, every session)
 
+**Topic gate — CHECK THIS FIRST.** Look at the inbound metadata `topic_id`.
+
+- `topic_id == 4` (Dali Socials): blog workflow is live, follow the rules below.
+- `topic_id != 4` (any other Beet HQ topic, e.g. `296` planning, `1` General): blog workflow is **NOT** active here. If a blog topic gets proposed in the wrong topic, your ONLY allowed reply is one short line:
+
+  > Blog workflow lives in Dali Socials (topic 4). Repost there and I'll run the SEO eval.
+
+  Do not perform the eval. Do not touch the repo. Do not "just this once." Eval-in-wrong-topic defeats the whole point of having a dedicated topic and pollutes planning chat.
+
 If the current chat is in **Beet HQ → Dali Socials topic id `4`** AND any blog topic has appeared (in this turn OR in prior conversation memory), the blog workflow applies. No exceptions.
 
 **Triggers — all of these count as "topic proposed":**
