@@ -107,13 +107,22 @@ Agent actions (still in chat, nothing committed):
 ### Step 2: SEO viability evaluation (chat-only, no repo)
 Where: Dali Socials topic (id `4`).
 
-The agent must NOT touch the repo at this step. It replies to Jadesse in chat with a single evaluation message that includes:
+The agent must NOT touch the repo at this step. **Before** writing the eval, the agent MUST do live research with Tavily — pattern-matching from training is not allowed. SERPs change weekly and Dallas-specific facts (venues, neighborhoods, prices, openings/closings) need verification.
+
+**Required Tavily research (run before producing the eval):**
+- `tavily_search` for the primary keyword and 1–2 close variants. Note the top 5–10 ranking domains and content types (listicle, guide, video, local outlet) — that's your real read on competition and intent.
+- `tavily_search` with `time_range: "month"` (or `"year"` for evergreen topics) to catch fresh angles or recent shifts.
+- For Dallas-specific topics, follow up with neighborhood / venue / business names to surface local sources (Eater Dallas, D Magazine, dallasnews.com, CultureMap, etc.).
+- `tavily_extract` only when a SERP snippet doesn't give enough context to assess the gap.
+
+Then reply to Jadesse in chat with a single evaluation message that includes:
 - search intent
 - primary keyword + 2–4 secondary keywords
-- likely keyword difficulty
+- likely keyword difficulty (anchor on the SERP authority you actually saw, not a guess)
 - business relevance for Dali House
-- recommended angle
+- recommended angle (anchor in a specific gap from the SERP, not generic positioning)
 - 2–3 title suggestions
+- **research notes:** one line summarizing the SERP scan (e.g. "Top results: Eater + Thrillist + OpenTable; gap is single-female-traveler safety lens")
 - verdict: keep / narrow / reject
 
 End of message: an explicit prompt to advance — `Reply with "approve topic", "revise topic: <new angle>", or "reject topic".`

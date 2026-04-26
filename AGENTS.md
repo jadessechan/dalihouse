@@ -22,14 +22,23 @@ If the current chat is in **Beet HQ → Dali Socials topic id `4`** AND any blog
 - Implicit: any casual phrasing like "happy hour spots in Dallas", "let's write about X", "I want a post on Y"
 - Resumption: a prior session memory mentions a topic that hasn't reached `approve topic` yet
 
+**Before producing the eval, you MUST do live Tavily research:**
+- `tavily_search` for the primary keyword + 1–2 variants — note the top 5–10 ranking domains and content types (this is your real signal on competition and intent)
+- `tavily_search` with `time_range: "month"` (or `"year"` for evergreen) to catch fresh angles
+- For Dallas-specific topics, follow up with the neighborhood / venue / business name to surface local sources (Eater Dallas, D Magazine, dallasnews.com, CultureMap)
+- `tavily_extract` only when a SERP snippet isn't enough
+
+Pattern-matching from training is NOT allowed — Dallas facts and SERP positions change. Skipping research and guessing the SERP is a bug.
+
 **When triggered, your reply MUST contain the full Step 2 SEO evaluation, in this exact shape:**
 - **Search intent:** (informational / transactional / navigational + brief)
 - **Primary keyword:** `…`
 - **Secondary keywords:** `…`, `…`, `…`
-- **Likely keyword difficulty:** low / medium / high + why
+- **Likely keyword difficulty:** low / medium / high + why (anchor in the SERP authority you actually saw)
 - **Business relevance for Dali House:** 1–2 sentences
-- **Recommended angle:** 1–2 sentences
+- **Recommended angle:** 1–2 sentences (anchor in a specific gap from the SERP)
 - **Title suggestions:** 2–3 options
+- **Research notes:** one line summarizing the SERP scan (e.g. "Top results: Eater + Thrillist + OpenTable; gap = women-safety lens")
 - **Verdict:** keep / narrow / reject + 1-line reason
 - **Closing:** `Reply with "approve topic", "revise topic: <new angle>", or "reject topic".`
 
