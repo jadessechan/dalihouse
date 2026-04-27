@@ -22,13 +22,27 @@ If the current chat is in **Beet HQ → Dali Socials topic id `4`** AND any blog
 - Implicit: any casual phrasing like "happy hour spots in Dallas", "let's write about X", "I want a post on Y"
 - Resumption: a prior session memory mentions a topic that hasn't reached `approve topic` yet
 
-**Before producing the eval, you MUST do live Tavily research:**
-- `tavily_search` for the primary keyword + 1–2 variants — note the top 5–10 ranking domains and content types (this is your real signal on competition and intent)
-- `tavily_search` with `time_range: "month"` (or `"year"` for evergreen) to catch fresh angles
-- For Dallas-specific topics, follow up with the neighborhood / venue / business name to surface local sources (Eater Dallas, D Magazine, dallasnews.com, CultureMap)
-- `tavily_extract` only when a SERP snippet isn't enough
+**Tavily is the root of this workflow.** Every Step 2 eval is built on a
+live Tavily SERP — no Tavily call this turn, no eval. Pattern-matching
+from training is forbidden; Dallas facts, SERP positions, and local
+authority shift constantly. Default to Tavily for *all* deep research,
+escalating across `tavily_search` (basic → advanced → time-ranged →
+domain-filtered → `include_answer`) and `tavily_extract`.
 
-Pattern-matching from training is NOT allowed — Dallas facts and SERP positions change. Skipping research and guessing the SERP is a bug.
+The full research escalation ladder, query construction rules, and
+output template live in `skills/topic-eval/SKILL.md` — load it before
+producing any eval. Bare minimum:
+
+- `tavily_search` for the primary keyword + 1–2 variants — top 5–10 ranking domains and content types (real signal on competition and intent)
+- `tavily_search` with `time_range: "month"` (or `"year"` for evergreen) to catch fresh angles
+- For Dallas-specific topics, add the neighborhood / venue / business name and use `include_domains` for `eater.com`, `dmagazine.com`, `dallasnews.com`, `culturemap.com`
+- `tavily_extract` only when a SERP snippet isn't enough
+- `include_answer: true` is a last resort, not a default
+
+Companion skills (`seo-research-master`, `competitor-analysis`,
+`ai-seo`, `research_orchestrator`, `cross-validated-search`) layer on top
+when the eval has a specific weak spot — see
+`docs/workflows/SKILLS.md` for triggers.
 
 **When triggered, your reply MUST contain the full Step 2 SEO evaluation, in this exact shape:**
 - **Search intent:** (informational / transactional / navigational + brief)
@@ -42,7 +56,7 @@ Pattern-matching from training is NOT allowed — Dallas facts and SERP position
 - **Verdict:** keep / narrow / reject + 1-line reason
 - **Closing:** `Reply with "approve topic", "revise topic: <new angle>", or "reject topic".`
 
-Read `docs/workflows/BLOG-AUTOMATION.md` if you need the deeper spec; the eval block above is the bare minimum.
+Read `docs/workflows/BLOG-AUTOMATION.md` if you need the deeper spec; the eval block above is the bare minimum. For the full skill stack (which Tavily features to escalate to, when to layer in `seo-research-master` / `competitor-analysis` / `ai-seo` / `humanizer`), see `docs/workflows/SKILLS.md`.
 
 **Forbidden replies (these are bugs):**
 - ❌ "Topic noted: X. Say 'approve topic' when you're ready." → skips Step 2
@@ -51,6 +65,11 @@ Read `docs/workflows/BLOG-AUTOMATION.md` if you need the deeper spec; the eval b
 - ❌ Any reply in any topic other than `4` that pretends the workflow advanced
 
 **Repo writes:** none until you receive `approve topic`. Then create `content/pipeline/active/<slug>/` per `docs/workflows/BLOG-AUTOMATION.md` Step 3.
+
+**Skill stack (where to look):**
+- `skills/topic-eval/SKILL.md` — Step 2 Tavily research + eval pattern (load before any eval reply)
+- `skills/README.md` — repo-local skill map
+- `docs/workflows/SKILLS.md` — full workflow skills index with global + local skill triggers
 
 ## Dali House Project Defaults
 
