@@ -6,7 +6,18 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 ## ⛔ STOP — Blog workflow protocol (read first, every session)
 
-**Topic gate — CHECK THIS FIRST.** Look at the inbound metadata `topic_id`.
+**Command dispatch — check IN THIS ORDER, stop at first match. Matching is case-insensitive.**
+
+**1. Standalone image commands** (run in topic 4 only, do NOT trigger the blog workflow):
+- `source images: <slug>` — image research for an existing post in `content/blog/<slug>.md`
+- `source images: topic: <free text>` — ad-hoc image research, slug auto-derived
+- `revise images: <slug>` — regenerate image set for a slug
+
+If the inbound message matches any of these (any casing — `Source images:`, `SOURCE IMAGES:`, etc. all count), follow `skills/image-sourcing/SKILL.md`. Output lands in `content/image-runs/<slug>/` (NOT the pipeline folder). Mirrors to `dalihouse-images.vercel.app/<slug>/`. Pipeline state is untouched. **Do NOT run the SEO eval. Do NOT treat this as a blog topic.** Reply inline with the gallery URL + license breakdown + flagged gaps.
+
+**2. Blog workflow triggers** — only check these if step 1 did NOT match.
+
+**Topic gate.** Look at the inbound metadata `topic_id`.
 
 - `topic_id == 4` (Dali Socials): blog workflow is live, follow the rules below.
 - `topic_id != 4` (any other Beet HQ topic, e.g. `296` planning, `1` General): blog workflow is **NOT** active here. If a blog topic gets proposed in the wrong topic, your ONLY allowed reply is one short line:
@@ -17,10 +28,11 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 If the current chat is in **Beet HQ → Dali Socials topic id `4`** AND any blog topic has appeared (in this turn OR in prior conversation memory), the blog workflow applies. No exceptions.
 
-**Triggers — all of these count as "topic proposed":**
+**Triggers — all of these count as "topic proposed" (only if step 1 did NOT match):**
 - Explicit: `new blog topic: <topic>` / `revise topic: <topic>`
 - Implicit: any casual phrasing like "happy hour spots in Dallas", "let's write about X", "I want a post on Y"
 - Resumption: a prior session memory mentions a topic that hasn't reached `approve topic` yet
+- A `source images:` / `revise images:` message is **never** a topic trigger — those go through step 1.
 
 **Tavily is the root of this workflow.** Every Step 2 eval is built on a
 live Tavily SERP — no Tavily call this turn, no eval. Pattern-matching
@@ -63,14 +75,10 @@ Read `docs/workflows/BLOG-AUTOMATION.md` if you need the deeper spec; the eval b
 - ❌ "Looks like we were chatting about X — ready to start drafting?" → skips Step 2 AND skips approval
 - ❌ Any reply that touches the repo before `approve topic` → Step 2 is chat-only
 - ❌ Any reply in any topic other than `4` that pretends the workflow advanced
+- ❌ Treating `source images: <slug>` / `Source images: <slug>` (any casing) as a blog-topic trigger and replying with the SEO eval — those are standalone skill commands and dispatch in step 1, not the workflow
+- ❌ Replying to `revise images: <slug>` with anything other than running the image-sourcing skill
 
 **Repo writes:** none until you receive `approve topic`. Then create `content/pipeline/active/<slug>/` per `docs/workflows/BLOG-AUTOMATION.md` Step 3.
-
-**Standalone image research (chat command, runs in topic 4 outside the workflow):**
-- `source images: <slug>` — research images for an existing post in `content/blog/<slug>.md`
-- `source images: topic: <free text>` — ad-hoc image research, slug auto-derived
-- `revise images: <slug>` — regenerate the image set for a slug
-- All three follow `skills/image-sourcing/SKILL.md` — Tavily-only, no AI fallback. Output lands in `content/image-runs/<slug>/` (NOT the pipeline folder), mirrors to `dalihouse-images.vercel.app/<slug>/`, and replies inline with the gallery URL. Pipeline state is untouched.
 
 **Skill stack (where to look):**
 - `skills/topic-eval/SKILL.md` — Step 2 Tavily research + eval pattern (load before any eval reply)
