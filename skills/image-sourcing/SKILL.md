@@ -54,8 +54,8 @@ Example: `source images: topic: cozy fall coffee shop vibes` → `cozy-fall-coff
 ### Subject extraction (Modes 2 + 3)
 
 Before running Tavily:
-- **Mode 2:** read the post's frontmatter `title`, headings (`##`), and any explicit visual cues in the body. Build a list of 3–5 distinct subjects (hero + section illustrations).
-- **Mode 3:** parse the free text into 3–5 concrete visual subjects. If the topic is too abstract to picture, reply with a flag-and-skip and do not run Tavily — same rule as the no-AI policy.
+- **Mode 2:** read the post's frontmatter `title`, headings (`##`), and any explicit visual cues in the body. Build a list of 3–5 distinct subjects (hero + section illustrations). **Also scan the body and frontmatter for Instagram references** — `@handle` mentions, `instagram.com/<handle>` URLs, or `instagram.com/p/<id>` post links — and capture them into `instagram_seeds[]`. These are first-class image sources because the author chose to mention them.
+- **Mode 3:** parse the free text into 3–5 concrete visual subjects. If the free text contains `@handle` mentions or `instagram.com/...` URLs, also capture them into `instagram_seeds[]`. If the topic is too abstract to picture, reply with a flag-and-skip and do not run Tavily — same rule as the no-AI policy.
 
 ## Tavily-only source policy
 
@@ -76,9 +76,42 @@ Before running Tavily:
 
 ## Tavily query strategy
 
-Two-phase search per intended placement (hero + 2–4 supporting images is the default target):
+Three-phase search per intended placement (hero + 2–4 supporting images is the default target). Always run Phase A0 first when `instagram_seeds[]` is non-empty, then A1, then B as needed.
 
-**Phase A — open-license stock first**
+**Phase A0 — Instagram seed accounts** (only if `instagram_seeds[]` is non-empty)
+
+For each handle in `instagram_seeds[]`, run one targeted search per intended subject. Scope the search to that single account using `site:`-style domain filtering:
+
+```
+tavily_search:
+  query: "<concrete subject + setting>"
+  include_domains: ["instagram.com/<handle>"]
+  search_depth: "basic"
+  include_images: true
+  max_results: 10
+```
+
+If the seed is a specific post URL (`instagram.com/p/<id>`), skip search and go straight to `tavily_extract` on that URL — the author explicitly pointed at it.
+
+Use these results first; fall through to Phase A1 only for placements they don't cover.
+
+**Phase A1 — topical Instagram + open-license stock**
+
+Two parallel passes for the remaining placements:
+
+*A1a — topic-matching Instagram accounts (no seed required)*
+```
+tavily_search:
+  query: "<concrete subject + setting> instagram"
+  include_domains: ["instagram.com"]
+  search_depth: "basic"
+  include_images: true
+  max_results: 10
+```
+
+Use this when the topic has obvious creator coverage (Dallas neighborhoods, local businesses, lifestyle scenes, niche communities). Pick public business / creator accounts whose feed clearly matches the subject — a Bishop Arts coffee shop's own IG, a Dallas food blogger, a local design account.
+
+*A1b — open-license stock*
 ```
 tavily_search:
   query: "<concrete subject + setting>"
@@ -88,11 +121,13 @@ tavily_search:
   max_results: 10
 ```
 
-**Phase B — social credit fallback** (only if A returned nothing usable)
+Prefer A1a results when the post benefits from local authenticity (specific place, person, or scene); prefer A1b for generic supporting visuals (interiors, abstract scenes).
+
+**Phase B — broader social fallback** (only if A0 + A1 returned nothing usable)
 ```
 tavily_search:
-  query: "<concrete subject + setting> instagram OR tiktok"
-  include_domains: ["instagram.com", "tiktok.com", "x.com", "threads.net", "facebook.com"]
+  query: "<concrete subject + setting> tiktok OR threads OR facebook"
+  include_domains: ["tiktok.com", "x.com", "threads.net", "facebook.com"]
   search_depth: "basic"
   include_images: true
   max_results: 10
@@ -102,6 +137,7 @@ For each candidate, run `tavily_extract` on the source page to confirm:
 - the image is actually on the page
 - the license / credit info you write into the manifest matches reality
 - for social posts, the post is still public (no 404 / private)
+- for Instagram posts, the account is public (private accounts return 404 to logged-out scrapes)
 
 If extract fails, drop the candidate.
 
@@ -227,6 +263,8 @@ candidates.
 - ❌ AI-generated images, even labelled — user said no
 - ❌ Filling the manifest with a single hero and calling it done when the post needs 3–4 placements
 - ❌ Generating fake `attribution` strings — if you can't read the credit off the source page, drop the candidate
+- ❌ Ignoring `@handle` / `instagram.com/...` references in the post body — those are explicit author hints and must run as Phase A0
+- ❌ Linking an Instagram profile URL in `source_page` instead of the specific post URL — the credit chain breaks the moment the account posts something new
 
 ## Quality bar
 
