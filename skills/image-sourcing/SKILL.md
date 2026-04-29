@@ -188,8 +188,17 @@ Steps:
 - Commit + push the dalihouse repo per the standard Step 4 git rule
 
 **Standalone modes:**
-- Reply in chat (topic 4) with: gallery URL, image count, license breakdown, and any `flagged_gaps[]` entries.
+- Reply in chat (topic 4) with: image count, license breakdown, any `flagged_gaps[]`, and the gallery URL **as the last line** of the reply, in this exact format:
+
+  ```
+  🖼 Gallery: https://dalihouse-images.vercel.app/<slug>/
+  ```
+
+  This line is non-negotiable. Every successful standalone reply ends with it. If the push to `dalihouse-images` failed, replace the URL with `(deploy pending — push failed, see lastError)` so the user knows.
+
 - The run also commits the manifest + files into the dalihouse repo on `blog-content` under `content/image-runs/<slug>/` so the work is preserved (one commit per run, subject `images(<slug>): standalone run`). No `status.json` update.
+
+- Vercel takes ~30–60s to redeploy after the push to `dalihouse-images`. The URL in the reply may 404 for the first minute — call this out once if the build is fresh.
 
 If the push to `dalihouse-images` fails (auth, rebase, etc.), do NOT block the
 flow. In pipeline mode, write the failure into `status.lastError` (with
