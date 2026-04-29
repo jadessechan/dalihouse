@@ -10,12 +10,52 @@ for a blog draft so Jadesse can pick by hand before publish. AI-generated
 imagery is **not allowed** — if a topic genuinely has no good real-world
 photo, flag and skip.
 
-## When this runs
+## Invocation modes
 
-- Step 4 of `docs/workflows/BLOG-AUTOMATION.md` (cron-driven, after `approved_for_draft`)
-- Same tick as `draft.md` is written
-- Never runs before `approve topic` — there's no slug folder to write to
-- Never runs again automatically once `images/sources.json` exists for the slug; re-run only if Jadesse types `revise images: <guidance>` (future command, not wired yet)
+This skill is **isolated from the blog state machine** — the same logic powers
+three entry points. Pipeline mode is automatic; the others are direct chat
+commands so Jadesse can run image research for any post (existing, archived,
+ad-hoc) without touching the workflow.
+
+| Mode | Triggered by | Context source | Output folder |
+| --- | --- | --- | --- |
+| **1. Pipeline (Step 4)** | Cron, on `approved_for_draft` | `content/pipeline/active/<slug>/brief.md` + `draft.md` (same tick) | `content/pipeline/active/<slug>/images/` |
+| **2. Existing post** | Chat: `source images: <slug>` (in topic 4) | `content/blog/<slug>.md` (frontmatter + body) | `content/image-runs/<slug>/images/` |
+| **3. Ad-hoc** | Chat: `source images: topic: <free text>` (in topic 4) | The free text + agent-derived subject list | `content/image-runs/<auto-slug>/images/` |
+
+**Optional refinement (any mode):** append `with focus: <guidance>` to bias
+queries (e.g. `source images: why-community-matters with focus: shared
+breakfast scenes`).
+
+**Re-run / regenerate:** `revise images: <slug>` regenerates the manifest from
+scratch and archives prior files under `images/_archived/<timestamp>/`.
+
+**Mirror behavior is identical across all modes** — the gallery at
+`https://dalihouse-images.vercel.app/<slug>/` is the latest image set for that
+slug. A standalone run for an existing post overwrites a prior pipeline run
+for the same slug; that's by design.
+
+**Mode-specific notes:**
+
+- Pipeline mode **never** runs before `approve topic` — there's no slug folder yet.
+- Pipeline mode **never** runs twice for the same slug; re-run uses `revise images:`.
+- Standalone modes (2 + 3) run inline in the chat agent, not via cron — Jadesse gets the gallery URL in the same chat reply once the run finishes.
+- Standalone modes do **not** write to `content/pipeline/active/` and do **not** touch `status.json`. Pipeline state is untouched.
+
+### Slug derivation (Mode 3)
+
+When the trigger is `source images: topic: <free text>`:
+1. Lowercase, strip punctuation, collapse whitespace to `-`
+2. Truncate to 60 chars on a word boundary
+3. If `content/image-runs/<slug>/` already exists, suffix `-YYYYMMDD-HHMM`
+
+Example: `source images: topic: cozy fall coffee shop vibes` → `cozy-fall-coffee-shop-vibes`.
+
+### Subject extraction (Modes 2 + 3)
+
+Before running Tavily:
+- **Mode 2:** read the post's frontmatter `title`, headings (`##`), and any explicit visual cues in the body. Build a list of 3–5 distinct subjects (hero + section illustrations).
+- **Mode 3:** parse the free text into 3–5 concrete visual subjects. If the topic is too abstract to picture, reply with a flag-and-skip and do not run Tavily — same rule as the no-AI policy.
 
 ## Tavily-only source policy
 
@@ -75,12 +115,15 @@ If extract fails, drop the candidate.
 ## What to download
 
 - Pull the **actual image file** (not a hot-linked URL). Hot-linking Unsplash / Pexels works for a while then breaks; social-post hot-links break immediately.
-- Save to `content/pipeline/active/<slug>/images/<filename>`
+- Save to the mode's output folder (see Invocation modes table) — `content/pipeline/active/<slug>/images/` for pipeline mode, `content/image-runs/<slug>/images/` for standalone modes
 - Naming: `NN-<short-kebab-description>.<ext>` — e.g. `01-coliving-common-area.jpg`, `02-bishop-arts-street.jpg`. Two-digit prefix preserves intended order.
 - Max 6 images per draft (hero + 5 supporting). More is noise.
 - Max 1.5 MB per file — resize/transcode if larger. Vercel deploys carry the weight.
 
-## Manifest shape — `content/pipeline/active/<slug>/images/sources.json`
+## Manifest shape — `<output_folder>/sources.json`
+
+(`<output_folder>` = `content/pipeline/active/<slug>/images/` in pipeline mode,
+or `content/image-runs/<slug>/images/` in standalone modes.)
 
 ```json
 {
@@ -127,26 +170,32 @@ If extract fails, drop the candidate.
 
 ## Mirror to dalihouse-images repo
 
-After writing the manifest and downloading the files, the cron **also**
-publishes them to the draft gallery so Jadesse can scan them on a real URL.
-This is part of the same Step 4 tick — never deferred to a separate run.
+Identical for all three modes. After writing the manifest and downloading
+the files, publish them to the draft gallery so Jadesse can scan them on a
+real URL.
 
 Steps:
 1. Ensure clone at `~/.dali/images-clone` (clone if missing from `https://github.com/jadessechan/dalihouse-images.git`)
 2. `git fetch origin && git checkout master && git reset --hard origin/master`
 3. Copy:
-   - `content/pipeline/active/<slug>/images/*.{jpg,jpeg,png,webp}` → `public/images/<slug>/`
-   - `content/pipeline/active/<slug>/images/sources.json` → `data/drafts/<slug>.json`
+   - `<output_folder>/*.{jpg,jpeg,png,webp}` → `public/images/<slug>/`
+   - `<output_folder>/sources.json` → `data/drafts/<slug>.json`
 4. `git add -A && git commit -m "draft(<slug>): publish image set" && git push origin master`
 5. Vercel auto-deploys; the gallery URL is `https://dalihouse-images.vercel.app/<slug>/`
-6. Write `imageGalleryUrl` into the dalihouse repo's `status.json` so the draft-review announcement can include it
-7. Commit + push the dalihouse repo per the standard Step 4 git rule
+
+**Pipeline mode only:**
+- Write `imageGalleryUrl` into the dalihouse repo's `status.json` so the draft-review announcement can include it
+- Commit + push the dalihouse repo per the standard Step 4 git rule
+
+**Standalone modes:**
+- Reply in chat (topic 4) with: gallery URL, image count, license breakdown, and any `flagged_gaps[]` entries.
+- The run also commits the manifest + files into the dalihouse repo on `blog-content` under `content/image-runs/<slug>/` so the work is preserved (one commit per run, subject `images(<slug>): standalone run`). No `status.json` update.
 
 If the push to `dalihouse-images` fails (auth, rebase, etc.), do NOT block the
-draft. Write the failure into `status.lastError` (with `state: "step-4-image-mirror"`),
-push the dalihouse repo with the manifest still present locally, and announce
-the draft-review gate without the gallery URL. Jadesse can review the manifest
-file directly on GitHub as a fallback.
+flow. In pipeline mode, write the failure into `status.lastError` (with
+`state: "step-4-image-mirror"`) and announce the draft-review gate without the
+gallery URL. In standalone modes, surface the failure in the chat reply and
+point Jadesse at the local manifest path on GitHub as a fallback.
 
 ## On revise / rerun
 

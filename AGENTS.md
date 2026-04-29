@@ -66,6 +66,12 @@ Read `docs/workflows/BLOG-AUTOMATION.md` if you need the deeper spec; the eval b
 
 **Repo writes:** none until you receive `approve topic`. Then create `content/pipeline/active/<slug>/` per `docs/workflows/BLOG-AUTOMATION.md` Step 3.
 
+**Standalone image research (chat command, runs in topic 4 outside the workflow):**
+- `source images: <slug>` — research images for an existing post in `content/blog/<slug>.md`
+- `source images: topic: <free text>` — ad-hoc image research, slug auto-derived
+- `revise images: <slug>` — regenerate the image set for a slug
+- All three follow `skills/image-sourcing/SKILL.md` — Tavily-only, no AI fallback. Output lands in `content/image-runs/<slug>/` (NOT the pipeline folder), mirrors to `dalihouse-images.vercel.app/<slug>/`, and replies inline with the gallery URL. Pipeline state is untouched.
+
 **Skill stack (where to look):**
 - `skills/topic-eval/SKILL.md` — Step 2 Tavily research + eval pattern (load before any eval reply)
 - `skills/README.md` — repo-local skill map
