@@ -21,6 +21,7 @@ spot.
 | Skill | When to use |
 | --- | --- |
 | **`SEO Writer`** *(global, "afrexai-seo-writer")* | Step 4 draft generation — SEO-optimized blog drafting framework. |
+| **`image-sourcing`** *(local — `skills/image-sourcing/`)* | Step 4, same tick as the draft. Tavily-only sourcing of open-license / credited images, mirror to `dalihouse-images` repo. No AI fallback. |
 | **`humanizer`** *(global, "ai-humanizer")* | Run on the draft before the publish gate to strip AI-pattern tells. |
 | **`meta-tags-optimizer`** *(global)* | Title tag + meta description CTR optimization before publish. |
 | **`ai-seo`** *(global)* | Re-check AI extractability post-draft (FAQ block, lists, definitions). |

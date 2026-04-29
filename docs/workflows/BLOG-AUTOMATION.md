@@ -145,15 +145,24 @@ Agent actions ONLY upon `approve topic` — this is the first time the repo is t
 
 The next 15-min cron tick picks up `approved_for_draft` and runs Step 4.
 
-### Step 4: Draft creation
-Agent actions:
+### Step 4: Draft creation + image sourcing
+Agent actions (all in the same cron tick):
 - write a full blog draft in brand voice
 - include frontmatter
 - include internal link suggestions
 - include CTA
 - write to `draft.md`
+- run the `image-sourcing` skill (see `skills/image-sourcing/SKILL.md`):
+  - Tavily-only search of open-license / credited sources (Wikimedia, Unsplash, Pexels, Pixabay, public social posts)
+  - **No AI image generation.** When no real image fits a placement, log it in `flagged_gaps[]` and skip — Jadesse will source manually
+  - download files to `content/pipeline/active/<slug>/images/`
+  - write manifest to `content/pipeline/active/<slug>/images/sources.json`
+  - mirror images + manifest to the [`dalihouse-images`](https://github.com/jadessechan/dalihouse-images) repo so the draft gallery deploys at `https://dalihouse-images.vercel.app/<slug>/`
+  - write the gallery URL into `status.json` as `imageGalleryUrl`
 - set state to `awaiting_human_edit`
 - **commit AND push to `origin/blog-content`** in the same tick so Jadesse can read/edit the draft on GitHub. A draft that is committed but not pushed is invisible — treat that as a bug.
+
+Image gallery is **draft-only** — final images are picked by Jadesse and added by hand to the published post. The gallery exists so she can scan candidates on a real page.
 
 ### Step 5: Human edit
 Human action:
@@ -278,7 +287,7 @@ Suggested commands:
 | Agent just posted SEO eval in chat | `revise topic: <new angle>` | Agent re-runs SEO eval in chat with your guidance — still no repo write |
 | Agent just posted SEO eval in chat | `reject topic` | Agent drops the proposal in chat — nothing is committed |
 | Repo state `awaiting_human_edit` | _(edit `draft.md` on GitHub or locally and push)_ | Cron detects drift, state → `edited_by_human`, then auto-advances to `awaiting_final_approval` |
-| Cron announces `awaiting_final_approval` | `approve draft` | Copies to `content/blog/<slug>.md`, pushes, opens PR `blog-content` → `dev`, state → `published` |
+| Cron announces `awaiting_final_approval` (with image gallery URL) | `approve draft` | Copies to `content/blog/<slug>.md`, pushes, opens PR `blog-content` → `dev`, state → `published`. Gallery stays on dalihouse-images until archive. |
 | Cron announces `awaiting_final_approval` | `revise draft: <guidance>` | Appends guidance to `notes.md`, state → `edited_by_human` |
 | Cron announces `awaiting_final_approval` | `hold` | Processor stops touching it until you send a new approval |
 | _any time_ | `status` | Main agent reports current state, last action, and (if past topic approval) the path to the active folder |

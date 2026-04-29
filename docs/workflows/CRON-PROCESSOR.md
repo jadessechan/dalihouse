@@ -40,6 +40,14 @@ Every state transition that mutates files MUST commit AND push to `origin/blog-c
 - If `git push` fails (non-fast-forward), `git fetch` + rebase, then push again. If it still fails, stop, write `lastError`, push the error, and announce once
 - Never leave a local-only commit at end of tick
 
+**Cross-repo push for images.** Step 4 also pushes to a second repo
+(`jadessechan/dalihouse-images`, working clone at `~/.dali/images-clone`)
+so the draft image gallery deploys on Vercel. If that push fails, the
+dalihouse-blog-content push must still succeed — record the failure as
+`status.lastError = { state: "step-4-image-mirror", ... }` and announce
+the draft-review gate without the gallery URL. Never block the draft on
+the image-mirror push.
+
 ## Per-tick loop
 
 ```
@@ -62,7 +70,7 @@ for slug in content/pipeline/active/*/:
 | State | Automated? | Handler action |
 |---|---|---|
 | _`proposed` / `awaiting_topic_approval`_ | n/a | **chat-only** — no folder exists yet, cron never sees these |
-| `approved_for_draft` | yes | write `draft.md` + compute checksum, advance to `awaiting_human_edit` |
+| `approved_for_draft` | yes | write `draft.md` + run `image-sourcing` skill (Tavily, open-license / credited only, no AI fallback). Mirror to `dalihouse-images` repo. Compute checksum. Advance to `awaiting_human_edit`. |
 | `awaiting_human_edit` | mixed | check draft checksum drift; if drifted, advance to `edited_by_human` |
 | `edited_by_human` | yes | re-evaluate, append to `notes.md`, advance to `awaiting_final_approval` |
 | `awaiting_final_approval` | no | HITL: announce once, wait |
@@ -112,6 +120,22 @@ path: content/pipeline/active/<slug>/
 
 Keep it terse. The main agent can expand on it when Jadesse asks.
 
+**For `awaiting_final_approval` (draft review gate)**, append the image
+gallery URL when one exists:
+
+```
+[Dali House blog cron]
+slug: <slug>
+state: awaiting_final_approval
+next action: review draft + pick images
+path: content/pipeline/active/<slug>/
+images: https://dalihouse-images.vercel.app/<slug>/   (4 candidates, 1 flagged gap)
+reply: approve draft | revise draft <notes> | hold
+```
+
+If `status.imageGalleryUrl` is null (mirror push failed), point to the
+manifest on GitHub instead: `images: <github raw url to sources.json>`.
+
 ## Approval language → state transitions
 
 Jadesse's approvals are picked up by the main agent, not the cron processor. The main agent is responsible for translating chat commands into `status.json` edits + commits on `blog-content`. The cron processor only reads state; it does not parse chat.
@@ -136,12 +160,16 @@ If slug is omitted and there is exactly one active post, it applies to that one.
 
 Cron processor commit subjects:
 
-- `pipeline(<slug>): draft post`
+- `pipeline(<slug>): draft post + image set`
 - `pipeline(<slug>): detect human edit`
 - `pipeline(<slug>): re-evaluate edited draft`
 - `pipeline(<slug>): publish to content/blog/`
 - `pipeline(<slug>): generate social package`
 - `pipeline(<slug>): archive completed workflow`
+
+In the dalihouse-images repo (cross-repo, same Step 4 tick):
+
+- `draft(<slug>): publish image set`
 
 Main agent (HITL) commit subjects:
 
@@ -190,9 +218,17 @@ Fields the processor adds on top of the base shape:
   "draftChecksum": "sha256:...",
   "lastProcessedAt": "2026-04-24T07:15:00Z",
   "announcedStates": ["awaiting_topic_approval"],
-  "lastError": null
+  "lastError": null,
+  "imageGalleryUrl": "https://dalihouse-images.vercel.app/<slug>/",
+  "imageCount": 4,
+  "imageFlaggedGaps": 1
 }
 ```
+
+Image fields are written by the Step 4 handler. `imageGalleryUrl` is null
+when the cross-repo push to `dalihouse-images` failed (see `lastError` for
+the reason); the draft-review announcement falls back to the manifest path
+on GitHub in that case.
 
 ## First-run health check
 
