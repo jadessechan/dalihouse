@@ -8,10 +8,12 @@ import MeetYourHost from "@/components/MeetYourHost";
 import FAQ from "@/components/FAQ";
 import SoftLanding from "@/components/SoftLanding";
 import Footer from "@/components/Footer";
+import FaqJsonLd from "@/components/FaqJsonLd";
 
 export default function Home() {
   return (
     <>
+      <FaqJsonLd />
       <Nav />
       <main>
         <Hero />

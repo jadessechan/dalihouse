@@ -45,7 +45,7 @@ This is the part people underestimate.
 
 Most newcomers focus on rent, commute, and square footage. Those things matter, obviously. But if you're trying to make friends in a new city, your living situation shapes your social life more than you think.
 
-When you live alone in a traditional apartment, every bit of connection takes extra effort. You go to work, come home, eat dinner, scroll, repeat. If you want community, you have to go create it from scratch every single time.
+When you live alone in a traditional apartment, every bit of connection takes extra effort. You go to work, come home, eat dinner, scroll, repeat. If you want community, you have to go create it from scratch every single time. (More on the loneliness curve in [Why Community Matters When You're Starting Over in a New City](/blog/why-community-matters).)
 
 A more social home base changes that. When the people around you are also new-ish, open to connection, and actually spend time in shared spaces, your social life starts with momentum instead of friction.
 
@@ -61,6 +61,8 @@ If you're still deciding where to base yourself, here's the fast version:
 - **Lower Greenville:** more neighborhood feel, strong restaurant and patio scene, a little more relaxed and local than Uptown.
 - **Bishop Arts District:** more character, indie shops, coffee spots, and date-night energy, but less central to the rest of Dallas.
 - **Suburban options like Plano or Frisco:** quieter, safer-feeling, and easier for parking and routine, but more car-dependent and less spontaneous socially.
+
+For a deeper neighborhood-by-neighborhood breakdown (rent, vibe, safety), see [Relocating to Dallas as a Woman](/blog/relocating-to-dallas-as-a-woman).
 
 ## A better strategy than "just put yourself out there"
 

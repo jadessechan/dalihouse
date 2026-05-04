@@ -1,7 +1,7 @@
 ---
-title: "Relocating to Dallas as a Woman: What I Wish Someone Had Told Me"
+title: "Relocating to Dallas as a Woman: What I Wish I'd Known"
 date: "2026-04-04"
-description: "A practical guide to relocating to Dallas — cost, neighborhoods, safety, and social life — plus the part people don't talk about enough: how it actually feels to land here."
+description: "A woman's guide to moving to Dallas — neighborhoods, cost, safety, social life, plus the part nobody talks about: how it really feels to land here."
 tag: "Featured"
 ---
 
@@ -90,7 +90,7 @@ This is the hardest part. Dallas is friendly, but it's also a car city. You don'
 
 ### Social clubs
 
-There are groups for everything: hiking, book clubs, young professionals, new-to-Dallas women. Don't Be Strangers (@dontbestrangers), We're Not Really Runners (@wnnr_dallas), and Dallas Matcha Club (@dallasmatcha) are great for a variety of activities.
+There are groups for everything: hiking, book clubs, young professionals, new-to-Dallas women. Don't Be Strangers (@dontbestrangers), We're Not Really Runners (@wnnr_dallas), and Dallas Matcha Club (@dallasmatcha) are great for a variety of activities. (Full list of recurring social, fitness, and sports groups in [How to meet people in Dallas in real life](/blog/how-to-meet-people-in-dallas-in-real-life).)
 
 ### Fitness communities
 
@@ -119,6 +119,8 @@ Instead of starting from zero, you begin with:
 - a furnished space
 - a built-in sense of community
 - a home that's already designed for ease
+
+If you're not sure why this matters as much as the practical stuff, [Why Community Matters When You're Starting Over in a New City](/blog/why-community-matters) goes into the loneliness curve every transplant runs into around week three.
 
 It's not for everyone. If you need total privacy or have a partner/pet, a regular apartment is better. But if you're moving solo, want to save money, and value community over square footage, coliving works.
 
