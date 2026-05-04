@@ -36,6 +36,13 @@ Think of community like infrastructure for your new life. Just like you need a k
 - You celebrate wins with people who care
 - You feel at home weeks instead of months after moving
 
+## How to actually do it
+
+If you're moving to Dallas specifically, two practical follow-ups:
+
+- [How to meet people in Dallas in real life](/blog/how-to-meet-people-in-dallas-in-real-life) — the specific clubs, run groups, and neighborhoods that make connection easier
+- [Relocating to Dallas as a Woman](/blog/relocating-to-dallas-as-a-woman) — what to expect on cost, neighborhoods, safety, and how it actually feels to land here
+
 ## The bottom line
 
 You can figure out furniture, commutes, and grocery stores on your own. But you can't shortcut human connection. If you're relocating to Dallas and want to skip the loneliness curve, consider a living situation that puts community first.
