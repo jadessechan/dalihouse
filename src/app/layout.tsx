@@ -38,12 +38,21 @@ export const metadata: Metadata = {
     siteName: "Dali House",
     type: "website",
     locale: "en_US",
+    images: [
+      {
+        url: "/dali-house-hero.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Dali House — Coliving for Women in Dallas",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Dali House — Coliving for Women in Dallas",
     description:
       "A co-living space in Dallas for young female professionals who value comfort and intentional living.",
+    images: ["/dali-house-hero.jpg"],
   },
   robots: {
     index: true,
