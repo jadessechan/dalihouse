@@ -3,6 +3,9 @@ title: "Relocating to Dallas as a Woman: What I Wish I'd Known"
 date: "2026-04-04"
 description: "A woman's guide to moving to Dallas — neighborhoods, cost, safety, social life, plus the part nobody talks about: how it really feels to land here."
 tag: "Featured"
+coverTitle: "Moving to Dallas,"
+coverItalic: "as a woman"
+coverSubtitle: "What I wish someone had told me before I landed."
 ---
 
 *By Jadesse · 12 min read*

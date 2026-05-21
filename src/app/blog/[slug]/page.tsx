@@ -5,7 +5,7 @@ import {
   getPostBySlug,
   getAllSlugs,
   getPageNumber,
-  getSeasonLabel,
+  getSeason,
 } from "@/lib/blog";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -82,9 +82,16 @@ export default async function BlogPost({
 }) {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
-  const { lead, emphasis } = splitTitleForCover(post.title);
-  const issueLabel = getSeasonLabel(post.date);
+
+  // Editorial cover copy: prefer explicit frontmatter, fall back to splitting
+  // the SEO title (works but produces awkward results on long titles).
+  const fallbackSplit = splitTitleForCover(post.title);
+  const coverLead = post.coverTitle ?? fallbackSplit.lead;
+  const coverItalic = post.coverItalic ?? fallbackSplit.emphasis;
+  const coverSubtitle = post.coverSubtitle ?? post.description;
+
   const pageNumber = getPageNumber(slug);
+  const issueLabel = `Issue No. ${pageNumber} · ${getSeason(post.date)}`;
 
   return (
     <>
@@ -123,7 +130,7 @@ export default async function BlogPost({
                 Journal · {post.tag}
               </span>
               <span className="absolute top-8 right-10 z-10 font-serif text-[13px] italic text-cream/70">
-                Issue · {issueLabel}
+                {issueLabel}
               </span>
 
               {/* Floral motifs — sparse decorative blooms, per editorial spec */}
@@ -142,14 +149,9 @@ export default async function BlogPost({
 
               <div className="absolute top-[28%] right-0 left-0 z-10 mx-auto max-w-[980px] px-8 md:top-[24%] md:px-14">
                 <h1 className="font-serif font-semibold leading-[0.95] tracking-[-0.025em] text-cream text-[clamp(56px,8vw,110px)] drop-shadow-[0_4px_28px_rgba(0,0,0,0.25)]">
-                  {lead && (
-                    <>
-                      {lead}
-                      <br />
-                    </>
-                  )}
+                  {coverLead && <>{coverLead} </>}
                   <em className="font-serif italic text-tan-light">
-                    {emphasis}
+                    {coverItalic}
                   </em>
                 </h1>
 
@@ -163,7 +165,7 @@ export default async function BlogPost({
                       WebkitBoxDecorationBreak: "clone",
                     }}
                   >
-                    {post.description}
+                    {coverSubtitle}
                   </span>
                 </div>
               </div>

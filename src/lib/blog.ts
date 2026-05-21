@@ -22,6 +22,14 @@ export interface BlogPost {
   cover: string;
   content: string;
   headings: Heading[];
+  // Editorial cover copy — short hooks that drive the magazine-style cover.
+  // The SEO `title` is too long for the cover headline, so each post supplies
+  // a 2-3 word `coverTitle` + a one-word `coverItalic` emphasis (matching the
+  // UI kit's BlogPost.jsx pattern), plus a short `coverSubtitle` for the
+  // highlighter bar (the band below still uses `description` as the lede).
+  coverTitle?: string;
+  coverItalic?: string;
+  coverSubtitle?: string;
 }
 
 const DEFAULT_COVER = "/dali-house-bg.png";
@@ -95,6 +103,9 @@ export function getAllPosts(): BlogPost[] {
       cover: resolveCover(slug, data.cover),
       content: "",
       headings: [],
+      coverTitle: data.coverTitle,
+      coverItalic: data.coverItalic,
+      coverSubtitle: data.coverSubtitle,
     };
   });
 
@@ -120,6 +131,9 @@ export async function getPostBySlug(slug: string): Promise<BlogPost> {
     cover: resolveCover(slug, data.cover),
     content: processedHtml,
     headings,
+    coverTitle: data.coverTitle,
+    coverItalic: data.coverItalic,
+    coverSubtitle: data.coverSubtitle,
   };
 }
 
@@ -141,16 +155,12 @@ export function getPageNumber(slug: string): string {
   return String(n).padStart(2, "0");
 }
 
-// Northern-hemisphere season label, named for the year the post was published.
-// "Issue · Spring 2026" feels closer to the magazine cadence than "April 2026".
-export function getSeasonLabel(iso: string): string {
-  const d = new Date(iso);
-  const m = d.getMonth(); // 0-indexed
-  const year = d.getFullYear();
-  let season: string;
-  if (m >= 2 && m <= 4) season = "Spring";
-  else if (m >= 5 && m <= 7) season = "Summer";
-  else if (m >= 8 && m <= 10) season = "Fall";
-  else season = "Winter";
-  return `${season} ${year}`;
+// Northern-hemisphere season name. The cover issue line follows the UI kit
+// format ("Issue No. 04 · Spring") — season only, no year.
+export function getSeason(iso: string): string {
+  const m = new Date(iso).getMonth(); // 0-indexed
+  if (m >= 2 && m <= 4) return "Spring";
+  if (m >= 5 && m <= 7) return "Summer";
+  if (m >= 8 && m <= 10) return "Fall";
+  return "Winter";
 }

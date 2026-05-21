@@ -3,6 +3,9 @@ title: "How to Meet People in Dallas in Real Life If You're New"
 date: "2026-04-23"
 description: "New to Dallas? Here’s how to meet people in real life through social clubs, fitness communities, and neighborhoods that make connection easier."
 tag: "Dallas"
+coverTitle: "Meeting people"
+coverItalic: "in real life"
+coverSubtitle: "How to actually make friends when you're new to Dallas."
 ---
 
 If you're new to Dallas and want to meet people in real life, the best strategy is not random one-off events. It's recurring places.

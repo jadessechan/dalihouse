@@ -4,6 +4,9 @@ description: "Comparing coliving to finding random roommates from Craigslist or 
 date: "2026-04-24"
 slug: "coliving-vs-random-roommates-dallas-women"
 tags: ["Dallas", "Coliving", "Relocating"]
+coverTitle: "Coliving vs"
+coverItalic: "random roommates"
+coverSubtitle: "What women should know before signing a Craigslist lease."
 ---
 
 When you're moving to Dallas and looking for housing, the internet gives you two obvious paths: post on a Facebook group or scroll through Craigslist to find roommates, or look into coliving spaces like Dali House.

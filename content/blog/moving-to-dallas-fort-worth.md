@@ -3,6 +3,9 @@ title: "5 Things to Know Before Moving to the Dallas-Fort Worth Area"
 date: "2026-04-10"
 description: "Moving to Dallas-Fort Worth? 5 things to know first — neighborhoods, commute times, cost of living, weather, and the social scene most newcomers miss."
 tag: "Dallas"
+coverTitle: "Five things"
+coverItalic: "to know"
+coverSubtitle: "Before you move to the Dallas-Fort Worth metroplex."
 ---
 
 Dallas-Fort Worth is one of the most exciting metros in the country — but it's massive, and moving here without a game plan can be overwhelming. Whether you're coming for a job, a fresh start, or just a change of scenery, here are five things worth knowing before you arrive.
