@@ -155,6 +155,19 @@ export function SingleCol({ children }: { children: ReactNode }) {
   );
 }
 
+// ─── Lede ────────────────────────────────────────────────────────────────
+// Opening paragraph(s) of a post, sitting above the first <Spread>. Same
+// single-column typography as SingleCol but with the same drop-cap rule
+// Columns applies to its first paragraph — keeps the magazine opener
+// visually anchored without forcing a two-column layout.
+export function Lede({ children }: { children: ReactNode }) {
+  return (
+    <div className="not-prose max-w-[720px] text-[15px] font-light leading-[1.78] text-brown [&_p]:mb-[1em] [&_strong]:font-medium [&_strong]:text-brown-deep [&_p:first-of-type::first-letter]:float-left [&_p:first-of-type::first-letter]:mt-[6px] [&_p:first-of-type::first-letter]:mr-[10px] [&_p:first-of-type::first-letter]:font-serif [&_p:first-of-type::first-letter]:text-[56px] [&_p:first-of-type::first-letter]:font-semibold [&_p:first-of-type::first-letter]:leading-[0.9] [&_p:first-of-type::first-letter]:text-crimson">
+      {children}
+    </div>
+  );
+}
+
 // ─── PullQuote ───────────────────────────────────────────────────────────
 // Centered Playfair italic quote with a giant decorative " above and an
 // optional crimson attribution underneath.
