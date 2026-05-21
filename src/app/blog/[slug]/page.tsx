@@ -278,10 +278,15 @@ export default async function BlogPost({
               )}
 
               <div className="lg:order-2">
-                <div
-                  className="post-content"
-                  dangerouslySetInnerHTML={{ __html: post.content }}
-                />
+                <div className="post-content">
+                  {post.isMdx ? (
+                    <MdxBody slug={slug} />
+                  ) : (
+                    <div
+                      dangerouslySetInnerHTML={{ __html: post.content }}
+                    />
+                  )}
+                </div>
 
                 {/* Vendor-style info card — single CTA at the close */}
                 <aside className="mt-12 max-w-[520px] rounded-[14px] border-[1.5px] border-tan bg-cream p-7">
@@ -304,6 +309,15 @@ export default async function BlogPost({
       <Footer />
     </>
   );
+}
+
+// Dynamic MDX loader — resolved at build time because every slug from
+// `generateStaticParams` is statically known, so the bundler can include
+// every `.mdx` file under content/blog/ in the chunk graph.
+async function MdxBody({ slug }: { slug: string }) {
+  const mod = await import(`../../../../content/blog/${slug}.mdx`);
+  const Body = mod.default as React.ComponentType;
+  return <Body />;
 }
 
 function Bloom({ size = 22, className }: { size?: number; className?: string }) {
