@@ -125,7 +125,7 @@ export function SectionHead({
       </span>
       <h2
         id={id}
-        className={`mt-1 scroll-mt-28 font-serif font-semibold italic leading-[1.05] tracking-[-0.015em] text-[clamp(34px,4.5vw,46px)] ${heading}`}
+        className={`mt-[15px] scroll-mt-28 font-serif font-semibold italic leading-[1.05] tracking-[-0.015em] text-[clamp(34px,4.5vw,46px)] ${heading}`}
       >
         {children}
       </h2>
