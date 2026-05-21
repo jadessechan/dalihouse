@@ -117,7 +117,7 @@ export function SectionHead({
   const heading =
     headingColor === "brown" ? "text-brown-deep" : "text-crimson";
   return (
-    <header className="not-prose mt-16">
+    <header className="not-prose mt-28">
       <span
         className={`inline-block whitespace-nowrap rounded px-3 py-[5px] text-[11px] font-semibold uppercase tracking-[0.14em] ${pill}`}
       >
@@ -125,7 +125,7 @@ export function SectionHead({
       </span>
       <h2
         id={id}
-        className={`mt-1.5 scroll-mt-28 font-serif font-semibold italic leading-[1.05] tracking-[-0.015em] text-[clamp(34px,4.5vw,46px)] ${heading}`}
+        className={`-mt-0.5 scroll-mt-28 font-serif font-semibold italic leading-[1.05] tracking-[-0.015em] text-[clamp(34px,4.5vw,46px)] ${heading}`}
       >
         {children}
       </h2>

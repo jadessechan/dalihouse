@@ -288,6 +288,15 @@ export default async function BlogPost({
                     <InfoRow>Applications accepted on a rolling basis</InfoRow>
                   </ul>
                 </aside>
+
+                <div className="mt-14 border-t border-brown/10 pt-8">
+                  <Link
+                    href="/blog"
+                    className="inline-block text-[12px] font-medium tracking-[0.12em] uppercase text-brown/50 transition-colors hover:text-crimson"
+                  >
+                    &larr; Back to journal
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
