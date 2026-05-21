@@ -181,7 +181,7 @@ export default async function BlogPost({
                 }}
               />
               <div className="relative mx-auto max-w-[760px] text-center">
-                <p className="font-serif text-[18px] italic leading-[1.65] text-brown md:text-[20px]">
+                <p className="font-serif text-[22px] italic leading-[1.55] text-brown md:text-[26px]">
                   {post.description}
                 </p>
               </div>
