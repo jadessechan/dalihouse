@@ -1,7 +1,7 @@
 ---
 title: "5 Things to Know Before Moving to the Dallas-Fort Worth Area"
 date: "2026-04-10"
-description: "Thinking about relocating to DFW? From neighborhoods to commute times, here's what you need to know before you make the move."
+description: "Moving to Dallas-Fort Worth? 5 things to know first — neighborhoods, commute times, cost of living, weather, and the social scene most newcomers miss."
 tag: "Dallas"
 ---
 
@@ -11,7 +11,7 @@ Dallas-Fort Worth is one of the most exciting metros in the country — but it's
 
 DFW isn't one city — it's a sprawling metro of dozens of cities and suburbs. Dallas, Fort Worth, Plano, Carrollton, Frisco, Arlington, Richardson — they all blend together, and where you live determines your experience more than you'd expect.
 
-If you're working downtown, living in Plano means a 30-40 minute commute. If you're remote, a quieter suburb might be perfect. Know your priorities before picking a neighborhood.
+If you're working downtown, living in Plano means a 30-40 minute commute. If you're remote, a quieter suburb might be perfect. Know your priorities before picking a neighborhood. (For a women-focused breakdown of each area, see [Relocating to Dallas as a Woman](/blog/relocating-to-dallas-as-a-woman).)
 
 ## 2. You'll probably need a car
 
@@ -27,7 +27,7 @@ Dallas has incredible Tex-Mex (obviously), but also world-class Korean, Vietname
 
 ## 5. Building a social circle takes effort
 
-This is the biggest surprise for most transplants. Dallas is friendly, but making real friends as an adult takes intention. Join groups, say yes to things, and consider living situations that have built-in community — it accelerates the process dramatically.
+This is the biggest surprise for most transplants. Dallas is friendly, but making real friends as an adult takes intention. Join groups, say yes to things, and consider living situations that have built-in community — it accelerates the process dramatically. ([How to meet people in Dallas in real life](/blog/how-to-meet-people-in-dallas-in-real-life) breaks down the specific clubs, run groups, and neighborhoods that work.)
 
 ---
 

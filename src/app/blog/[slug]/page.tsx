@@ -10,6 +10,7 @@ import {
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import SoftLanding from "@/components/SoftLanding";
+import BlogPostingJsonLd from "@/components/BlogPostingJsonLd";
 
 export async function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -23,6 +24,8 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await getPostBySlug(slug);
 
+  const url = `https://dalihouse.co/blog/${slug}`;
+
   return {
     title: post.title,
     description: post.description,
@@ -32,8 +35,25 @@ export async function generateMetadata({
     openGraph: {
       title: post.title,
       description: post.description,
+      url,
       type: "article",
       publishedTime: post.date,
+      authors: ["Jadesse Chan"],
+      siteName: "Dali House",
+      images: [
+        {
+          url: "/dali-house-hero.jpg",
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: ["/dali-house-hero.jpg"],
     },
   };
 }
@@ -68,6 +88,13 @@ export default async function BlogPost({
 
   return (
     <>
+      <BlogPostingJsonLd
+        slug={slug}
+        title={post.title}
+        description={post.description}
+        date={post.date}
+        tag={post.tag}
+      />
       <Nav />
       <main className="bg-cream">
         <article>
