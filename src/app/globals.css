@@ -41,10 +41,6 @@ body {
   font-weight: 300;
 }
 
-.post-content > * + * {
-  margin-top: 1.35em;
-}
-
 .post-content h2 {
   font-family: var(--font-serif);
   font-style: italic;

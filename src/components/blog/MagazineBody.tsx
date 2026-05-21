@@ -11,7 +11,7 @@ import type { ReactNode } from "react";
 // editorial spread of a post lives here.
 export function Spread({ children }: { children: ReactNode }) {
   return (
-    <div className="not-prose grid grid-cols-1 items-start gap-12 md:grid-cols-[1fr_1.1fr]">
+    <div className="not-prose mt-12 grid grid-cols-1 items-start gap-12 md:grid-cols-[1fr_1.1fr]">
       {children}
     </div>
   );
@@ -125,7 +125,7 @@ export function SectionHead({
       </span>
       <h2
         id={id}
-        className={`-mt-2 scroll-mt-28 font-serif font-semibold italic leading-[1.05] tracking-[-0.015em] text-[clamp(34px,4.5vw,46px)] ${heading}`}
+        className={`mt-1 scroll-mt-28 font-serif font-semibold italic leading-[1.05] tracking-[-0.015em] text-[clamp(34px,4.5vw,46px)] ${heading}`}
       >
         {children}
       </h2>
