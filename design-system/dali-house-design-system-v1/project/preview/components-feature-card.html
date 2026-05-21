@@ -1,0 +1,54 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin:0; padding:0; font-family: var(--font-sans); background: var(--bg-warm); }
+  body { padding: 24px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: 0 2px 20px rgba(61, 35, 20, 0.055);
+    transition: transform 200ms, box-shadow 200ms;
+  }
+  .card.hover { transform: translateY(-4px); box-shadow: 0 10px 36px rgba(61, 35, 20, 0.10); }
+  .icon-badge {
+    width: 56px; height: 56px; border-radius: 999px;
+    border: 1px solid rgba(201, 169, 110, 0.20);
+    background: rgba(201, 169, 110, 0.12);
+    color: var(--accent);
+    display: inline-flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+  }
+  .title { font-family: var(--font-serif); font-weight: 600; font-size: 17px; color: var(--fg); margin: 0 0 8px; }
+  .desc { font-size: 12.5px; line-height: 1.7; font-weight: 300; color: var(--fg-muted); }
+  .hint { font-family: ui-monospace, monospace; font-size: 9px; color: var(--fg-soft); margin-top: 10px; letter-spacing: 0.04em; }
+</style></head><body>
+  <div class="grid">
+    <div class="card">
+      <div class="icon-badge">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14h18v4H3z"/><path d="M5 14v-3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3"/><path d="M8 11h8"/><path d="M5 18v2 M19 18v2"/></svg>
+      </div>
+      <div class="title">Fully Furnished</div>
+      <div class="desc">Move in with just your suitcase. Every room is thoughtfully furnished.</div>
+      <div class="hint">rest</div>
+    </div>
+    <div class="card hover">
+      <div class="icon-badge">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4 M16 3v4"/></svg>
+      </div>
+      <div class="title">Flexible Lease</div>
+      <div class="desc">No long-term commitment required. Stay as long as you need.</div>
+      <div class="hint">hover · -translate-y-1</div>
+    </div>
+    <div class="card">
+      <div class="icon-badge">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="title">Built-in Community</div>
+      <div class="desc">Connect with women who are building their careers in Dallas.</div>
+      <div class="hint">rest</div>
+    </div>
+  </div>
+</body></html>

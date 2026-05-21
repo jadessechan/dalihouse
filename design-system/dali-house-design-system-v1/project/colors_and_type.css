@@ -1,0 +1,187 @@
+/* =========================================================================
+   Dali House — Colors & Type Tokens
+   --------------------------------------------------------------------------
+   Source: jadessechan/dalihouse → src/app/globals.css + layout.tsx
+   ========================================================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;700&display=swap");
+
+:root {
+  /* ---- Brand palette (exact values from globals.css) ------------------- */
+  --color-charcoal:       #1a1612;  /* darkest — nav scrolled, footer, hero overlay */
+  --color-charcoal-mid:   #241d16;  /* secondary dark — "The Space" section */
+  --color-cream:          #faf4e8;  /* primary surface — page background */
+  --color-cream-light:    #f3ead6;  /* subtle warm surface — features section, CTA button */
+  --color-tan:            #c9a96e;  /* primary accent — eyebrow text, price, links */
+  --color-tan-light:      #e8d5b0;  /* soft accent — rarely used */
+  --color-brown:          #7c5c3e;  /* body text on cream surfaces */
+  --color-brown-deep:     #3d2314;  /* headings, primary text on light */
+  --color-crimson:        #7a1c1c;  /* primary brand accent #2 — editorial labels, blog category, headlines */
+  --color-crimson-warm:   #9a2828;  /* slightly brighter — used for headings and category text */
+  --color-crimson-deep:   #5a1414;  /* deeper, for press / hover */
+
+  /* ---- Semantic foreground / background ------------------------------- */
+  --bg:                   var(--color-cream);
+  --bg-warm:              var(--color-cream-light);
+  --bg-dark:              var(--color-charcoal);
+  --bg-dark-2:            var(--color-charcoal-mid);
+  --bg-deep:              var(--color-brown-deep);
+
+  --fg:                   var(--color-brown-deep);   /* primary on light bg */
+  --fg-muted:             var(--color-brown);        /* body copy on light */
+  --fg-soft:              rgba(124, 92, 62, 0.55);   /* meta on light */
+  --fg-on-dark:           var(--color-cream);
+  --fg-on-dark-muted:     rgba(250, 244, 232, 0.55); /* body copy on dark */
+  --fg-on-dark-soft:      rgba(250, 244, 232, 0.35); /* eyebrow / meta on dark */
+  --accent:               var(--color-tan);            /* warm/secondary accent — eyebrows, links, italics */
+  --accent-soft:          rgba(201, 169, 110, 0.20);
+  --accent-2:             var(--color-crimson);        /* editorial accent — category labels, blog headlines */
+  --accent-2-warm:        var(--color-crimson-warm);
+  --accent-2-soft:        rgba(122, 28, 28, 0.10);
+  --highlight:            rgba(232, 213, 176, 0.65);   /* highlighter bar under subtitles (magazine layout) */
+
+  --border-on-dark:       rgba(250, 244, 232, 0.10);
+  --border-on-dark-2:     rgba(250, 244, 232, 0.20);
+  --border-on-light:      rgba(124, 92, 62, 0.11);
+  --hairline:             rgba(124, 92, 62, 0.15);
+
+  /* ---- Type families --------------------------------------------------- */
+  --font-serif: "Playfair Display", "Cormorant Garamond", "DM Serif Display", Georgia, serif;
+  --font-sans:  "DM Sans", "Inter", "Manrope", system-ui, -apple-system, sans-serif;
+
+  /* ---- Type scale (px values lifted from production components) ------- */
+  --fs-eyebrow:      10px;   /* uppercase tracked label */
+  --fs-meta:         11px;
+  --fs-caption:      12px;
+  --fs-body-sm:      13px;
+  --fs-body:         15px;
+  --fs-body-lg:      17px;   /* blog post body */
+  --fs-h4:           18px;
+  --fs-h3:           22px;
+  --fs-h2:           28px;   /* blog h2 */
+  --fs-section:      clamp(30px, 4vw, 44px);   /* section titles */
+  --fs-display:      clamp(34px, 5vw, 56px);   /* hero-adjacent */
+  --fs-price:        clamp(52px, 8vw, 72px);   /* the $900 */
+  --fs-blog-title:   clamp(36px, 6vw, 60px);
+
+  --lh-tight:        1.18;
+  --lh-snug:         1.35;
+  --lh-body:         1.7;
+  --lh-prose:        1.78;
+  --lh-relaxed:      1.82;
+
+  --tracking-eyebrow: 0.22em;
+  --tracking-cta:     0.20em;
+  --tracking-meta:    0.10em;
+  --tracking-tight:  -0.01em;
+
+  /* ---- Spacing (the system observed in the codebase) ------------------ */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --section-y: 96px;          /* py-24 — section vertical rhythm */
+  --section-y-lg: 112px;      /* used on ValueProposition */
+  --container: 1080px;        /* max-w containers */
+  --container-narrow: 660px;  /* FAQ / prose */
+
+  /* ---- Radii ---------------------------------------------------------- */
+  --radius-sm: 4px;
+  --radius-md: 14px;     /* blog images */
+  --radius-lg: 18px;     /* large cards (host photo, amenity card) */
+  --radius-2xl: 16px;    /* room cards (rounded-2xl) */
+  --radius-pill: 999px;  /* chips & buttons */
+
+  /* ---- Shadows -------------------------------------------------------- */
+  --shadow-card:        0 2px 20px rgba(61, 35, 20, 0.055);
+  --shadow-card-hover:  0 10px 36px rgba(61, 35, 20, 0.10);
+  --shadow-blog-hover:  0 12px 40px rgba(61, 35, 20, 0.11);
+  --shadow-cta:         0 4px 28px rgba(0, 0, 0, 0.22);
+  --shadow-cta-hover:   0 8px 36px rgba(0, 0, 0, 0.30);
+  --shadow-nav:         0 1px 0 rgba(0, 0, 0, 0.25);
+
+  /* ---- Overlays / textures ------------------------------------------- */
+  --overlay-hero:       rgba(10, 7, 5, 0.58);
+  --overlay-soft:       rgba(14, 10, 7, 0.72);
+  --grain-opacity:      0.06;
+
+  /* ---- Motion --------------------------------------------------------- */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur-fast: 200ms;
+  --dur-base: 300ms;
+  --dur-slow: 380ms;
+}
+
+/* =========================================================================
+   Semantic element styles — use these as defaults, or apply via class.
+   ========================================================================= */
+
+html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  color: var(--fg);
+  font-weight: 500;
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+}
+h1 { font-size: var(--fs-display);  line-height: var(--lh-tight); }
+h2 { font-size: var(--fs-section);  line-height: var(--lh-tight); }
+h3 { font-size: var(--fs-h2);       line-height: var(--lh-snug);  }
+h4 { font-size: var(--fs-h3);       line-height: var(--lh-snug);  }
+
+p {
+  margin: 0;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: 300;
+  color: var(--fg-muted);
+}
+
+em { font-family: var(--font-serif); font-style: italic; }
+
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--dur-fast) ease;
+}
+a:hover { color: var(--fg); }
+
+/* The single most-recognizable element of the brand: the uppercase eyebrow */
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: var(--fs-eyebrow);
+  font-weight: 500;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Pull-quote — Playfair italic, tan left rule */
+.pullquote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 21px;
+  line-height: 1.6;
+  color: var(--fg);
+  border-left: 2px solid var(--accent);
+  padding-left: 22px;
+}

@@ -1,0 +1,36 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin:0; padding:0; font-family: var(--font-sans); background: var(--bg-dark-2); }
+  body { padding: 24px; color: var(--fg-on-dark); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .room {
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid rgba(250,244,232,0.10);
+    background: rgba(250,244,232,0.04);
+  }
+  .photo {
+    aspect-ratio: 4/3; width: 100%;
+    background-position: center; background-size: cover;
+  }
+  .body { padding: 18px 20px 22px; }
+  .name { font-family: var(--font-serif); font-size: 16px; font-weight: 500; color: var(--accent); margin: 0 0 4px; }
+  .desc { font-size: 12.5px; line-height: 1.65; color: rgba(250,244,232,0.55); font-weight: 300; }
+</style></head><body>
+  <div class="grid">
+    <div class="room">
+      <div class="photo" style="background-image: url(../assets/room-bedroom1.jpg);"></div>
+      <div class="body">
+        <div class="name">Bedroom 1</div>
+        <div class="desc">Full size bed, work station, TV, full-length mirror.</div>
+      </div>
+    </div>
+    <div class="room">
+      <div class="photo" style="background-image: url(../assets/room-living.jpg);"></div>
+      <div class="body">
+        <div class="name">Living Room</div>
+        <div class="desc">Vintage pieces and original artwork in a warm, modern setting.</div>
+      </div>
+    </div>
+  </div>
+</body></html>

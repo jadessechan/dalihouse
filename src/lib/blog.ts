@@ -19,8 +19,23 @@ export interface BlogPost {
   description: string;
   tag: string;
   readTime: string;
+  cover: string;
   content: string;
   headings: Heading[];
+}
+
+const DEFAULT_COVER = "/dali-house-bg.png";
+const COVER_BY_SLUG: Record<string, string> = {
+  "relocating-to-dallas-as-a-woman": "/dali-house-bg.png",
+  "why-community-matters": "/room-living.jpeg",
+  "coliving-vs-random-roommates-dallas-women": "/room-bedroom1.jpeg",
+  "how-to-meet-people-in-dallas-in-real-life": "/dali-house-hero.jpg",
+  "moving-to-dallas-fort-worth": "/room-kitchen.png",
+};
+
+function resolveCover(slug: string, fromFrontmatter?: string): string {
+  if (fromFrontmatter) return fromFrontmatter;
+  return COVER_BY_SLUG[slug] ?? DEFAULT_COVER;
 }
 
 function slugify(text: string): string {
@@ -77,6 +92,7 @@ export function getAllPosts(): BlogPost[] {
       description: data.description,
       tag: data.tag ?? "Journal",
       readTime: data.readTime ?? estimateReadTime(content),
+      cover: resolveCover(slug, data.cover),
       content: "",
       headings: [],
     };
@@ -101,6 +117,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost> {
     description: data.description,
     tag: data.tag ?? "Journal",
     readTime: data.readTime ?? estimateReadTime(content),
+    cover: resolveCover(slug, data.cover),
     content: processedHtml,
     headings,
   };

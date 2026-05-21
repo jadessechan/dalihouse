@@ -1,0 +1,2551 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dali House — Brand Deck</title>
+  <link rel="stylesheet" href="colors_and_type.css">
+  <link rel="icon" href="assets/favicon.ico">
+  <style>
+    /* =========================================================
+       Brand deck — Dali House
+       1920×1080 slides via <deck-stage>
+       ========================================================= */
+
+    * { box-sizing: border-box; }
+    deck-stage:not(:defined) { visibility: hidden; }
+    html, body { margin: 0; background: #0c0a08; }
+
+    /* Each slide fills the full canvas */
+    section.slide {
+      position: relative;
+      width: 1920px; height: 1080px;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-sans);
+      font-weight: 300;
+    }
+    section.slide.dark { background: var(--bg-dark); color: var(--fg-on-dark); }
+    section.slide.warm { background: var(--bg-warm); }
+    section.slide.mid  { background: var(--bg-dark-2); color: var(--fg-on-dark); }
+
+    /* ---- Masthead chrome (top + bottom on every slide) ---- */
+    .masthead, .footplate {
+      position: absolute; left: 64px; right: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: var(--font-sans); font-size: 12px; font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent);
+      z-index: 5;
+      white-space: nowrap;
+    }
+    .masthead > *, .footplate > * { white-space: nowrap; }
+    .masthead { top: 48px; }
+    .footplate { bottom: 48px; letter-spacing: 0.18em; }
+    .masthead .dot, .footplate .dot { color: rgba(201,169,110,0.40); margin: 0 12px; }
+    .masthead .vol, .footplate .folio {
+      font-family: var(--font-serif); font-style: italic; font-weight: 400;
+      letter-spacing: 0.02em; text-transform: none;
+      color: var(--accent);
+    }
+    .dark .masthead, .dark .footplate, .mid .masthead, .mid .footplate {
+      color: var(--accent);
+    }
+    .footplate .right { color: rgba(124,92,62,0.55); font-weight: 400; letter-spacing: 0.08em; text-transform: none; font-size: 12px; }
+    .dark .footplate .right, .mid .footplate .right { color: rgba(250,244,232,0.40); }
+
+    /* Optional rule under masthead */
+    .masthead::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: -16px;
+      height: 1px; background: rgba(124,92,62,0.18);
+    }
+    .dark .masthead::after, .mid .masthead::after { background: rgba(250,244,232,0.12); }
+
+    /* ---- Type primitives ---- */
+    .eyebrow-lg {
+      font-family: var(--font-sans);
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 0.32em; text-transform: uppercase;
+      color: var(--accent);
+    }
+    .display {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      letter-spacing: -0.018em;
+      line-height: 0.98;
+      color: var(--fg);
+    }
+    .dark .display, .mid .display { color: var(--fg-on-dark); }
+    .display em { font-style: italic; color: var(--accent); }
+    .display em.crimson { color: var(--color-crimson-warm); }
+
+    .lede {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 22px; line-height: 1.55;
+      color: var(--fg-muted);
+      max-width: 640px;
+    }
+    .dark .lede, .mid .lede { color: rgba(250,244,232,0.65); }
+
+    .body {
+      font-family: var(--font-sans); font-weight: 300;
+      font-size: 17px; line-height: 1.75;
+      color: var(--fg-muted);
+    }
+    .dark .body, .mid .body { color: rgba(250,244,232,0.65); }
+
+    /* ---- Layout helpers ---- */
+    .stage { position: absolute; inset: 110px 64px 110px; }
+    .grain {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 220px; opacity: 0.06;
+    }
+
+    /* ---- Playful injection: motion + decorative motifs ---- */
+    @keyframes bob   { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes drift { 0%,100% { transform: translateY(0) rotate(var(--rot,0deg)); } 50% { transform: translateY(-6px) rotate(var(--rot,0deg)); } }
+    @keyframes spin-slow { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+    @keyframes wiggle { 0%,100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+    @keyframes dash-flow { to { stroke-dashoffset: -40; } }
+    .bob    { animation: bob 3.6s ease-in-out infinite; }
+    .drift  { animation: drift 4.2s ease-in-out infinite; }
+    .spinny { animation: spin-slow 22s linear infinite; transform-origin: center; }
+    .wiggle { display: inline-block; animation: wiggle 5.5s ease-in-out infinite; transform-origin: center; }
+
+    .ornament { position: absolute; pointer-events: none; z-index: 3; }
+
+    /* Rubber-stamp pill — rotated, used as a playful accent */
+    .stamp {
+      position: absolute; z-index: 4;
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1.5px solid var(--accent); color: var(--accent);
+      background: rgba(250,244,232,0.05);
+      border-radius: 999px; padding: 10px 18px;
+      font-family: var(--font-sans); font-size: 11px; font-weight: 600;
+      letter-spacing: 0.24em; text-transform: uppercase;
+    }
+    .stamp.crimson { border-color: var(--color-crimson); color: var(--color-crimson); background: rgba(255,255,255,0.7); }
+    .stamp .ast { display: inline-block; }
+
+    /* Hand-drawn underline — wavy stroke sits under an emphasis word */
+    .underline-wave {
+      position: absolute; left: 0; right: 0; bottom: -10px;
+      width: 100%; height: 14px;
+      pointer-events: none; color: var(--accent);
+    }
+
+    /* Confetti dot — solid tan pellet for sprinkle compositions */
+    .dot-pellet { width: 10px; height: 10px; border-radius: 999px; background: var(--accent); display: inline-block; }
+    .dot-pellet.crimson { background: var(--color-crimson); }
+    .dot-pellet.cream { background: var(--color-cream-light); }
+    .dot-pellet.tan-light { background: var(--color-tan-light); }
+
+    /* =========================================================
+       SLIDE 1 — Cover
+       ========================================================= */
+    .s-cover { background: #0c0a08; color: var(--fg-on-dark); padding: 0; }
+    .s-cover .photo {
+      position: absolute; inset: 0;
+      background: url(assets/dali-house-hero.jpg) center 70% / cover no-repeat;
+    }
+    .s-cover .photo::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(10,7,5,0.55) 0%, rgba(10,7,5,0.35) 38%, rgba(10,7,5,0.80) 100%);
+    }
+    .s-cover .center {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; z-index: 3;
+    }
+    .s-cover .welcome {
+      font-size: 14px; font-weight: 400; letter-spacing: 0.5em;
+      text-transform: uppercase; color: rgba(250,244,232,0.45);
+      margin: 0 0 96px;
+    }
+    .s-cover .wordmark {
+      width: 720px; filter: brightness(0) invert(1); opacity: 0.97;
+    }
+    .s-cover .tag {
+      margin-top: 36px;
+      font-size: 14px; letter-spacing: 0.40em; text-transform: uppercase;
+      color: var(--accent);
+    }
+    .s-cover .rule {
+      width: 80px; height: 1px; background: var(--accent); margin: 64px auto 28px;
+    }
+    .s-cover .deck-title {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 26px; color: var(--color-cream-light);
+      font-weight: 400; letter-spacing: 0.02em;
+    }
+    .s-cover .corner {
+      position: absolute; z-index: 4; color: var(--accent);
+      font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 500;
+    }
+    .s-cover .corner.tl { top: 48px; left: 64px; }
+    .s-cover .corner.tr { top: 48px; right: 64px; font-family: var(--font-serif); font-style: italic; text-transform: none; letter-spacing: 0.02em; color: rgba(250,244,232,0.55); }
+    .s-cover .corner.bl { bottom: 48px; left: 64px; font-family: var(--font-serif); color: rgba(250,244,232,0.55); letter-spacing: 0.04em; text-transform: none; }
+    .s-cover .corner.br { bottom: 48px; right: 64px; color: rgba(250,244,232,0.55); }
+
+    /* =========================================================
+       SLIDE 2 — Contents (Index)
+       ========================================================= */
+    .s-index .display { font-size: 132px; max-width: 1100px; }
+    .s-index .toc {
+      position: absolute; top: 200px; right: 64px; bottom: 110px; width: 920px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px;
+      align-content: start;
+    }
+    .s-index .toc-col { display: flex; flex-direction: column; }
+    .s-index .toc-row {
+      display: grid; grid-template-columns: 44px 1fr 60px;
+      align-items: baseline; padding: 11px 0;
+      border-bottom: 1px solid rgba(124,92,62,0.18);
+      gap: 16px;
+    }
+    .s-index .toc-row .n {
+      font-family: var(--font-serif); font-style: italic;
+      color: var(--accent); font-size: 18px; font-weight: 400;
+    }
+    .s-index .toc-row .t {
+      font-family: var(--font-serif); font-weight: 500;
+      font-size: 22px; color: var(--fg); letter-spacing: -0.01em;
+    }
+    .s-index .toc-row .p {
+      font-family: var(--font-sans); font-size: 11px;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(124,92,62,0.55); text-align: right;
+    }
+    .s-index .toc-group {
+      font-family: var(--font-sans); font-size: 10px;
+      letter-spacing: 0.32em; text-transform: uppercase;
+      color: var(--color-crimson); margin: 10px 0 6px;
+    }
+    .s-index .toc-group:first-child { margin-top: 0; }
+    .s-index .opener {
+      position: absolute; top: 200px; left: 64px; max-width: 480px;
+    }
+    .s-index .opener .eyebrow-lg { color: var(--color-crimson); }
+    .s-index .opener .display { font-size: 88px; margin-top: 22px; }
+    .s-index .opener .display em { color: var(--color-crimson-warm); font-style: italic; }
+    .s-index .opener .lede { margin-top: 28px; font-size: 18px; max-width: 420px; color: var(--fg-muted); }
+
+    /* =========================================================
+       SLIDE 3 — Promise / Soft landing
+       ========================================================= */
+    .s-promise { padding: 0; }
+    .s-promise .photo {
+      position: absolute; left: 0; top: 0; bottom: 0; width: 50%;
+      background: url(assets/dali-house-bg.jpg) center / cover no-repeat;
+    }
+    .s-promise .photo::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(10,7,5,0.25), rgba(10,7,5,0.50));
+    }
+    .s-promise .photo-label {
+      position: absolute; bottom: 64px; left: 64px; color: rgba(250,244,232,0.65);
+      font-family: var(--font-serif); font-style: italic; font-size: 16px; z-index: 2;
+    }
+    .s-promise .copy {
+      position: absolute; right: 0; top: 0; bottom: 0; width: 50%;
+      background: var(--bg);
+      padding: 200px 96px 110px 96px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .s-promise .display { font-size: 86px; }
+    .s-promise .display em { color: var(--color-crimson-warm); }
+    .s-promise .quote {
+      margin-top: 48px; padding-left: 24px;
+      border-left: 2px solid var(--accent);
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 24px; line-height: 1.55; color: var(--fg);
+      max-width: 580px;
+    }
+    .s-promise .signed {
+      margin-top: 28px; font-size: 12px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(124,92,62,0.55); font-weight: 500;
+    }
+
+    /* =========================================================
+       SLIDE 4 — Audience
+       ========================================================= */
+    .s-audience .stage { display: grid; grid-template-columns: 540px 1fr; gap: 96px; align-items: center; }
+    .s-audience .left h2 { margin: 22px 0 0; }
+    .s-audience .display { font-size: 100px; }
+    .s-audience .display em { color: var(--accent); }
+    .s-audience .left .lede { margin-top: 36px; }
+    .s-audience .cards {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    }
+    .a-card {
+      background: #fff; border-radius: 18px; padding: 36px;
+      box-shadow: var(--shadow-card);
+    }
+    .a-card .num {
+      font-family: var(--font-serif); font-style: italic;
+      color: var(--color-crimson); font-size: 22px; margin-bottom: 16px;
+    }
+    .a-card h3 {
+      font-family: var(--font-serif); font-size: 26px; font-weight: 500;
+      color: var(--fg); margin: 0 0 12px; line-height: 1.2;
+    }
+    .a-card p {
+      font-family: var(--font-sans); font-weight: 300;
+      font-size: 15px; line-height: 1.75; color: var(--fg-muted);
+      margin: 0;
+    }
+    .a-card .chip {
+      display: inline-flex; margin-top: 22px;
+      padding: 5px 12px; border-radius: 999px;
+      border: 1px solid var(--accent-soft); background: rgba(201,169,110,0.10);
+      color: var(--accent); font-size: 11px; letter-spacing: 0.18em;
+      text-transform: uppercase; font-weight: 500;
+    }
+
+    /* =========================================================
+       SLIDE 5 — Voice
+       ========================================================= */
+    .s-voice .stage { display: grid; grid-template-columns: 460px 1fr; gap: 88px; }
+    .s-voice .display { font-size: 84px; line-height: 1.02; }
+    .s-voice .display em { color: var(--accent); }
+    .s-voice .voice-right { display: grid; grid-template-columns: 1fr 1fr; gap: 56px 64px; align-content: start; padding-top: 24px; }
+    .v-col h4 {
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      margin: 0 0 18px; color: var(--accent);
+    }
+    .v-col.avoid h4 { color: var(--color-crimson); }
+    .v-col ul { list-style: none; padding: 0; margin: 0; }
+    .v-col li {
+      font-family: var(--font-serif); font-weight: 400;
+      font-size: 22px; line-height: 1.45; color: var(--fg);
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(124,92,62,0.14);
+    }
+    .v-col.avoid li { color: var(--color-brown); text-decoration: line-through; text-decoration-color: rgba(122,28,28,0.4); text-decoration-thickness: 1px; }
+    .v-col li:last-child { border-bottom: 0; }
+    .s-voice .phrases {
+      grid-column: 1 / -1; margin-top: 12px;
+      border-top: 1px solid rgba(124,92,62,0.18); padding-top: 28px;
+    }
+    .s-voice .phrases .lbl {
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: rgba(124,92,62,0.55); margin: 0 0 18px;
+    }
+    .s-voice .phrases-row {
+      display: flex; flex-wrap: wrap; gap: 12px 14px;
+    }
+    .s-voice .phrase {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 18px; color: var(--fg);
+      padding: 8px 18px;
+      background: var(--color-cream-light);
+      border-radius: 4px;
+    }
+
+    /* =========================================================
+       SLIDE 6 — Logo
+       ========================================================= */
+    .s-logo.dark .stage { display: grid; grid-template-columns: 1.3fr 1fr; gap: 96px; align-items: center; }
+    .s-logo .display { font-size: 96px; color: var(--fg-on-dark); }
+    .s-logo .display em { color: var(--accent); }
+    .s-logo .left .lede { margin-top: 32px; color: rgba(250,244,232,0.65); }
+    .s-logo .panels { display: flex; flex-direction: column; gap: 24px; }
+    .s-logo .panel {
+      border-radius: 18px; padding: 36px;
+      border: 1px solid rgba(250,244,232,0.10);
+      background: rgba(250,244,232,0.04);
+    }
+    .s-logo .panel.invert {
+      background: var(--bg); border-color: transparent;
+    }
+    .s-logo .panel .row {
+      display: flex; align-items: center; gap: 32px;
+    }
+    .s-logo .panel .row img.wordmark {
+      width: 380px; max-width: 100%;
+    }
+    .s-logo .panel.invert img.wordmark { filter: none; }
+    .s-logo .panel:not(.invert) img.wordmark { filter: brightness(0) invert(1); }
+    .s-logo .panel .row img.glyph { width: 84px; height: 84px; }
+    .s-logo .panel.invert .row img.glyph { filter: none; }
+    .s-logo .panel .panel-label {
+      margin-top: 18px;
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--accent);
+    }
+    .s-logo .panel .panel-sub {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 16px; color: rgba(250,244,232,0.55);
+      margin-top: 6px;
+    }
+    .s-logo .panel.invert .panel-sub { color: var(--fg-muted); }
+    .s-logo .clearspace {
+      position: relative; padding: 16px;
+      border: 1px dashed rgba(201,169,110,0.35);
+      border-radius: 4px;
+    }
+
+    /* =========================================================
+       SLIDE 7 — Color palette
+       ========================================================= */
+    .s-palette .stage { display: grid; grid-template-columns: 420px 1fr; gap: 88px; }
+    .s-palette .display { font-size: 84px; }
+    .s-palette .display em { color: var(--accent); }
+    .s-palette .swatches {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+      grid-auto-rows: 220px;
+    }
+    .sw {
+      border-radius: 18px; padding: 24px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      box-shadow: var(--shadow-card);
+    }
+    .sw .name { font-family: var(--font-serif); font-weight: 500; font-size: 18px; line-height: 1.2; }
+    .sw .sub { font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; opacity: 0.7; }
+    .sw .hex { font-family: var(--font-sans); font-size: 13px; letter-spacing: 0.06em; opacity: 0.85; }
+    .sw .role { font-family: var(--font-serif); font-style: italic; font-size: 13px; line-height: 1.45; opacity: 0.75; max-width: 220px; }
+    .sw .tag { font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.65; }
+    .sw.accent-tan { background: var(--color-tan); color: #2a1d10; }
+    .sw.cream { background: var(--color-cream); color: var(--color-brown-deep); border: 1px solid rgba(124,92,62,0.10); }
+    .sw.cream-light { background: var(--color-cream-light); color: var(--color-brown-deep); }
+    .sw.brown-deep { background: var(--color-brown-deep); color: var(--color-cream); }
+    .sw.charcoal { background: var(--color-charcoal); color: var(--color-cream); }
+    .sw.charcoal-mid { background: var(--color-charcoal-mid); color: var(--color-cream); }
+    .sw.crimson { background: var(--color-crimson); color: var(--color-cream); }
+    .sw.crimson-warm { background: var(--color-crimson-warm); color: var(--color-cream); }
+    .sw.tan-light { background: var(--color-tan-light); color: #3b2a16; }
+    .sw.brown { background: var(--color-brown); color: var(--color-cream); }
+
+    /* =========================================================
+       SLIDE 8 — Surfaces
+       ========================================================= */
+    .s-surfaces .stage { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; }
+    .s-surfaces .display { position: absolute; top: 120px; left: 64px; right: 64px; font-size: 64px; }
+    .s-surfaces .display em { color: var(--accent); }
+    .s-surfaces .lede { position: absolute; top: 240px; left: 64px; max-width: 720px; }
+    .s-surfaces .stage { top: 360px; bottom: 110px; }
+    .surface-card {
+      border-radius: 18px; overflow: hidden; position: relative;
+      display: flex; flex-direction: column;
+    }
+    .surface-card .swatch { height: 260px; padding: 36px; display: flex; flex-direction: column; justify-content: space-between; }
+    .surface-card .swatch .label {
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.28em; text-transform: uppercase;
+    }
+    .surface-card .swatch .name {
+      font-family: var(--font-serif); font-size: 36px; font-weight: 500;
+      line-height: 1.05; letter-spacing: -0.01em;
+    }
+    .surface-card.light .swatch { background: var(--color-cream); color: var(--color-brown-deep); }
+    .surface-card.light .swatch .label { color: var(--accent); }
+    .surface-card.warm  .swatch { background: var(--color-cream-light); color: var(--color-brown-deep); }
+    .surface-card.warm  .swatch .label { color: var(--color-crimson); }
+    .surface-card.dark  .swatch { background: var(--color-charcoal); color: var(--color-cream); }
+    .surface-card.dark  .swatch .label { color: var(--accent); }
+    .surface-card .desc {
+      background: #fff; border: 1px solid rgba(124,92,62,0.10); border-top: 0;
+      padding: 24px 28px; flex: 1;
+      font-family: var(--font-sans); font-weight: 300;
+      font-size: 14px; line-height: 1.7; color: var(--fg-muted);
+    }
+    .surface-card .desc strong { font-weight: 500; color: var(--fg); }
+    .surface-card .desc .when {
+      display: block; font-family: var(--font-sans); font-size: 10px; font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(124,92,62,0.50); margin-bottom: 8px;
+    }
+
+    /* =========================================================
+       SLIDE 9 — Typography (Playfair)
+       ========================================================= */
+    .s-type-serif { background: var(--bg-warm); }
+    .s-type-serif .stage { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; }
+    .s-type-serif .label-col h3 {
+      font-family: var(--font-serif);
+      font-weight: 500; font-size: 96px; line-height: 1; color: var(--fg);
+      letter-spacing: -0.02em; margin: 0;
+    }
+    .s-type-serif .label-col h3 em { color: var(--accent); font-style: italic; }
+    .s-type-serif .label-col p { margin-top: 28px; font-size: 16px; color: var(--fg-muted); max-width: 380px; line-height: 1.75; }
+    .s-type-serif .label-col .meta {
+      margin-top: 32px; display: grid; grid-template-columns: auto 1fr; gap: 14px 28px;
+      font-family: var(--font-sans); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .s-type-serif .label-col .meta .k { color: var(--accent); font-weight: 500; }
+    .s-type-serif .label-col .meta .v { color: var(--fg-muted); letter-spacing: 0.04em; text-transform: none; font-family: var(--font-sans); font-weight: 400; font-size: 13px; }
+    .s-type-serif .spec-col { display: flex; flex-direction: column; gap: 22px; }
+    .s-type-serif .spec {
+      border-top: 1px solid rgba(124,92,62,0.20); padding: 18px 0 0;
+    }
+    .s-type-serif .spec .px {
+      font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 8px;
+    }
+    .s-type-serif .spec .sample {
+      font-family: var(--font-serif); color: var(--fg);
+      letter-spacing: -0.012em; line-height: 1;
+    }
+    .s-type-serif .spec .sample.italic { font-style: italic; color: var(--color-crimson); }
+
+    /* =========================================================
+       SLIDE 10 — Typography (DM Sans)
+       ========================================================= */
+    .s-type-sans .stage { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; }
+    .s-type-sans .label-col h3 {
+      font-family: var(--font-sans); font-weight: 300; font-size: 116px;
+      color: var(--fg); letter-spacing: -0.03em; line-height: 0.96; margin: 0;
+    }
+    .s-type-sans .label-col h3 .light { font-weight: 300; }
+    .s-type-sans .label-col h3 .reg { font-weight: 400; }
+    .s-type-sans .label-col h3 .med { font-weight: 500; }
+    .s-type-sans .label-col p { margin-top: 32px; font-size: 16px; color: var(--fg-muted); max-width: 400px; line-height: 1.75; }
+    .s-type-sans .label-col .meta {
+      margin-top: 32px; display: grid; grid-template-columns: auto 1fr; gap: 14px 28px;
+      font-family: var(--font-sans); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .s-type-sans .label-col .meta .k { color: var(--accent); font-weight: 500; }
+    .s-type-sans .label-col .meta .v { color: var(--fg-muted); letter-spacing: 0.04em; text-transform: none; font-weight: 400; font-size: 13px; }
+    .s-type-sans .spec-col { display: flex; flex-direction: column; gap: 22px; }
+    .s-type-sans .spec { border-top: 1px solid rgba(124,92,62,0.20); padding: 18px 0 0; }
+    .s-type-sans .spec .px {
+      font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 8px;
+    }
+    .s-type-sans .spec .sample { font-family: var(--font-sans); color: var(--fg); line-height: 1.2; }
+    .s-type-sans .spec .sample.eyebrow {
+      font-size: 14px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* =========================================================
+       SLIDE 11 — Type in use
+       ========================================================= */
+    .s-type-use { background: var(--bg-warm); }
+    .s-type-use .stage { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: stretch; }
+    .s-type-use .canvas {
+      background: var(--bg); border-radius: 18px; padding: 64px;
+      box-shadow: var(--shadow-card-hover);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .s-type-use .price-wrap { display: flex; align-items: baseline; gap: 6px; }
+    .s-type-use .price { font-family: var(--font-serif); font-weight: 700; font-size: 132px; color: var(--accent); line-height: 0.9; }
+    .s-type-use .per { font-size: 18px; color: rgba(124,92,62,0.55); font-weight: 300; }
+    .s-type-use .canvas .eyebrow-lg { margin-bottom: 18px; color: var(--accent); font-size: 11px; letter-spacing: 0.28em; }
+    .s-type-use .canvas h2 {
+      font-family: var(--font-serif); font-weight: 500; font-size: 56px;
+      color: var(--fg); margin: 32px 0 22px; line-height: 1.1; letter-spacing: -0.01em;
+    }
+    .s-type-use .canvas h2 em { color: var(--accent); font-style: italic; }
+    .s-type-use .canvas p {
+      font-family: var(--font-sans); font-weight: 300;
+      font-size: 17px; line-height: 1.78; color: var(--fg-muted); margin: 0;
+    }
+    .s-type-use .specs {
+      display: flex; flex-direction: column; gap: 18px; align-self: center;
+    }
+    .s-type-use .specs h4 {
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.28em; text-transform: uppercase; color: var(--accent); margin: 0 0 8px;
+    }
+    .s-type-use .specs .lede { margin: 0 0 24px; font-size: 18px; color: var(--fg-muted); }
+    .s-type-use .spec-row {
+      display: grid; grid-template-columns: 180px 1fr;
+      padding: 16px 0; border-top: 1px solid rgba(124,92,62,0.18);
+      align-items: baseline;
+    }
+    .s-type-use .spec-row:last-child { border-bottom: 1px solid rgba(124,92,62,0.18); }
+    .s-type-use .spec-row .name {
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent);
+    }
+    .s-type-use .spec-row .value {
+      font-family: var(--font-sans); font-weight: 400;
+      font-size: 14px; color: var(--fg-muted); line-height: 1.55;
+    }
+    .s-type-use .spec-row .value em { font-family: var(--font-serif); font-style: italic; color: var(--fg); }
+
+    /* =========================================================
+       SLIDE 12 — Iconography
+       ========================================================= */
+    .s-icons .stage { padding-top: 12px; }
+    .s-icons .display { font-size: 84px; }
+    .s-icons .display em { color: var(--accent); }
+    .s-icons .row1 { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 24px; }
+    .s-icons .lede { margin-top: 28px; }
+    .s-icons .badges {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+      margin-top: 48px;
+    }
+    .badge-card {
+      background: #fff; border-radius: 18px; padding: 32px;
+      box-shadow: var(--shadow-card);
+      display: flex; flex-direction: column; align-items: flex-start; gap: 18px;
+    }
+    .badge-card .circle {
+      width: 76px; height: 76px; border-radius: 999px;
+      border: 1px solid var(--accent-soft);
+      background: rgba(201,169,110,0.12);
+      color: var(--accent);
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .badge-card.crimson .circle {
+      background: var(--color-crimson); color: var(--color-cream); border-color: transparent;
+    }
+    .badge-card h4 {
+      font-family: var(--font-serif); font-size: 22px; font-weight: 500;
+      color: var(--fg); margin: 0;
+    }
+    .badge-card .meta {
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase; color: rgba(124,92,62,0.55);
+    }
+    .s-icons .rules {
+      position: absolute; bottom: 110px; left: 64px; right: 64px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+      padding-top: 24px; border-top: 1px solid rgba(124,92,62,0.18);
+    }
+    .s-icons .rule-col h5 {
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-crimson);
+      margin: 0 0 10px;
+    }
+    .s-icons .rule-col p {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 16px; line-height: 1.5; color: var(--fg-muted); margin: 0;
+    }
+
+    /* =========================================================
+       SLIDE 13 — Photography
+       ========================================================= */
+    .s-photo { background: var(--bg); }
+    .s-photo .display { position: absolute; top: 130px; left: 64px; max-width: 700px; font-size: 84px; }
+    .s-photo .display em { color: var(--accent); }
+    .s-photo .lede { position: absolute; top: 340px; left: 64px; max-width: 520px; }
+    .s-photo .mosaic {
+      position: absolute; top: 120px; right: 64px; bottom: 110px; width: 1080px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 16px;
+    }
+    .s-photo .frame { border-radius: 16px; overflow: hidden; position: relative; background-size: cover; background-position: center; }
+    .s-photo .frame .cap {
+      position: absolute; bottom: 14px; left: 16px;
+      color: rgba(255,255,255,0.92);
+      font-family: var(--font-serif); font-style: italic; font-size: 13px;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+    }
+    .s-photo .frame.big { grid-row: 1 / 3; }
+    .s-photo .rules {
+      position: absolute; bottom: 110px; left: 64px; width: 720px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
+      padding-top: 24px; border-top: 1px solid rgba(124,92,62,0.18);
+    }
+    .s-photo .r-col h5 {
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase; margin: 0 0 8px;
+    }
+    .s-photo .r-col.do h5 { color: var(--accent); }
+    .s-photo .r-col.dont h5 { color: var(--color-crimson); }
+    .s-photo .r-col p {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 15px; line-height: 1.55; color: var(--fg-muted); margin: 0;
+    }
+
+    /* =========================================================
+       SLIDE 14 — Components
+       ========================================================= */
+    .s-components .display { position: absolute; top: 130px; left: 64px; max-width: 1100px; font-size: 72px; }
+    .s-components .display em { color: var(--accent); }
+    .s-components .lede { position: absolute; top: 300px; left: 64px; max-width: 760px; }
+    .s-components .grid {
+      position: absolute; top: 410px; left: 64px; right: 64px; bottom: 110px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    }
+    .c-card {
+      background: var(--color-cream-light); border-radius: 18px; padding: 32px;
+      display: flex; flex-direction: column; gap: 22px;
+      position: relative; min-height: 320px;
+    }
+    .c-card.dark { background: var(--color-charcoal); color: var(--color-cream); }
+    .c-card .label {
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent);
+    }
+    .c-card.dark .label { color: var(--accent); }
+    .c-card .name {
+      font-family: var(--font-serif); font-size: 22px; font-weight: 500;
+      color: var(--fg); margin: -8px 0 0;
+    }
+    .c-card.dark .name { color: var(--fg-on-dark); }
+    .c-card .demo { flex: 1; display: flex; align-items: center; justify-content: center; }
+    .btn-apply-demo {
+      display: inline-block;
+      background: var(--color-cream-light);
+      color: var(--color-brown-deep);
+      padding: 15px 44px;
+      border-radius: 999px;
+      font-family: var(--font-sans); font-size: 12px; font-weight: 500; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-cta);
+    }
+    .btn-ghost-demo {
+      display: inline-block;
+      background: transparent;
+      color: rgba(250,244,232,0.85);
+      border: 1px solid rgba(250,244,232,0.35);
+      padding: 13px 28px;
+      border-radius: 999px;
+      font-family: var(--font-sans); font-size: 12px; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .chip-demo {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 18px; border-radius: 999px;
+      border: 1px solid rgba(250,244,232,0.15);
+      color: rgba(250,244,232,0.78);
+      font-family: var(--font-sans); font-size: 14px;
+    }
+    .chip-demo .check { width: 13px; height: 13px; }
+    .chip-stack { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+    .pill-tag {
+      display: inline-flex; padding: 6px 14px; border-radius: 999px;
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+    }
+    .pill-tag.cat { border: 1px solid var(--color-crimson); background: rgba(122,28,28,0.08); color: var(--color-crimson); }
+    .pill-tag.read { border: 1px solid rgba(124,92,62,0.20); color: rgba(124,92,62,0.75); }
+    .pill-feat {
+      padding: 6px 14px; border-radius: 999px;
+      background: var(--color-crimson); color: var(--color-cream);
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+    }
+    .pullquote-demo {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 18px; line-height: 1.55;
+      border-left: 2px solid var(--accent); padding-left: 16px;
+      color: var(--fg);
+    }
+    .eyebrow-demo {
+      font-family: var(--font-sans); font-size: 12px; font-weight: 500;
+      letter-spacing: 0.32em; text-transform: uppercase; color: var(--accent);
+    }
+    .feature-mini {
+      width: 56px; height: 56px; border-radius: 999px;
+      background: rgba(201,169,110,0.12); border: 1px solid var(--accent-soft);
+      color: var(--accent); display: inline-flex; align-items: center; justify-content: center;
+    }
+    .room-mini {
+      width: 100%; border-radius: 14px; overflow: hidden;
+      background: #fff;
+    }
+    .room-mini .ph {
+      height: 110px;
+      background: url(assets/room-bedroom1.jpg) center / cover;
+    }
+    .room-mini .b { padding: 12px 14px; }
+    .room-mini h4 { font-family: var(--font-serif); font-size: 14px; color: var(--accent); margin: 0 0 4px; font-weight: 500; }
+    .room-mini p { font-family: var(--font-sans); font-size: 11px; color: rgba(124,92,62,0.65); margin: 0; line-height: 1.5; font-weight: 300; }
+    .c-card .spec-note {
+      font-family: var(--font-sans); font-size: 11px; line-height: 1.55;
+      color: rgba(124,92,62,0.65); margin-top: auto;
+    }
+    .c-card.dark .spec-note { color: rgba(250,244,232,0.40); }
+
+    /* =========================================================
+       SLIDE 15 — Application Process (Playful)
+       ========================================================= */
+    .s-process { background: var(--bg-warm); }
+    .s-process .display { font-size: 84px; max-width: 1100px; }
+    .s-process .display em { color: var(--color-crimson-warm); }
+    .s-process .lede { margin-top: 24px; max-width: 620px; }
+    .s-process .stamp {
+      top: 154px; right: 80px;
+      transform: rotate(8deg);
+      background: #fff;
+      box-shadow: 0 4px 18px rgba(61,35,20,0.10);
+    }
+    .s-process .ast-mark {
+      position: absolute; top: 168px; left: 24px; color: var(--accent);
+    }
+
+    .s-process .steps {
+      position: absolute; left: 64px; right: 64px; bottom: 110px;
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 28px;
+    }
+    .s-process .step-card {
+      position: relative;
+      z-index: 2;
+      background: #fff;
+      border-radius: 24px;
+      padding: 40px 36px 36px;
+      box-shadow: var(--shadow-card-hover);
+      display: flex; flex-direction: column; gap: 14px;
+      min-height: 360px;
+      overflow: hidden;
+    }
+    .s-process .step-card .big-num {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 168px; font-weight: 600;
+      color: var(--accent); line-height: 0.78;
+      letter-spacing: -0.03em;
+      margin: -6px 0 0 -4px;
+    }
+    .s-process .step-card.crimson-num .big-num { color: var(--color-crimson-warm); }
+    .s-process .step-card .eyebrow-step {
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--accent);
+    }
+    .s-process .step-card.crimson-num .eyebrow-step { color: var(--color-crimson); }
+    .s-process .step-card h3 {
+      font-family: var(--font-serif); font-weight: 500;
+      font-size: 30px; line-height: 1.12; letter-spacing: -0.01em;
+      color: var(--fg); margin: 4px 0 0;
+    }
+    .s-process .step-card h3 em { color: var(--accent); font-style: italic; }
+    .s-process .step-card p {
+      font-family: var(--font-sans); font-weight: 300;
+      font-size: 15px; line-height: 1.75; color: var(--fg-muted);
+      margin: 0;
+    }
+    .s-process .step-card .badge {
+      position: absolute; top: 28px; right: 28px;
+      width: 44px; height: 44px; border-radius: 999px;
+      border: 1px solid var(--accent-soft);
+      background: rgba(201,169,110,0.10);
+      color: var(--accent);
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .s-process .step-card .footnote {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 13px; color: rgba(124,92,62,0.65);
+      margin-top: auto;
+    }
+
+    /* Dashed arrow connector — sits between cards, behind them */
+    .s-process .connector {
+      position: absolute; pointer-events: none; z-index: 1;
+      top: 50%; transform: translateY(-50%);
+      color: var(--accent);
+    }
+    .s-process .connector svg path { stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-dasharray: 4 6; stroke-dashoffset: 0; animation: dash-flow 2.4s linear infinite; }
+    .s-process .connector svg .head { stroke-dasharray: 0; animation: none; }
+    .s-process .conn-1 { left: calc((100% - 56px) / 3 - 4px); }
+    .s-process .conn-2 { left: calc(2 * (100% - 56px) / 3 + 24px); }
+
+    /* Confetti dots scattered behind the steps */
+    .s-process .confetti { position: absolute; pointer-events: none; }
+    .s-process .confetti .dot-pellet { position: absolute; }
+
+    /* =========================================================
+       SLIDE 16 — Editorial (Blog system)
+       ========================================================= */
+    .s-editorial { background: var(--bg-dark); color: var(--fg-on-dark); padding: 0; overflow: hidden; }
+    .s-editorial .stage { inset: 110px 64px; display: grid; grid-template-columns: 1.05fr 1fr; gap: 64px; }
+    .s-editorial .left {
+      position: relative; background: url(assets/dali-house-bg.jpg) center / cover no-repeat;
+      border-radius: 18px; overflow: hidden;
+      padding: 56px; display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .s-editorial .left::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(10,7,5,0.55), rgba(10,7,5,0.35) 40%, rgba(10,7,5,0.78));
+    }
+    .s-editorial .left > * { position: relative; z-index: 2; }
+    .s-editorial .section-label {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.30em; text-transform: uppercase;
+      color: var(--fg-on-dark);
+    }
+    .s-editorial .cover-h1 {
+      font-family: var(--font-serif); font-weight: 600;
+      font-size: 88px; line-height: 0.95; letter-spacing: -0.025em;
+      color: var(--fg-on-dark); margin: 0; text-shadow: 0 4px 28px rgba(0,0,0,0.25);
+    }
+    .s-editorial .cover-h1 em { color: var(--color-tan-light); font-style: italic; }
+    .s-editorial .sub-bar {
+      display: inline; box-decoration-break: clone; -webkit-box-decoration-break: clone;
+      background: var(--color-cream-light); color: var(--color-brown-deep);
+      padding: 8px 14px 10px;
+      font-family: var(--font-serif); font-weight: 500;
+      font-size: 22px; line-height: 1.7; margin-top: 22px;
+    }
+    .s-editorial .byline {
+      font-family: var(--font-serif); font-style: italic; font-size: 16px;
+      color: rgba(250,244,232,0.65);
+    }
+    .s-editorial .byline .strong { color: var(--color-tan-light); font-style: normal; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; font-size: 12px; font-family: var(--font-sans); margin-right: 8px; }
+
+    .s-editorial .editorial-right { display: flex; flex-direction: column; gap: 28px; align-self: center; }
+    .s-editorial .eyebrow-lg { color: var(--accent); font-size: 12px; }
+    .s-editorial .display { font-size: 64px; color: var(--fg-on-dark); }
+    .s-editorial .display em { color: var(--accent); }
+    .s-editorial .lede { color: rgba(250,244,232,0.65); font-size: 19px; max-width: 580px; margin-top: 4px; }
+    .s-editorial .palette-row {
+      display: flex; gap: 10px; margin-top: 16px;
+    }
+    .s-editorial .palette-row .dot {
+      width: 36px; height: 36px; border-radius: 999px;
+      border: 1px solid rgba(250,244,232,0.18);
+    }
+    .s-editorial .legend {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px 32px; margin-top: 8px;
+      font-family: var(--font-sans); font-size: 13px; color: rgba(250,244,232,0.65);
+    }
+    .s-editorial .legend .k {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 4px;
+    }
+
+    /* =========================================================
+       SLIDE 16 — Soft landing closing
+       ========================================================= */
+    .s-end { padding: 0; color: var(--fg-on-dark); }
+    .s-end .photo {
+      position: absolute; inset: 0;
+      background: url(assets/dali-house-bg.jpg) center / cover no-repeat;
+    }
+    .s-end .photo::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(14,10,7,0.72), rgba(14,10,7,0.78));
+    }
+    .s-end .grain { z-index: 2; }
+    .s-end .stage {
+      position: absolute; inset: 0; padding: 110px 96px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      z-index: 3;
+    }
+    .s-end .top { display: flex; justify-content: space-between; align-items: flex-end; }
+    .s-end .top .lockup img { width: 320px; filter: brightness(0) invert(1); opacity: 0.85; }
+    .s-end .top .meta {
+      text-align: right; font-family: var(--font-serif); font-style: italic;
+      font-size: 18px; color: rgba(250,244,232,0.55);
+    }
+    .s-end .center {
+      display: flex; flex-direction: column; align-items: flex-start;
+    }
+    .s-end .center .eyebrow-lg { color: var(--accent); }
+    .s-end h1 {
+      font-family: var(--font-serif); font-weight: 500;
+      font-size: 144px; line-height: 0.96; letter-spacing: -0.025em;
+      color: var(--fg-on-dark); margin: 28px 0 0; max-width: 1300px;
+    }
+    .s-end h1 em { font-style: italic; color: var(--accent); }
+    .s-end .center .lede {
+      margin-top: 36px; font-size: 22px; max-width: 720px; color: rgba(250,244,232,0.65);
+    }
+    .s-end .bottom {
+      display: flex; justify-content: space-between; align-items: flex-end; gap: 64px;
+    }
+    .s-end .contacts {
+      display: grid; grid-template-columns: repeat(3, auto); gap: 56px;
+    }
+    .s-end .contact .k {
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.28em; text-transform: uppercase; color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .s-end .contact .v {
+      font-family: var(--font-serif); font-size: 22px; color: var(--fg-on-dark);
+      font-weight: 500; letter-spacing: -0.005em;
+    }
+    .s-end .cta {
+      display: inline-block;
+      background: var(--color-cream-light); color: var(--color-brown-deep);
+      padding: 18px 52px; border-radius: 999px;
+      font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      box-shadow: var(--shadow-cta); text-decoration: none;
+    }
+
+    /* small checkmark inline */
+    .check-mini { width: 13px; height: 13px; flex: 0 0 13px; }
+
+    /* =========================================================
+       SLIDE 17 — Journal Index (Listing)
+       ========================================================= */
+    .s-journal-index { background: var(--bg); }
+    .s-journal-index .stage-head {
+      position: absolute; top: 130px; left: 64px; right: 64px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end;
+    }
+    .s-journal-index .display { font-size: 72px; max-width: 760px; }
+    .s-journal-index .display em { color: var(--color-crimson-warm); }
+    .s-journal-index .stage-head .lede { margin: 0; max-width: 560px; font-size: 20px; }
+    .s-journal-index .mock {
+      position: absolute; top: 360px; left: 64px; right: 64px; bottom: 110px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px;
+    }
+    .s-journal-index .featured-card {
+      grid-column: 1 / span 2;
+      display: grid; grid-template-columns: 1fr 1.1fr;
+      background: #fff; border-radius: 18px; overflow: hidden;
+      box-shadow: var(--shadow-card-hover);
+    }
+    .s-journal-index .featured-card .ph {
+      background: url(assets/dali-house-bg.jpg) center / cover no-repeat;
+      min-height: 100%; position: relative;
+    }
+    .s-journal-index .featured-card .ph .pill-feat {
+      position: absolute; top: 22px; left: 22px;
+      background: var(--accent); color: var(--color-brown-deep);
+      padding: 7px 16px; border-radius: 999px;
+      font-family: var(--font-sans); font-size: 12px; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+    }
+    .s-journal-index .featured-card .body { padding: 56px 52px; display: flex; flex-direction: column; justify-content: center; }
+    .s-journal-index .featured-card .meta { font-family: var(--font-sans); font-size: 14px; font-weight: 400; letter-spacing: 0.04em; color: rgba(124,92,62,0.55); margin: 0 0 18px; }
+    .s-journal-index .featured-card h3 { font-family: var(--font-serif); font-size: 36px; font-weight: 500; line-height: 1.18; color: var(--fg); margin: 0 0 18px; letter-spacing: -0.01em; }
+    .s-journal-index .featured-card p { font-family: var(--font-sans); font-weight: 300; font-size: 17px; line-height: 1.7; color: var(--fg-muted); margin: 0; }
+    .s-journal-index .featured-card .read { margin-top: 28px; font-family: var(--font-sans); font-size: 13px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+
+    .s-journal-index .small-card {
+      grid-row: 1 / span 2;
+      grid-column: 3;
+      background: #fff; border-radius: 18px; overflow: hidden;
+      box-shadow: var(--shadow-card);
+      display: flex; flex-direction: column;
+    }
+    .s-journal-index .small-card .ph {
+      aspect-ratio: 16/9; background-size: cover; background-position: center; position: relative;
+    }
+    .s-journal-index .small-card .ph .pill {
+      position: absolute; top: 16px; left: 16px;
+      background: var(--color-crimson); color: #fff;
+      padding: 5px 12px; border-radius: 999px;
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+    }
+    .s-journal-index .small-card .body { padding: 28px 28px 32px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+    .s-journal-index .small-card .meta { font-family: var(--font-sans); font-size: 12px; color: rgba(124,92,62,0.55); margin: 0; letter-spacing: 0.04em; }
+    .s-journal-index .small-card h4 { font-family: var(--font-serif); font-size: 22px; font-weight: 500; line-height: 1.28; color: var(--fg); margin: 0; letter-spacing: -0.005em; }
+    .s-journal-index .small-card p { font-family: var(--font-sans); font-weight: 300; font-size: 14px; line-height: 1.7; color: var(--fg-muted); margin: 0; flex: 1; }
+    .s-journal-index .small-card .read { font-family: var(--font-sans); font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-top: auto; }
+
+    .s-journal-index .legend {
+      grid-column: 1 / span 2;
+      align-self: end;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+      padding-top: 26px; border-top: 1px solid rgba(124,92,62,0.18);
+    }
+    .s-journal-index .legend .k { font-family: var(--font-sans); font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-crimson); margin: 0 0 6px; }
+    .s-journal-index .legend .v { font-family: var(--font-serif); font-style: italic; font-size: 15px; line-height: 1.5; color: var(--fg-muted); margin: 0; }
+
+    /* =========================================================
+       SLIDE 18 — Article Anatomy
+       ========================================================= */
+    .s-anatomy { background: var(--bg-warm); }
+    .s-anatomy .stage-head {
+      position: absolute; top: 130px; left: 64px; right: 64px;
+    }
+    .s-anatomy .display { font-size: 72px; max-width: 1100px; }
+    .s-anatomy .display em { color: var(--color-crimson-warm); }
+    .s-anatomy .stage-head .lede { margin-top: 22px; max-width: 720px; font-size: 19px; }
+
+    .s-anatomy .layout {
+      position: absolute; top: 340px; left: 64px; right: 64px; bottom: 110px;
+      display: grid; grid-template-columns: 1.15fr 1fr; gap: 56px;
+    }
+    .s-anatomy .specimen {
+      position: relative;
+      background: var(--bg); border-radius: 18px; overflow: hidden;
+      box-shadow: var(--shadow-card-hover);
+      display: flex; flex-direction: column;
+    }
+    .s-anatomy .spec-photo {
+      position: relative; height: 360px;
+      background: url(assets/dali-house-bg.jpg) center 45% / cover no-repeat;
+    }
+    .s-anatomy .spec-photo::before {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(10,7,5,0.55) 0%, rgba(10,7,5,0.35) 28%, rgba(10,7,5,0.30) 60%, rgba(10,7,5,0.65) 100%);
+    }
+    .s-anatomy .spec-photo > * { position: relative; z-index: 2; }
+    .s-anatomy .spec-label {
+      position: absolute; top: 18px; left: 22px;
+      color: var(--fg-on-dark);
+      font-family: var(--font-sans); font-size: 10px; font-weight: 600;
+      letter-spacing: 0.30em; text-transform: uppercase;
+    }
+    .s-anatomy .spec-issue {
+      position: absolute; top: 18px; right: 22px;
+      color: rgba(250,244,232,0.7);
+      font-family: var(--font-serif); font-style: italic; font-size: 12px;
+    }
+    .s-anatomy .spec-h1 {
+      position: absolute; left: 32px; top: 90px; right: 32px;
+      color: var(--fg-on-dark);
+      font-family: var(--font-serif); font-weight: 600;
+      font-size: 48px; line-height: 0.96; letter-spacing: -0.025em;
+      margin: 0; text-shadow: 0 4px 18px rgba(0,0,0,0.25);
+    }
+    .s-anatomy .spec-h1 em { color: var(--color-tan-light); font-style: italic; }
+    .s-anatomy .spec-sub {
+      position: absolute; left: 32px; top: 234px; right: 32px;
+      display: inline; box-decoration-break: clone; -webkit-box-decoration-break: clone;
+    }
+    .s-anatomy .spec-sub span {
+      background: var(--color-cream-light); color: var(--color-brown-deep);
+      padding: 6px 12px 8px;
+      font-family: var(--font-serif); font-weight: 500; font-size: 17px;
+      line-height: 1.85;
+    }
+    .s-anatomy .spec-folio {
+      position: absolute; bottom: 14px; right: 22px;
+      color: rgba(250,244,232,0.85);
+      font-family: var(--font-serif); font-weight: 600; font-size: 13px;
+    }
+    .s-anatomy .spec-band {
+      padding: 32px 40px 28px; position: relative;
+    }
+    .s-anatomy .spec-band::before {
+      content: ""; position: absolute; left: 0; right: 0; top: -28px; height: 32px;
+      background: var(--bg);
+      border-top-left-radius: 50% 100%;
+      border-top-right-radius: 50% 100%;
+    }
+    .s-anatomy .spec-byline { font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-brown-deep); font-weight: 500; margin: 0 0 8px; text-align: center; }
+    .s-anatomy .spec-byline .crm { color: var(--color-crimson); font-weight: 600; }
+    .s-anatomy .spec-lede { font-family: var(--font-serif); font-style: italic; font-size: 14px; line-height: 1.6; color: var(--color-brown); margin: 0; text-align: center; max-width: 480px; margin: 0 auto; }
+
+    /* Annotations around the specimen */
+    .s-anatomy .anno {
+      position: absolute;
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--color-crimson);
+      white-space: nowrap;
+    }
+    .s-anatomy .anno::before {
+      content: ""; position: absolute; background: var(--color-crimson);
+    }
+    .s-anatomy .anno .it { display: block; font-family: var(--font-serif); font-style: italic; font-size: 13px; letter-spacing: 0; text-transform: none; color: var(--fg-muted); margin-top: 4px; font-weight: 400; }
+    .s-anatomy .a-1 { top: -8px; right: 100%; padding-right: 18px; text-align: right; transform: translateX(-12px); }
+    .s-anatomy .a-1::before { right: -12px; top: 8px; width: 18px; height: 1px; }
+    .s-anatomy .a-2 { top: 90px; left: 100%; padding-left: 18px; transform: translateX(12px); max-width: 200px; white-space: normal; }
+    .s-anatomy .a-2::before { left: -12px; top: 8px; width: 18px; height: 1px; }
+    .s-anatomy .a-3 { top: 224px; left: 100%; padding-left: 18px; transform: translateX(12px); max-width: 200px; white-space: normal; }
+    .s-anatomy .a-3::before { left: -12px; top: 8px; width: 18px; height: 1px; }
+    .s-anatomy .a-4 { top: 410px; left: 100%; padding-left: 18px; transform: translateX(12px); max-width: 200px; white-space: normal; }
+    .s-anatomy .a-4::before { left: -12px; top: 8px; width: 18px; height: 1px; }
+
+    /* Body grammar panels */
+    .s-anatomy .grammar {
+      display: grid; grid-template-rows: auto auto; gap: 18px;
+      align-content: start;
+    }
+    .s-anatomy .grammar h4 {
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.28em; text-transform: uppercase; color: var(--color-crimson);
+      margin: 0 0 4px;
+    }
+    .s-anatomy .gpanels {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    }
+    .s-anatomy .gpanel {
+      background: var(--bg); border-radius: 14px;
+      padding: 18px 20px; min-height: 120px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .s-anatomy .gpanel .label { font-family: var(--font-sans); font-size: 10px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); }
+    .s-anatomy .gpanel .desc { font-family: var(--font-sans); font-size: 12px; line-height: 1.55; color: var(--fg-muted); font-weight: 300; margin: 0; }
+
+    .s-anatomy .gpanel .demo-cat {
+      display: inline-block;
+      background: var(--color-crimson); color: #fff;
+      font-family: var(--font-sans); font-size: 10px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 5px 11px; border-radius: 4px;
+    }
+    .s-anatomy .gpanel .demo-h {
+      font-family: var(--font-serif); font-style: italic; font-weight: 600;
+      color: var(--color-crimson);
+      font-size: 22px; line-height: 1.05; letter-spacing: -0.01em; margin: 6px 0 0;
+    }
+    .s-anatomy .gpanel .demo-drop {
+      font-family: var(--font-sans); font-weight: 300; font-size: 12px;
+      line-height: 1.6; color: var(--color-brown);
+    }
+    .s-anatomy .gpanel .demo-drop::first-letter {
+      font-family: var(--font-serif); font-weight: 600; font-size: 34px;
+      line-height: 0.9; float: left; margin: 4px 6px 0 0; color: var(--color-crimson);
+    }
+    .s-anatomy .gpanel .demo-pq {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 17px; line-height: 1.4; color: var(--color-brown-deep);
+      text-align: center; margin: 0;
+    }
+    .s-anatomy .gpanel .demo-pq .mk { display: block; font-size: 30px; line-height: 0.6; color: var(--color-crimson); opacity: 0.4; }
+    .s-anatomy .gpanel .demo-callout {
+      position: relative;
+      border: 1.5px solid var(--color-crimson); border-radius: 10px;
+      padding: 14px 16px;
+      font-family: var(--font-sans); font-size: 12px; line-height: 1.6;
+      color: var(--color-brown); font-weight: 300;
+    }
+    .s-anatomy .gpanel .demo-callout::after {
+      content: "✿"; position: absolute; top: -10px; left: 18px;
+      color: var(--color-crimson); font-size: 14px;
+      background: var(--bg); padding: 0 4px; line-height: 1;
+    }
+    .s-anatomy .gpanel .demo-info {
+      border: 1.5px solid var(--accent); border-radius: 10px;
+      padding: 12px 16px;
+      font-family: var(--font-sans); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--color-brown-deep);
+    }
+    .s-anatomy .gpanel .demo-info span { color: var(--color-crimson); font-weight: 500; }
+    .s-anatomy .gpanel .demo-info .ic-row { display: flex; gap: 8px; margin-top: 8px; }
+    .s-anatomy .gpanel .demo-info .ic-row span.ic {
+      width: 18px; height: 18px; border-radius: 999px;
+      background: var(--color-crimson); color: #fff;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 400; letter-spacing: 0;
+    }
+
+    /* =========================================================
+       SLIDE 19 — Three Post Types
+       ========================================================= */
+    .s-post-types { background: var(--bg); }
+    .s-post-types .stage-head {
+      position: absolute; top: 130px; left: 64px; right: 64px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end;
+    }
+    .s-post-types .display { font-size: 72px; max-width: 800px; }
+    .s-post-types .display em { color: var(--color-crimson-warm); }
+    .s-post-types .stage-head .lede { margin: 0; max-width: 560px; font-size: 19px; }
+
+    .s-post-types .cards {
+      position: absolute; top: 360px; left: 64px; right: 64px; bottom: 110px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+    }
+    .pt-card {
+      background: var(--bg-warm); border-radius: 22px;
+      padding: 36px; display: flex; flex-direction: column; gap: 20px;
+      position: relative;
+      box-shadow: var(--shadow-card);
+    }
+    .pt-card .pt-num {
+      font-family: var(--font-serif); font-style: italic;
+      color: var(--accent); font-size: 22px; line-height: 1; margin: 0;
+    }
+    .pt-card.crimson .pt-num { color: var(--color-crimson); }
+    .pt-card h3 {
+      font-family: var(--font-serif); font-weight: 500;
+      font-size: 32px; line-height: 1.12; letter-spacing: -0.01em;
+      color: var(--fg); margin: 0;
+    }
+    .pt-card h3 em { color: var(--accent); font-style: italic; }
+    .pt-card.crimson h3 em { color: var(--color-crimson-warm); }
+    .pt-card .pt-tag {
+      display: inline-flex; align-self: flex-start;
+      padding: 5px 11px; border-radius: 4px;
+      background: var(--color-crimson); color: #fff;
+      font-family: var(--font-sans); font-size: 10px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    .pt-card.tan .pt-tag { background: var(--accent); color: var(--color-brown-deep); }
+
+    .pt-mini {
+      background: #fff; border-radius: 14px; padding: 22px;
+      box-shadow: 0 6px 18px rgba(61,35,20,0.08);
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .pt-mini .mini-eyebrow {
+      font-family: var(--font-sans); font-size: 9px; font-weight: 600;
+      letter-spacing: 0.28em; text-transform: uppercase; color: var(--color-crimson);
+    }
+    .pt-mini .mini-h {
+      font-family: var(--font-serif); font-style: italic; font-weight: 600;
+      font-size: 18px; line-height: 1.15; color: var(--color-crimson);
+      letter-spacing: -0.01em; margin: 0;
+    }
+    .pt-mini .mini-h.crimson-warm { color: var(--color-crimson-warm); }
+    .pt-mini .mini-h.brown { color: var(--color-brown-deep); }
+    .pt-mini ol { margin: 4px 0 0; padding-left: 18px; }
+    .pt-mini ol li {
+      font-family: var(--font-sans); font-weight: 300;
+      font-size: 11px; line-height: 1.55; color: var(--color-brown); margin: 0 0 4px;
+    }
+    .pt-mini ol li::marker {
+      font-family: var(--font-serif); font-style: italic; font-weight: 600;
+      color: var(--color-crimson);
+    }
+    .pt-mini .mini-toc {
+      display: flex; flex-direction: column; gap: 6px;
+      border-left: 1.5px solid rgba(124,92,62,0.18);
+      padding-left: 12px; margin-top: 4px;
+    }
+    .pt-mini .mini-toc span {
+      font-family: var(--font-sans); font-size: 10px;
+      color: rgba(124,92,62,0.85); font-weight: 400;
+    }
+    .pt-mini .mini-toc span:first-child {
+      color: var(--color-crimson); font-weight: 500;
+    }
+    .pt-mini .mini-body {
+      font-family: var(--font-sans); font-size: 11px; font-weight: 300;
+      line-height: 1.6; color: var(--color-brown); margin: 0;
+    }
+    .pt-mini .mini-body::first-letter {
+      font-family: var(--font-serif); font-weight: 600; font-size: 30px;
+      line-height: 0.85; float: left; margin: 3px 6px 0 0; color: var(--color-crimson);
+    }
+    .pt-mini .mini-pq {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 13px; line-height: 1.4; color: var(--color-brown-deep);
+      text-align: center; margin: 6px 0 0; padding: 0 8px;
+    }
+    .pt-mini .mini-pq::before {
+      content: "“"; display: block;
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 26px; line-height: 0.4; color: var(--color-crimson); opacity: 0.4;
+    }
+
+    .pt-meta {
+      margin-top: auto;
+      display: grid; grid-template-columns: auto 1fr; gap: 8px 14px;
+      padding-top: 18px; border-top: 1px solid rgba(124,92,62,0.18);
+    }
+    .pt-meta .k {
+      font-family: var(--font-sans); font-size: 10px; font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent);
+    }
+    .pt-card.crimson .pt-meta .k { color: var(--color-crimson); }
+    .pt-meta .v {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 13px; line-height: 1.5; color: var(--fg-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <deck-stage width="1920" height="1080">
+
+    <!-- ============================================================
+         01 — COVER
+         ============================================================ -->
+    <section class="slide s-cover" data-screen-label="01 Cover">
+      <div class="photo"></div>
+      <div class="grain" style="z-index:2;"></div>
+
+      <div class="corner tl">Brand Deck · Vol. 01</div>
+      <div class="corner tr">Spring · 2026</div>
+
+      <div class="center">
+        <p class="welcome">Welcome to</p>
+        <img class="wordmark" src="assets/logo-wordmark.png" alt="Dali House">
+        <p class="tag">Coliving for women in Dallas</p>
+        <div class="rule"></div>
+        <p class="deck-title">A brand book for a soft landing.</p>
+      </div>
+
+      <!-- decorative bobbing asterisk, top-center -->
+      <div class="ornament spinny" style="top: 96px; left: 50%; margin-left: -16px; color: var(--accent); opacity: 0.7;">
+        <svg width="32" height="32" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+          <path d="M20 6v28 M6 20h28 M10 10l20 20 M30 10l-20 20"/>
+        </svg>
+      </div>
+
+      <div class="corner bl">Dali House · dalihouse.co</div>
+      <div class="corner br">01 / 20</div>
+    </section>
+
+    <!-- ============================================================
+         02 — INDEX (Contents)
+         ============================================================ -->
+    <section class="slide s-index" data-screen-label="02 Contents">
+      <div class="masthead">
+        <span>Dali House <span class="dot">·</span> Brand Deck</span>
+        <span class="vol">Vol. 01 — Contents</span>
+      </div>
+
+      <div class="opener">
+        <p class="eyebrow-lg">Inside this volume</p>
+        <h1 class="display">What's<br><em>in here.</em></h1>
+        <p class="lede">A working brand book — voice, color, type, iconography, photography, and the editorial system that brings it all together.</p>
+      </div>
+
+      <div class="toc">
+        <div class="toc-col">
+          <p class="toc-group">Part I — Foundations</p>
+          <div class="toc-row"><span class="n">01</span><span class="t">The Promise</span><span class="p">p. 03</span></div>
+          <div class="toc-row"><span class="n">02</span><span class="t">Who It's For</span><span class="p">p. 04</span></div>
+          <div class="toc-row"><span class="n">03</span><span class="t">Voice &amp; Tone</span><span class="p">p. 05</span></div>
+
+          <p class="toc-group">Part II — Identity</p>
+          <div class="toc-row"><span class="n">04</span><span class="t">Logo</span><span class="p">p. 06</span></div>
+          <div class="toc-row"><span class="n">05</span><span class="t">Color Palette</span><span class="p">p. 07</span></div>
+          <div class="toc-row"><span class="n">06</span><span class="t">Surfaces</span><span class="p">p. 08</span></div>
+        </div>
+
+        <div class="toc-col">
+          <p class="toc-group">Part II — Identity (cont.)</p>
+          <div class="toc-row"><span class="n">07</span><span class="t">Typography — Serif</span><span class="p">p. 09</span></div>
+          <div class="toc-row"><span class="n">08</span><span class="t">Typography — Sans</span><span class="p">p. 10</span></div>
+
+          <p class="toc-group">Part III — In Practice</p>
+          <div class="toc-row"><span class="n">09</span><span class="t">Type in Use</span><span class="p">p. 11</span></div>
+          <div class="toc-row"><span class="n">10</span><span class="t">Iconography</span><span class="p">p. 12</span></div>
+          <div class="toc-row"><span class="n">11</span><span class="t">Photography</span><span class="p">p. 13</span></div>
+          <div class="toc-row"><span class="n">12</span><span class="t">Components</span><span class="p">p. 14</span></div>
+          <div class="toc-row"><span class="n">13</span><span class="t">Application Process</span><span class="p">p. 15</span></div>
+
+          <p class="toc-group">Part IV — The Journal</p>
+          <div class="toc-row"><span class="n">14</span><span class="t">Editorial System</span><span class="p">p. 16</span></div>
+          <div class="toc-row"><span class="n">15</span><span class="t">The Index</span><span class="p">p. 17</span></div>
+          <div class="toc-row"><span class="n">16</span><span class="t">Article Anatomy</span><span class="p">p. 18</span></div>
+          <div class="toc-row"><span class="n">17</span><span class="t">Three Post Types</span><span class="p">p. 19</span></div>
+        </div>
+      </div>
+
+      <div class="footplate">
+        <span class="folio">page 02</span>
+        <span class="right">Dali House Brand · 2026</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         03 — THE PROMISE
+         ============================================================ -->
+    <section class="slide s-promise" data-screen-label="03 The Promise">
+      <div class="photo">
+        <p class="photo-label">— A coliving home in Dallas. —</p>
+      </div>
+      <div class="copy">
+        <div class="masthead" style="left:0; right:0; top:48px; padding:0 96px;">
+          <span>Part I <span class="dot">·</span> The Promise</span>
+          <span class="vol">No. 01</span>
+        </div>
+
+        <p class="eyebrow-lg" style="color: var(--color-crimson); margin-bottom: 28px;">Welcome to</p>
+        <h1 class="display">Your<br><em>relocation oasis</em><br>in Dallas.</h1>
+
+        <blockquote class="quote">
+          "Not just a place to live — but a space to land, connect, and grow. We handle the friction of moving, so you can pour your energy into what actually matters."
+        </blockquote>
+        <p class="signed">— The Dali House Promise</p>
+
+        <div class="footplate" style="left:0; right:0; bottom:48px; padding:0 96px;">
+          <span class="folio">page 03</span>
+          <span class="right">Dali House Brand · 2026</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         04 — AUDIENCE
+         ============================================================ -->
+    <section class="slide s-audience warm" data-screen-label="04 Audience">
+      <div class="masthead">
+        <span>Part I <span class="dot">·</span> Audience</span>
+        <span class="vol">No. 02</span>
+      </div>
+
+      <div class="stage">
+        <div class="left">
+          <p class="eyebrow-lg">Who it's for</p>
+          <h2 class="display">Built for women<br>navigating <em>what's next.</em></h2>
+          <p class="lede">She values comfort, intentional living, and meaningful connection — and she's tired of starting over alone.</p>
+        </div>
+
+        <div class="cards">
+          <div class="a-card">
+            <div class="num">i.</div>
+            <h3>The Relocator</h3>
+            <p>Just landed in Dallas for a new role. Wants a furnished room, not a six-month furniture-and-utilities project.</p>
+            <span class="chip">Just moved</span>
+          </div>
+          <div class="a-card">
+            <div class="num">ii.</div>
+            <h3>The Builder</h3>
+            <p>Mid-career, mid-pivot. Saving for a place of her own and wants the runway without sacrificing how she lives now.</p>
+            <span class="chip">In transition</span>
+          </div>
+          <div class="a-card">
+            <div class="num">iii.</div>
+            <h3>The Returner</h3>
+            <p>Grew up here, came back, and is rebuilding her social fabric. Wants a home that introduces her to her people.</p>
+            <span class="chip">Putting down roots</span>
+          </div>
+          <div class="a-card">
+            <div class="num">iv.</div>
+            <h3>The Quiet Professional</h3>
+            <p>Hybrid schedule, evening yoga, real groceries. Wants calm, beauty, and a kitchen she's not embarrassed by.</p>
+            <span class="chip">Slow living</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footplate">
+        <span class="folio">page 04</span>
+        <span class="right">Dali House Brand · 2026</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         05 — VOICE & TONE
+         ============================================================ -->
+    <section class="slide s-voice" data-screen-label="05 Voice">
+      <div class="masthead">
+        <span>Part I <span class="dot">·</span> Voice &amp; Tone</span>
+        <span class="vol">No. 03</span>
+      </div>
+
+      <div class="stage">
+        <div class="left">
+          <p class="eyebrow-lg">How we sound</p>
+          <h2 class="display" style="margin-top:22px;">Warm, calm,<br><em style="position: relative; display: inline-block;">grounded.<svg class="underline-wave" viewBox="0 0 200 14" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8 Q 25 -2, 50 7 T 100 7 T 150 7 T 198 7" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg></em></h2>
+          <p class="lede" style="margin-top:32px;">Feminine without being cutesy. Elevated without pretension. Clarity over cleverness — always anchored to a real pain point.</p>
+        </div>
+
+        <div class="voice-right">
+          <div class="v-col reach">
+            <h4>Reach for</h4>
+            <ul>
+              <li>Clarity over cleverness</li>
+              <li>Emotional truth</li>
+              <li>Practical reassurance</li>
+              <li>A soft landing</li>
+              <li>"We handle the friction."</li>
+            </ul>
+          </div>
+          <div class="v-col avoid">
+            <h4>Avoid</h4>
+            <ul>
+              <li>Hype &amp; startup energy</li>
+              <li>Party-hostel vibes</li>
+              <li>Generic luxury language</li>
+              <li>Exaggeration, filler copy</li>
+              <li>"Game-changing community."</li>
+            </ul>
+          </div>
+
+          <div class="phrases">
+            <p class="lbl">Signature phrases — reuse, don't paraphrase</p>
+            <div class="phrases-row">
+              <span class="phrase">"a soft landing in Dallas"</span>
+              <span class="phrase">"your relocation oasis"</span>
+              <span class="phrase">"everything handled, from day one"</span>
+              <span class="phrase">"a space to land, connect &amp; grow"</span>
+              <span class="phrase">"coliving for women in Dallas"</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footplate">
+        <span class="folio">page 05</span>
+        <span class="right">Dali House Brand · 2026</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         06 — LOGO
+         ============================================================ -->
+    <section class="slide s-logo dark" data-screen-label="06 Logo">
+      <div class="masthead">
+        <span>Part II <span class="dot">·</span> Identity</span>
+        <span class="vol">No. 04 — Logo</span>
+      </div>
+
+      <div class="stage">
+        <div class="left">
+          <p class="eyebrow-lg">The wordmark</p>
+          <h2 class="display" style="margin-top:24px;">A surrealist<br><em>melting clock</em><br>inside a serif D.</h2>
+          <p class="lede">Drawn once, never recreated. Treat the glyph as a proper noun — it lives only in the lockup and as our favicon.</p>
+
+          <div style="margin-top:48px; display:grid; grid-template-columns: auto auto auto; gap: 28px 48px; align-items:center;">
+            <span style="font-family: var(--font-sans); font-size: 11px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent);">Min height</span>
+            <span style="font-family: var(--font-serif); font-style: italic; font-size: 18px; color: rgba(250,244,232,0.75);">28px on screen · 0.4&nbsp;in print</span>
+            <span></span>
+            <span style="font-family: var(--font-sans); font-size: 11px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent);">Clear space</span>
+            <span style="font-family: var(--font-serif); font-style: italic; font-size: 18px; color: rgba(250,244,232,0.75);">1× cap-height on all sides</span>
+            <span></span>
+            <span style="font-family: var(--font-sans); font-size: 11px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent);">Color</span>
+            <span style="font-family: var(--font-serif); font-style: italic; font-size: 18px; color: rgba(250,244,232,0.75);">Cream on dark · Brown-deep on light</span>
+          </div>
+        </div>
+
+        <div class="panels">
+          <div class="panel">
+            <div class="row">
+              <div class="clearspace"><img class="wordmark" src="assets/logo-wordmark.png" alt="Dali House"></div>
+            </div>
+            <p class="panel-label">Primary lockup · on dark</p>
+            <p class="panel-sub">The default. Cream on charcoal.</p>
+          </div>
+          <div class="panel invert">
+            <div class="row">
+              <img class="wordmark" src="assets/logo-wordmark.png" alt="Dali House">
+              <div style="border-left:1px solid rgba(124,92,62,0.20); height:80px; margin: 0 8px;"></div>
+              <img class="glyph" src="assets/icon-clock.svg" alt="Melting clock">
+            </div>
+            <p class="panel-label" style="color: var(--color-crimson);">On cream · Glyph alone</p>
+            <p class="panel-sub">The glyph reads as our favicon — never as a UI icon.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footplate">
+        <span class="folio">page 06</span>
+        <span class="right">Dali House Brand · 2026</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         07 — COLOR PALETTE
+         ============================================================ -->
+    <section class="slide s-palette" data-screen-label="07 Palette">
+      <div class="masthead">
+        <span>Part II <span class="dot">·</span> Color</span>
+        <span class="vol">No. 05 — Palette</span>
+      </div>
+
+      <div class="stage">
+        <div class="left">
+          <p class="eyebrow-lg">The palette</p>
+          <h2 class="display" style="margin-top:24px;">Two accents,<br>warm <em>neutrals,</em><br>no gradients.</h2>
+          <p class="lede" style="margin-top:32px;">Tan is the everyday voice. Crimson is when the brand turns the page into a magazine spread. They live on the same page comfortably.</p>
+        </div>
+
+        <div class="swatches">
+          <div class="sw accent-tan">
+            <div><div class="sub">Accent · primary</div><div class="name">Tan</div></div>
+            <div><div class="role">Eyebrows · price · italics · links</div><div class="hex">#C9A96E</div></div>
+          </div>
+          <div class="sw crimson">
+            <div><div class="sub">Accent · editorial</div><div class="name">Crimson</div></div>
+            <div><div class="role">Blog labels · callouts · category pills</div><div class="hex">#7A1C1C</div></div>
+          </div>
+          <div class="sw cream">
+            <div><div class="sub">Surface · primary</div><div class="name">Cream</div></div>
+            <div><div class="role">Page background</div><div class="hex">#FAF4E8</div></div>
+          </div>
+          <div class="sw cream-light">
+            <div><div class="sub">Surface · warm</div><div class="name">Cream Light</div></div>
+            <div><div class="role">Features · curved bands</div><div class="hex">#F3EAD6</div></div>
+          </div>
+
+          <div class="sw brown-deep">
+            <div><div class="sub">Text · primary</div><div class="name">Brown Deep</div></div>
+            <div><div class="role">Headings on light</div><div class="hex">#3D2314</div></div>
+          </div>
+          <div class="sw brown">
+            <div><div class="sub">Text · body</div><div class="name">Brown</div></div>
+            <div><div class="role">Body copy on cream</div><div class="hex">#7C5C3E</div></div>
+          </div>
+          <div class="sw charcoal">
+            <div><div class="sub">Surface · dark</div><div class="name">Charcoal</div></div>
+            <div><div class="role">Hero · footer · nav scrolled</div><div class="hex">#1A1612</div></div>
+          </div>
+          <div class="sw charcoal-mid">
+            <div><div class="sub">Surface · dark 2</div><div class="name">Charcoal Mid</div></div>
+            <div><div class="role">"The Space" section</div><div class="hex">#241D16</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footplate">
+        <span class="folio">page 07</span>
+        <span class="right">Dali House Brand · 2026</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         08 — SURFACES
+         ============================================================ -->
+    <section class="slide s-surfaces" data-screen-label="08 Surfaces">
+      <div class="masthead">
+        <span>Part II <span class="dot">·</span> Color</span>
+        <span class="vol">No. 06 — Surfaces</span>
+      </div>
+
+      <h2 class="display">A page<br>has <em>two moods,</em> max.</h2>
+      <p class="lede">Surfaces alternate down a page to create rhythm — never more than two adjacent. Solid color and photography only; no gradients, no patterns.</p>
+
+      <div class="stage">
+        <div class="surface-card light">
+          <div class="swatch">
+            <span class="label">Light</span>
+            <span class="name">Cream<br>surface</span>
+          </div>
+          <div class="desc">
+            <span class="when">The default</span>
+            <strong>About, Audience, FAQ, Host.</strong> Brown-deep type on cream. Calm, editorial, low contrast. Body copy lives here.
+          </div>
+        </div>
+
+        <div class="surface-card warm">
+          <div class="swatch">
+            <span class="label">Warm</span>
+            <span class="name">Cream-light<br>surface</span>
+          </div>
+          <div class="desc">
+            <span class="when">For rhythm</span>
+            <strong>Features, blog cover band.</strong> A half-step warmer than cream. Used to separate two cream sections without going dark.
+          </div>
+        </div>
+
+        <div class="surface-card dark">
+          <div class="swatch">
+            <span class="label">Dark</span>
+            <span class="name">Charcoal<br>surface</span>
+          </div>
+          <div class="desc">
+            <span class="when">For weight</span>
+            <strong>Hero, The Space, How It Works, Footer.</strong> Cream type on charcoal. Where the brand turns intimate. Tan eyebrows replace crimson.
+          </div>
+        </div>
+      </div>
+
+      <div class="footplate">
+        <span class="folio">page 08</span>
+        <span class="right">Dali House Brand · 2026</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         09 — TYPOGRAPHY · SERIF
+         ============================================================ -->
+    <section class="slide s-type-serif" data-screen-label="09 Type Serif">
+      <div class="masthead">
+        <span>Part II <span class="dot">·</span> Typography</span>
+        <span class="vol">No. 07 — Display Serif</span>
+      </div>
+
+      <div class="stage">
+        <div class="label-col">
+          <p class="eyebrow-lg">Display serif</p>
+          <h3>Play<em>fair</em><br>Display</h3>
+          <p>Headlines, the $900 price, pull-quotes, every moment of italic emphasis inside body copy.</p>
+          <div class="meta">
+            <span class="k">Family</span><span class="v">Playfair Display · Google Fonts</span>
+            <span class="k">Weights</span><span class="v">400 · 500 · 600 · 700 + italics</span>
+            <span class="k">Tracking</span><span class="v">−0.01em on display</span>
+            <span class="k">Default</span><span class="v">500, line-height 1.18</span>
+          </div>
+        </div>
+
+        <div class="spec-col">
+          <div class="spec">
+            <div class="px">132 · Hero display · weight 500</div>
+            <div class="sample" style="font-size: 96px; font-weight: 500;">A soft landing.</div>
+          </div>
+          <div class="spec">
+            <div class="px">56 · Section title · italic</div>
+            <div class="sample italic" style="font-size: 56px; font-weight: 500;">your relocation oasis</div>
+          </div>
+          <div class="spec">
+            <div class="px">28 · H3 · blog body heading</div>
+            <div class="sample" style="font-size: 28px; font-weight: 500;">Six rooms, one quiet street.</div>
+          </div>
+          <div class="spec">
+            <div class="px">22 · Pull-quote · italic</div>
+            <div class="sample italic" style="font-size: 22px; line-height: 1.55; color: var(--fg);">"Home isn't just about where you live — it's about the people and the life you build."</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footplate">
+        <span class="folio">page 09</span>
+        <span class="right">Dali House Brand · 2026</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         10 — TYPOGRAPHY · SANS
+         ============================================================ -->
+    <section class="slide s-type-sans" data-screen-label="10 Type Sans">
+      <div class="masthead">
+        <span>Part II <span class="dot">·</span> Typography</span>
+        <span class="vol">No. 08 — Working Sans</span>
+      </div>
+
+      <div class="stage">
+        <div class="label-col">
+          <p class="eyebrow-lg">Working sans</p>
+          <h3><span class="light">DM</span> <span class="med">Sans</span></h3>
+          <p>Everything that isn't a heading: body, UI, eyebrows, CTAs, blog meta. Default body weight is <strong>300</strong> — never 400.</p>
+          <div class="meta">
+            <span class="k">Family</span><span class="v">DM Sans · Google Fonts</span>
+            <span class="k">Weights</span><span class="v">300 · 400 · 500 · 700</span>
+            <span class="k">Body</span><span class="v">15–17px / 1.70–1.78 / weight 300</span>
+            <span class="k">Eyebrow</span><span class="v">10–13px / 0.22em tracked / 500</span>
+          </div>
+        </div>
+
+        <div class="spec-col">
+          <div class="spec">
+            <div class="px">11 · Eyebrow · 500 · tracked 0.22em</div>
+            <div class="sample eyebrow">WELCOME TO · APPLY NOW · THE PROCESS</div>
+          </div>
+          <div class="spec">
+            <div class="px">17 · Body large · weight 300 · LH 1.78</div>
+            <div class="sample" style="font-size: 17px; font-weight: 300; line-height: 1.78; color: var(--fg-muted); max-width: 580px;">A coliving space for young female professionals who value comfort and intentional living. Whether you're relocating or building your career.</div>
+          </div>
+          <div class="spec">
+            <div class="px">15 · Body default · weight 300 · LH 1.70</div>
+            <div class="sample" style="font-size: 15px; font-weight: 300; line-height: 1.70; color: var(--fg-muted); max-width: 540px;">Furnished rooms, flexible leases, utilities included — so you can pour your energy into what actually matters.</div>
+          </div>
+          <div class="spec">
+            <div class="px">12 · CTA · 500 · tracked 0.20em</div>
+            <div class="sample" style="font-size: 12px; font-weight: 500; letter-spacing: 0.20em; text-transform: uppercase; color: var(--fg);">APPLY NOW &nbsp;·&nbsp; READ ARTICLE →</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footplate">
+        <span class="folio">page 10</span>
+        <span class="right">Dali House Brand · 2026</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         11 — TYPE IN USE
+         ============================================================ -->
+    <section class="slide s-type-use" data-screen-label="11 Type in Use">
+      <div class="masthead">
+        <span>Part III <span class="dot">·</span> In Practice</span>
+        <span class="vol">No. 09 — Type in Use</span>
+      </div>
+
+      <div class="stage">
+        <div class="canvas">
+          <div class="eyebrow-lg">Pricing &amp; amenities</div>
+          <div class="price-wrap">
+            <span class="price">$900</span><span class="per">/month</span>
+          </div>
+          <h2>Everything <em>handled,</em><br>from day one.</h2>
+          <p>Utilities included · monthly cleaning · fully stocked essentials. Near Carrollton/Plano · ±20 min from downtown Dallas, major suburbs &amp; DFW airport.</p>
+        </div>
+
+        <div class="specs">
+          <h4>Anatomy of the recipe</h4>
+          <p class="lede">A four-layer cake every section reuses — eyebrow, display, body, meta. Hierarchy without surprise.</p>
+          <div class="spec-row"><span class="name">Eyebrow</span><span class="value">DM Sans · <em>500</em> · 11px · tracked 0.22em · tan</span></div>
+          <div class="spec-row"><span class="name">Price</span><span class="value">Playfair · <em>700</em> · clamp(52, 8vw, 72) · tan</span></div>
+          <div class="spec-row"><span class="name">Section title</span><span class="value">Playfair · <em>500</em> · clamp(30, 4vw, 44) · brown-deep, with one italic word in tan</span></div>
+          <div class="spec-row"><span class="name">Body</span><span class="value">DM Sans · <em>300</em> · 17px · line-height 1.78</span></div>
+          <div class="spec-row"><span class="name">Punctuation</span><span class="value">Em-dashes (—) for editorial pauses · mid-dot (·) between meta items · curly quotes always</span></div>
+        </div>
+      </div>
+
+      <div class="footplate">
+        <span class="folio">page 11</span>
+        <span class="right">Dali House Brand · 2026</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         12 — ICONOGRAPHY
+         ============================================================ -->
+    <section class="slide s-icons" data-screen-label="12 Iconography">
+      <div class="masthead">
+        <span>Part III <span class="dot">·</span> In Practice</span>
+        <span class="vol">No. 10 — Iconography</span>
+      </div>
+
+      <div class="stage">
+        <div class="row1">
+          <div>
+            <p class="eyebrow-lg">Iconography</p>
+            <h2 class="display">Hand-drawn,<br>not <em>downloaded.</em></h2>
+          </div>
+          <p class="lede" style="align-self:end;">Every UI icon is inline SVG at 20–22px, stroke 1.6, rounded caps, no fills. They live inside a 56–64px tan-tinted circle. Heroicons outline is the substitute when we need something new.</p>
+        </div>
+
+        <div class="badges">
+          <div class="badge-card">
+            <span class="circle">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14h18v4H3z"/><path d="M5 14v-3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3"/><path d="M8 11h8"/><path d="M5 18v2 M19 18v2"/></svg>
+            </span>
+            <h4>Fully Furnished</h4>
+            <span class="meta">Tan circle · stroke 1.6</span>
+          </div>
+          <div class="badge-card">
+            <span class="circle">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4 M16 3v4"/></svg>
+            </span>
+            <h4>Flexible Lease</h4>
+            <span class="meta">Tan circle · stroke 1.6</span>
+          </div>
+          <div class="badge-card">
+            <span class="circle">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </span>
+            <h4>Built-in Community</h4>
+            <span class="meta">Tan circle · stroke 1.6</span>
+          </div>
+          <div class="badge-card crimson">
+            <span class="circle">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-7-8-13a8 8 0 0 1 16 0c0 6-8 13-8 13z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            </span>
+            <h4>Location</h4>
+            <span class="meta">Crimson circle · blog only</span>
+          </div>
+          <div class="badge-card crimson">
+            <span class="circle">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+            </span>
+            <h4>Email</h4>
+            <span class="meta">Crimson circle · blog only</span>
+          </div>
+          <div class="badge-card crimson">
+            <span class="circle">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+            </span>
+            <h4>Reading Time</h4>
+            <span class="meta">Crimson circle · blog only</span>
+          </div>
+        </div>
+
+        <div class="rules">
+          <div class="rule-col"><h5>Size</h5><p>20–22px stroke; 56–64px circle.</p></div>
+          <div class="rule-col"><h5>Style</h5><p>Stroke 1.6 · round caps · no fills.</p></div>
+          <div class="rule-col"><h5>Color</h5><p>Tan in UI; crimson reserved for the Journal.</p></div>
+          <div class="rule-col"><h5>Emoji</h5><p>Never in UI. The cat caption is the only exception.</p></div>
+        </div>
+      </div>
+
+      <div class="footplate">
+        <span class="folio">page 12</span>
+        <span class="right">Dali House Brand · 2026</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         13 — PHOTOGRAPHY
+         ============================================================ -->
+    <section class="slide s-photo" data-screen-label="13 Photography">
+      <div class="masthead">
+        <span>Part III <span class="dot">·</span> In Practice</span>
+        <span class="vol">No. 11 — Photography</span>
+      </div>
+
+      <h2 class="display">Real rooms,<br>warm <em>light.</em></h2>
+      <p class="lede">Interiors with real furniture, real artwork, real plants. Browns, creams, terracotta, sage. Never stock condos. Never staged "diverse women laughing at salad."</p>
+
+      <div class="stamp drift" style="--rot:-7deg; top: 510px; left: 100px;">
+        <svg width="10" height="10" viewBox="0 0 20 20" fill="currentColor"><path d="M10 0L11.8 7.1L19 8.5L13.5 13.4L15 20.5L10 16.4L5 20.5L6.5 13.4L1 8.5L8.2 7.1z"/></svg>
+        Shot in-house
+      </div>
+
+      <div class="mosaic">
+        <div class="frame big" style="background-image: url(assets/dali-house-bg.jpg);">
+          <p class="cap">— Living room, golden hour —</p>
+        </div>
+        <div class="frame" style="background-image: url(assets/room-bedroom1.jpg);"><p class="cap">— Bedroom 1 —</p></div>
+        <div class="frame" style="background-image: url(assets/room-kitchen.jpg);"><p class="cap">— Kitchen —</p></div>
+        <div class="frame" style="background-image: url(assets/room-bedroom2.jpg);"><p class="cap">— Bedroom 2 —</p></div>
+        <div class="frame" style="background-image: url(assets/room-bathroom.jpg);"><p class="cap">— Shared bath —</p></div>
+      </div>
+
+      <div class="rules">
+        <div class="r-col do">
+          <h5>Reach for</h5>
+          <p>Natural light · vintage pieces · real plants · warm wood · genuine intimacy.</p>
+        </div>
+        <div class="r-col dont">
+          <h5>Avoid</h5>
+          <p>Cold blue tones · staged stock · empty model units · drone shots · over-edited HDR.</p>
+        </div>
+      </div>
+
+      <div class="footplate">
+        <span class="folio">page 13</span>
+        <span class="right">Dali House Brand · 2026</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         14 — COMPONENTS
+         ============================================================ -->
+    <section class="slide s-components warm" data-screen-label="14 Components">
+      <div class="masthead">
+        <span>Part III <span class="dot">·</span> In Practice</span>
+        <span class="vol">No. 12 — Components</span>
+      </div>
+
+      <h2 class="display">The building<br><em>blocks.</em></h2>
+      <p class="lede">Small, calm parts. Pills for chips and CTAs (999px). 16–18px corners on cards. Motion is 200–380ms, ease-out, and never theatrical.</p>
+
+      <div class="grid">
+        <div class="c-card dark">
+          <span class="label">Button · primary</span>
+          <span class="name" style="color: var(--accent);">Apply Now</span>
+          <div class="demo"><a class="btn-apply-demo">Apply Now</a></div>
+          <p class="spec-note">Cream-light fill · brown-deep label · 15×44 · pill · CTA shadow.</p>
+        </div>
+        <div class="c-card dark">
+          <span class="label">Button · ghost</span>
+          <span class="name" style="color: var(--accent);">Nav Apply</span>
+          <div class="demo"><a class="btn-ghost-demo">Apply</a></div>
+          <p class="spec-note">1px cream/35 border · fills to cream/10 on hover.</p>
+        </div>
+        <div class="c-card dark">
+          <span class="label">Chips · highlights</span>
+          <span class="name" style="color: var(--accent);">Amenity</span>
+          <div class="demo">
+            <div class="chip-stack">
+              <span class="chip-demo">
+                <svg class="check check-mini" viewBox="0 0 20 20" fill="#6bcb77"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-8 8a1 1 0 01-1.4 0l-4-4a1 1 0 011.4-1.4L8 12.6l7.3-7.3a1 1 0 011.4 0z" clip-rule="evenodd"/></svg>
+                Utilities included
+              </span>
+              <span class="chip-demo">
+                <svg class="check check-mini" viewBox="0 0 20 20" fill="#6bcb77"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-8 8a1 1 0 01-1.4 0l-4-4a1 1 0 011.4-1.4L8 12.6l7.3-7.3a1 1 0 011.4 0z" clip-rule="evenodd"/></svg>
+                Monthly cleaning
+              </span>
+            </div>
+          </div>
+          <p class="spec-note">Pill · cream/15 border · green check 13px.</p>
+        </div>
+        <div class="c-card">
+          <span class="label">Pills · editorial</span>
+          <span class="name">Category &amp; meta</span>
+          <div class="demo" style="gap:10px; flex-direction:column;">
+            <span class="pill-tag cat">Community</span>
+            <span class="pill-tag read">7 min read</span>
+            <span class="pill-feat">Featured</span>
+          </div>
+          <p class="spec-note">Crimson for blog category &amp; featured · brown/20 for meta.</p>
+        </div>
+
+        <div class="c-card">
+          <span class="label">Feature card</span>
+          <span class="name">Tan-circle badge</span>
+          <div class="demo">
+            <span class="feature-mini">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4 M16 3v4"/></svg>
+            </span>
+          </div>
+          <p class="spec-note">White card · 16px radius · 40px pad · card shadow.</p>
+        </div>
+        <div class="c-card">
+          <span class="label">Eyebrow + heading</span>
+          <span class="name">Section opener</span>
+          <div class="demo" style="flex-direction:column; align-items:flex-start; gap:10px;">
+            <span class="eyebrow-demo">About Dali House</span>
+            <span style="font-family: var(--font-serif); font-size: 30px; font-weight: 500; color: var(--fg); letter-spacing:-0.01em; line-height:1.1;">Your <em style="color:var(--accent); font-style:italic;">relocation</em><br>oasis in Dallas.</span>
+          </div>
+          <p class="spec-note">Tracked tan eyebrow · italic serif emphasis on one word.</p>
+        </div>
+        <div class="c-card">
+          <span class="label">Room card</span>
+          <span class="name">4/3 photo + caption</span>
+          <div class="demo" style="align-items:stretch;">
+            <div class="room-mini">
+              <div class="ph"></div>
+              <div class="b">
+                <h4>Bedroom 1</h4>
+                <p>Full bed, work station, original artwork.</p>
+              </div>
+            </div>
+          </div>
+          <p class="spec-note">16px radius · tan caption serif · charcoal/04 surface on dark.</p>
+        </div>
+        <div class="c-card">
+          <span class="label">Pull-quote</span>
+          <span class="name">Editorial moment</span>
+          <div class="demo" style="align-items:flex-start;">
+            <p class="pullquote-demo">"Not just a place to live — but a space to land, connect, and grow."</p>
+          </div>
+          <p class="spec-note">2px tan left rule · Playfair italic 21px · indent 22px.</p>
+        </div>
+      </div>
+
+      <div class="footplate">
+        <span class="folio">page 14</span>
+        <span class="right">Dali House Brand · 2026</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         15 — APPLICATION PROCESS (Playful)
+         ============================================================ -->
+    <section class="slide s-process" data-screen-label="15 Application Process">
+      <div class="masthead">
+        <span>Part III <span class="dot">·</span> The Process</span>
+        <span class="vol">No. 13 — Application</span>
+      </div>
+
+      <!-- decorative ornaments -->
+      <div class="ornament ast-mark spinny" aria-hidden="true">
+        <svg width="36" height="36" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+          <path d="M20 4v32 M4 20h32 M8.5 8.5l23 23 M31.5 8.5l-23 23"/>
+        </svg>
+      </div>
+
+      <div class="confetti" style="top: 200px; left: 64px; right: 64px; bottom: 110px;" aria-hidden="true">
+        <span class="dot-pellet drift"          style="top: 30px;  left: 32%;  --rot:0deg;"></span>
+        <span class="dot-pellet crimson drift"  style="top: 12px;  left: 58%;  --rot:8deg;"></span>
+        <span class="dot-pellet tan-light"      style="top: 48px;  left: 78%;"></span>
+        <span class="dot-pellet"                style="top: 6px;   left: 91%;  width:6px; height:6px;"></span>
+        <span class="dot-pellet crimson"        style="top: 60px;  left: 5%;   width:6px; height:6px;"></span>
+      </div>
+
+      <div class="stamp drift" style="--rot:8deg;">
+        <svg width="10" height="10" viewBox="0 0 20 20" fill="currentColor"><path d="M10 0L11.8 7.1L19 8.5L13.5 13.4L15 20.5L10 16.4L5 20.5L6.5 13.4L1 8.5L8.2 7.1z"/></svg>
+        An easy first step
+      </div>
+
+      <div style="position: absolute; top: 140px; left: 64px; right: 64px;">
+        <p class="eyebrow-lg">The application</p>
+        <h2 class="display" style="margin-top: 20px;">Apply in three<br><em>soft steps.</em></h2>
+        <p class="lede" style="margin-top: 28px;">Not a funnel. A short, intentional conversation — so we can build the right room, with the right people, in the right rhythm.</p>
+      </div>
+
+      <div class="steps">
+
+        <!-- STEP 01 -->
+        <div class="step-card">
+          <span class="badge">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </span>
+          <span class="big-num bob">01</span>
+          <span class="eyebrow-step">Step one</span>
+          <h3>Get to <em>know you.</em></h3>
+          <p>Share a little about your lifestyle, your work, your what's-next. We read every word — Jadesse personally.</p>
+          <p class="footnote">— Takes 6 minutes, give or take.</p>
+        </div>
+
+        <!-- connector 01 → 02 -->
+        <div class="connector conn-1" aria-hidden="true">
+          <svg width="36" height="28" viewBox="0 0 36 28">
+            <path d="M2 14 Q 18 4, 30 14"/>
+            <path class="head" d="M24 10 L30 14 L24 18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <!-- STEP 02 -->
+        <div class="step-card crimson-num">
+          <span class="badge" style="background: rgba(122,28,28,0.08); border-color: rgba(122,28,28,0.18); color: var(--color-crimson);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </span>
+          <span class="big-num bob" style="animation-delay: -1.2s;">02</span>
+          <span class="eyebrow-step">Step two</span>
+          <h3>Tour the <em style="color: var(--color-crimson-warm);">space.</em></h3>
+          <p>Drop by, or hop on a video call. Coffee's on, the cats are nosy, and you'll see exactly which room would be yours.</p>
+          <p class="footnote">— In-person or virtual.</p>
+        </div>
+
+        <!-- connector 02 → 03 -->
+        <div class="connector conn-2" aria-hidden="true">
+          <svg width="36" height="28" viewBox="0 0 36 28">
+            <path d="M2 14 Q 18 24, 30 14"/>
+            <path class="head" d="M24 10 L30 14 L24 18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <!-- STEP 03 -->
+        <div class="step-card">
+          <span class="badge">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+          </span>
+          <span class="big-num bob" style="animation-delay: -2.4s;">03</span>
+          <span class="eyebrow-step">Step three</span>
+          <h3>Make it <em>home.</em></h3>
+          <p>Screening, lease, deposit — handled quickly and gently. Then we'll see you on move-in day with the welcome bag.</p>
+          <p class="footnote">— Most rooms confirmed in under a week.</p>
+        </div>
+
+      </div>
+
+      <div class="footplate">
+        <span class="folio">page 15</span>
+        <span class="right">Dali House Brand · 2026</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         16 — THE JOURNAL (Editorial system)
+         ============================================================ -->
+    <section class="slide s-editorial" data-screen-label="16 The Journal">
+      <div class="masthead">
+        <span>Part III <span class="dot">·</span> The Journal</span>
+        <span class="vol">No. 14 — Editorial</span>
+      </div>
+
+      <div class="stage">
+        <div class="left">
+          <div class="section-label">THE JOURNAL · ISSUE 04</div>
+          <div>
+            <h1 class="cover-h1">Why<br>community<br><em>matters.</em></h1>
+            <div style="margin-top: 24px;">
+              <span class="sub-bar">Notes on building a home, not just sharing one.</span>
+            </div>
+          </div>
+          <div>
+            <p class="byline"><span class="strong">Words by</span>Jadesse Chan · 7 min read</p>
+          </div>
+        </div>
+
+        <div class="editorial-right">
+          <p class="eyebrow-lg">When the brand becomes a magazine</p>
+          <h2 class="display">Crimson<br>takes <em>the page.</em></h2>
+          <p class="lede">The blog is the only place crimson takes over as the dominant accent. Big Playfair cover headlines, a highlighted cream-light subtitle bar, curved bottom band, sparse floral motifs, and a real folio at the page corner.</p>
+
+          <div class="palette-row">
+            <span class="dot" style="background: var(--color-crimson);"></span>
+            <span class="dot" style="background: var(--color-crimson-warm);"></span>
+            <span class="dot" style="background: var(--color-tan-light);"></span>
+            <span class="dot" style="background: var(--color-cream-light);"></span>
+            <span class="dot" style="background: var(--color-charcoal);"></span>
+          </div>
+
+          <div class="legend">
+            <div><div class="k">Cover headline</div>Playfair 600 · clamp(56, 8vw, 110) · italic emphasis in tan-light</div>
+            <div><div class="k">Subtitle bar</div>Cream-light highlight · Playfair 500 · brown-deep</div>
+            <div><div class="k">Category pill</div>Crimson border + 8% fill · tracked 0.12em</div>
+            <div><div class="k">Info cards</div>White-on-crimson 22px icon circle</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footplate">
+        <span class="folio">page 16</span>
+        <span class="right">Dali House Brand · 2026</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         17 — JOURNAL INDEX (Listing page)
+         ============================================================ -->
+    <section class="slide s-journal-index" data-screen-label="17 Journal Index">
+      <div class="masthead">
+        <span>Part IV <span class="dot">·</span> The Journal</span>
+        <span class="vol">No. 15 — The Index</span>
+      </div>
+
+      <div class="stage-head">
+        <div>
+          <p class="eyebrow-lg" style="color: var(--color-crimson);">The front page</p>
+          <h2 class="display" style="margin-top: 22px;">A quiet<br><em>front page.</em></h2>
+        </div>
+        <p class="lede">One tan FEATURED card on top, three crimson-tagged regulars below. 18px corners, the brown card-shadow, and meta in muted brown. The cover photo does the heavy lifting — copy stays calm.</p>
+      </div>
+
+      <div class="mock">
+        <!-- Featured card -->
+        <div class="featured-card">
+          <div class="ph">
+            <span class="pill-feat">Featured</span>
+          </div>
+          <div class="body">
+            <p class="meta">June 18, 2026 · 7 min read</p>
+            <h3>Six spaces to land in: a room-by-room tour of Dali House</h3>
+            <p>A home is the sum of the small rooms inside it. Here are the six spaces that make Dali House feel like a soft landing — and what makes each one worth the rent.</p>
+            <span class="read">Read article →</span>
+          </div>
+        </div>
+
+        <!-- Small card column (spans 2 rows) -->
+        <div class="small-card">
+          <div class="ph" style="background-image: url(assets/room-bedroom1.jpg);">
+            <span class="pill">Community</span>
+          </div>
+          <div class="body">
+            <p class="meta">April 5, 2026 · 6 min read</p>
+            <h4>Why community matters when you're starting over</h4>
+            <p>Relocating is exciting — but loneliness is real. Why a built-in community makes all the difference.</p>
+            <span class="read">Read →</span>
+          </div>
+        </div>
+
+        <!-- Legend row -->
+        <div class="legend">
+          <div>
+            <p class="k">Featured pill</p>
+            <p class="v">Tan fill, brown-deep label. One per page, top-left of the cover.</p>
+          </div>
+          <div>
+            <p class="k">Category pill</p>
+            <p class="v">Crimson fill on the grid — the editorial register.</p>
+          </div>
+          <div>
+            <p class="k">Card</p>
+            <p class="v">18px radius · white surface · brown card-shadow. Lifts 4px on hover.</p>
+          </div>
+          <div>
+            <p class="k">Header</p>
+            <p class="v">Charcoal band with tan eyebrow + serif title — same chrome as the marketing site.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footplate">
+        <span class="folio">page 17</span>
+        <span class="right">Dali House Brand · 2026</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         18 — ARTICLE ANATOMY
+         ============================================================ -->
+    <section class="slide s-anatomy" data-screen-label="18 Article Anatomy">
+      <div class="masthead">
+        <span>Part IV <span class="dot">·</span> The Journal</span>
+        <span class="vol">No. 16 — Article Anatomy</span>
+      </div>
+
+      <div class="stage-head">
+        <p class="eyebrow-lg" style="color: var(--color-crimson);">The post template</p>
+        <h2 class="display" style="margin-top: 22px;">A cover module<br>and a <em>body grammar.</em></h2>
+        <p class="lede">Every article reuses the same cover — photo, headline, highlighter subtitle, curved band — and the same six body parts: category pill, italic crimson heading, drop cap, callout, pull-quote, info card.</p>
+      </div>
+
+      <div class="layout">
+        <!-- Specimen (article cover) -->
+        <div class="specimen">
+          <div class="spec-photo">
+            <span class="spec-label">Journal · Community</span>
+            <span class="spec-issue">Issue No. 04 · Spring</span>
+            <h3 class="spec-h1">Why community<br><em>matters</em></h3>
+            <div class="spec-sub">
+              <span>When you're starting over in a new city.</span>
+            </div>
+            <span class="spec-folio">04</span>
+
+            <!-- Annotations -->
+            <span class="anno a-1" style="top: 18px; left: 22px; right: auto; padding: 0; transform: none;">
+              <span class="it" style="margin: 0;">↑ section label</span>
+            </span>
+          </div>
+          <div class="spec-band">
+            <p class="spec-byline"><span style="color: rgba(124,92,62,0.65); font-weight: 400;">Words by</span> <span class="crm">Jadesse</span> &nbsp;·&nbsp; <span style="color: rgba(124,92,62,0.65); font-weight: 400;">Photography by</span> <span class="crm">Dali House</span></p>
+            <p class="spec-lede">You got the job. You signed the lease. The first week is exciting — then week three hits. Here's why community makes all the difference.</p>
+          </div>
+
+          <!-- Side annotations positioned absolutely over the spec -->
+          <span class="anno" style="top: 110px; left: 100%; padding-left: 18px; max-width: 200px; white-space: normal;">
+            Headline
+            <span class="it">Playfair 600 · italic word in tan-light · clamp(56–110px)</span>
+            <span style="position: absolute; left: -12px; top: 8px; width: 18px; height: 1px; background: var(--color-crimson); display: block; content: '';"></span>
+          </span>
+          <span class="anno" style="top: 250px; left: 100%; padding-left: 18px; max-width: 200px; white-space: normal;">
+            Highlighter bar
+            <span class="it">Cream-light, box-decoration-break:clone — wraps with the line</span>
+            <span style="position: absolute; left: -12px; top: 8px; width: 18px; height: 1px; background: var(--color-crimson); display: block; content: '';"></span>
+          </span>
+          <span class="anno" style="top: 410px; left: 100%; padding-left: 18px; max-width: 200px; white-space: normal;">
+            Curved band
+            <span class="it">Soft hill — cream-light, 50%/100% top-corner radius</span>
+            <span style="position: absolute; left: -12px; top: 8px; width: 18px; height: 1px; background: var(--color-crimson); display: block; content: '';"></span>
+          </span>
+          <span class="anno" style="top: 322px; right: 100%; padding-right: 18px; text-align: right; max-width: 180px; white-space: normal;">
+            Page folio
+            <span class="it">Playfair 600, the smallest editorial touch</span>
+            <span style="position: absolute; right: -12px; top: 8px; width: 18px; height: 1px; background: var(--color-crimson); display: block; content: '';"></span>
+          </span>
+          <span class="anno" style="top: 480px; right: 100%; padding-right: 18px; text-align: right; max-width: 160px; white-space: normal;">
+            Byline
+            <span class="it">Names in crimson · roles in muted brown</span>
+            <span style="position: absolute; right: -12px; top: 8px; width: 18px; height: 1px; background: var(--color-crimson); display: block; content: '';"></span>
+          </span>
+        </div>
+
+        <!-- Body grammar panels -->
+        <div class="grammar">
+          <h4>Body grammar — six reusable parts</h4>
+          <div class="gpanels">
+            <div class="gpanel">
+              <span class="label">01 · Category + heading</span>
+              <span class="demo-cat">Community</span>
+              <p class="demo-h">The loneliness curve is real.</p>
+            </div>
+            <div class="gpanel">
+              <span class="label">02 · Drop cap</span>
+              <p class="demo-drop">Research shows that the hardest part of relocating isn't logistics — it's the social gap that opens up in week three.</p>
+            </div>
+            <div class="gpanel">
+              <span class="label">03 · Pull-quote</span>
+              <p class="demo-pq"><span class="mk">“</span>Community isn't a feature of where you live.</p>
+            </div>
+            <div class="gpanel">
+              <span class="label">04 · Callout</span>
+              <div class="demo-callout">Six months to a year — the average it takes before you feel you truly belong.</div>
+            </div>
+            <div class="gpanel">
+              <span class="label">05 · Multi-column</span>
+              <p class="demo-drop" style="column-count: 2; column-gap: 14px;">When you move into a solo apartment, your social life starts from zero. You go to work, come home, and the cycle repeats.</p>
+            </div>
+            <div class="gpanel">
+              <span class="label">06 · Info card</span>
+              <div class="demo-info">Dali House <span>· Dallas, TX</span>
+                <div class="ic-row"><span class="ic">●</span><span class="ic">●</span><span class="ic">●</span><span class="ic">●</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footplate">
+        <span class="folio">page 18</span>
+        <span class="right">Dali House Brand · 2026</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         19 — THREE POST TYPES
+         ============================================================ -->
+    <section class="slide s-post-types" data-screen-label="19 Three Post Types">
+      <div class="masthead">
+        <span>Part IV <span class="dot">·</span> The Journal</span>
+        <span class="vol">No. 17 — Three Post Types</span>
+      </div>
+
+      <div class="stage-head">
+        <div>
+          <p class="eyebrow-lg" style="color: var(--color-crimson);">What we publish</p>
+          <h2 class="display" style="margin-top: 22px;">Three shapes,<br>one <em>house voice.</em></h2>
+        </div>
+        <p class="lede">Every Journal post falls into one of three formats. Same cover module, same body grammar — but the skeleton inside shifts to match the kind of reading the piece is asking for.</p>
+      </div>
+
+      <div class="cards">
+
+        <!-- POST TYPE 01 — LISTICLE -->
+        <div class="pt-card tan">
+          <span class="pt-num">i.</span>
+          <h3>The <em>Listicle.</em></h3>
+          <span class="pt-tag">The Space</span>
+
+          <div class="pt-mini">
+            <span class="mini-eyebrow">Journal · The Space</span>
+            <p class="mini-h">Six spaces to land in: a room-by-room tour.</p>
+            <ol>
+              <li>The Living Room — golden hour</li>
+              <li>The Kitchen — the social gravity</li>
+              <li>Bedroom 1 — a desk that faces the window</li>
+              <li>Bedroom 2 — the corner room</li>
+              <li>The Shared Bath — quiet luxury</li>
+              <li>The Backyard — the cat's office</li>
+            </ol>
+          </div>
+
+          <div class="pt-meta">
+            <span class="k">When</span><span class="v">A room tour, a checklist, a recap of things.</span>
+            <span class="k">Voice</span><span class="v">Light, scannable, captions over essays.</span>
+            <span class="k">Hallmark</span><span class="v">Numbered serif markers in crimson.</span>
+          </div>
+        </div>
+
+        <!-- POST TYPE 02 — GUIDE -->
+        <div class="pt-card crimson">
+          <span class="pt-num">ii.</span>
+          <h3>The <em>Guide.</em></h3>
+          <span class="pt-tag">Relocation</span>
+
+          <div class="pt-mini">
+            <span class="mini-eyebrow">Journal · Relocation</span>
+            <p class="mini-h crimson-warm">Relocating to Dallas: what to actually expect.</p>
+            <div class="mini-toc">
+              <span>1. The cost of landing</span>
+              <span>2. Neighborhoods, north → south</span>
+              <span>3. Safety, soberly</span>
+              <span>4. The emotional curve</span>
+              <span>5. Your first thirty days</span>
+            </div>
+          </div>
+
+          <div class="pt-meta">
+            <span class="k">When</span><span class="v">A how-to, a primer, a long answer.</span>
+            <span class="k">Voice</span><span class="v">Patient, sectioned, takes the reader's hand.</span>
+            <span class="k">Hallmark</span><span class="v">Sticky TOC + section pills + practical callouts.</span>
+          </div>
+        </div>
+
+        <!-- POST TYPE 03 — NARRATIVE ESSAY -->
+        <div class="pt-card">
+          <span class="pt-num">iii.</span>
+          <h3>The <em>Narrative Essay.</em></h3>
+          <span class="pt-tag">Community</span>
+
+          <div class="pt-mini">
+            <span class="mini-eyebrow">Journal · Community</span>
+            <p class="mini-h">Why community matters when you're starting over.</p>
+            <p class="mini-body">You got the job. You signed the lease. You drove to a brand-new city. The first week is exciting — then week three hits, and the apartment gets quiet.</p>
+            <p class="mini-pq">Community isn't a feature of where you live.</p>
+          </div>
+
+          <div class="pt-meta">
+            <span class="k">When</span><span class="v">A first-person essay, a reflection, a stance.</span>
+            <span class="k">Voice</span><span class="v">Warm, intimate, lets one idea breathe.</span>
+            <span class="k">Hallmark</span><span class="v">Drop cap + centered pull-quote + closing info card.</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footplate">
+        <span class="folio">page 19</span>
+        <span class="right">Dali House Brand · 2026</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         17 — CLOSING (Soft landing)
+         ============================================================ -->
+    <section class="slide s-end" data-screen-label="20 Soft Landing">
+      <div class="photo"></div>
+      <div class="grain"></div>
+
+      <!-- confetti pellets sprinkle -->
+      <div class="ornament" style="inset: 0;" aria-hidden="true">
+        <span class="dot-pellet drift" style="position: absolute; top: 220px; left: 280px; --rot: 0deg;"></span>
+        <span class="dot-pellet crimson drift" style="position: absolute; top: 380px; left: 1550px; --rot: 8deg; animation-delay: -1.6s;"></span>
+        <span class="dot-pellet tan-light drift" style="position: absolute; top: 720px; left: 200px; width: 14px; height: 14px; animation-delay: -2.4s;"></span>
+        <span class="dot-pellet drift" style="position: absolute; top: 800px; left: 1600px; width: 8px; height: 8px;"></span>
+        <span class="dot-pellet cream drift" style="position: absolute; top: 160px; left: 1700px; width: 6px; height: 6px; animation-delay: -1s;"></span>
+      </div>
+
+      <div class="stage">
+        <div class="top">
+          <div class="lockup"><img src="assets/logo-wordmark.png" alt="Dali House"></div>
+          <div class="meta">— Fin · Vol. 01 —</div>
+        </div>
+
+        <div class="center">
+          <p class="eyebrow-lg">In closing</p>
+          <h1>Start your soft<br>landing in <em>Dallas.</em></h1>
+          <p class="lede">Move-in ready, thoughtfully designed, and built for women navigating a new city, a new role, or whatever's next.</p>
+        </div>
+
+        <div class="bottom">
+          <div class="contacts">
+            <div class="contact">
+              <div class="k">Web</div>
+              <div class="v">dalihouse.co</div>
+            </div>
+            <div class="contact">
+              <div class="k">Email</div>
+              <div class="v">dalihouse.dtx@gmail.com</div>
+            </div>
+            <div class="contact">
+              <div class="k">Instagram</div>
+              <div class="v">@dalihouse.dtx</div>
+            </div>
+          </div>
+          <a class="cta" href="#">Apply Now</a>
+        </div>
+      </div>
+
+      <div class="footplate" style="color: rgba(250,244,232,0.45); z-index: 4;">
+        <span class="folio" style="color: rgba(250,244,232,0.45);">page 20</span>
+        <span class="right">Dali House Brand · 2026</span>
+      </div>
+    </section>
+
+  </deck-stage>
+
+  <script src="deck-stage.js"></script>
+</body>
+</html>

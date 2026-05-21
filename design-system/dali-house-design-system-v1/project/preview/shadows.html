@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin:0; padding:0; background: var(--bg); font-family: var(--font-sans); }
+  body { padding: 30px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .card { background: #fff; border-radius: 16px; padding: 22px; min-height: 92px; display:flex; flex-direction:column; justify-content:space-between; }
+  .label { font-size: 12px; font-weight: 500; color: var(--fg); }
+  .val { font-family: ui-monospace, monospace; font-size: 10px; color: var(--fg-soft); margin-top: 4px; line-height: 1.5; }
+  .cta { display: inline-block; align-self: flex-start; background: var(--color-cream-light); color: var(--color-brown-deep); padding: 12px 22px; border-radius: 999px; font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; }
+</style></head><body>
+  <div class="card" style="box-shadow: 0 2px 20px rgba(61, 35, 20, 0.055);">
+    <div class="label">Card · rest</div>
+    <div class="val">0 2px 20px rgba(61,35,20,.055)</div>
+  </div>
+  <div class="card" style="box-shadow: 0 10px 36px rgba(61, 35, 20, 0.10);">
+    <div class="label">Card · hover</div>
+    <div class="val">0 10px 36px rgba(61,35,20,.10)</div>
+  </div>
+  <div class="card" style="box-shadow: 0 12px 40px rgba(61, 35, 20, 0.11);">
+    <div class="label">Blog · hover</div>
+    <div class="val">0 12px 40px rgba(61,35,20,.11)</div>
+  </div>
+  <div class="card" style="background: var(--bg); box-shadow: none; padding: 30px 22px; align-items: flex-start;">
+    <span class="cta" style="box-shadow: 0 4px 28px rgba(0, 0, 0, 0.22);">Apply Now</span>
+    <div class="val">CTA rest · 0 4px 28px rgba(0,0,0,.22)</div>
+  </div>
+  <div class="card" style="background: var(--bg); box-shadow: none; padding: 30px 22px; align-items: flex-start;">
+    <span class="cta" style="box-shadow: 0 8px 36px rgba(0, 0, 0, 0.30); transform: translateY(-2px);">Apply Now</span>
+    <div class="val">CTA hover · 0 8px 36px rgba(0,0,0,.30)</div>
+  </div>
+  <div class="card" style="background: var(--bg-dark); color: var(--fg-on-dark); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25); border-bottom: 1px solid rgba(250,244,232,.10);">
+    <div class="label" style="color: var(--fg-on-dark);">Nav · scrolled</div>
+    <div class="val" style="color: var(--fg-on-dark-soft);">0 1px 0 rgba(0,0,0,.25) + backdrop-blur</div>
+  </div>
+</body></html>

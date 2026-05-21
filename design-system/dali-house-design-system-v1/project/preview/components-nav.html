@@ -1,0 +1,40 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin:0; padding:0; font-family: var(--font-sans); background: var(--bg-dark); }
+  body { padding: 0; }
+  .nav {
+    background: rgba(22,17,13,0.96);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.25);
+    padding: 0 32px;
+    height: 72px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand img { height: 28px; opacity: 0.9; filter: brightness(0) invert(1); }
+  .links { display: flex; gap: 36px; align-items: center; }
+  .links a { font-size: 13px; letter-spacing: 0.04em; color: rgba(250,244,232,0.65); text-decoration: none; transition: color 200ms; }
+  .links a:hover { color: var(--fg-on-dark); }
+  .apply {
+    border: 1px solid rgba(250,244,232,0.35);
+    border-radius: 999px;
+    padding: 9px 22px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(250,244,232,0.85);
+    text-decoration: none;
+  }
+</style></head><body>
+  <nav class="nav">
+    <div class="brand"><img src="../assets/logo-wordmark.png" alt="Dali House"></div>
+    <div class="links">
+      <a href="#">The Space</a>
+      <a href="#">How It Works</a>
+      <a href="#">Your Host</a>
+      <a href="#">FAQ</a>
+      <a href="#" class="apply">Apply</a>
+    </div>
+  </nav>
+</body></html>

@@ -1,0 +1,77 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin:0; padding:0; font-family: var(--font-sans); }
+  body { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { padding: 30px 28px; }
+  .light { background: var(--bg); }
+  .dark { background: var(--bg-dark); color: var(--fg-on-dark); }
+  .cluster { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .label { font-size: 9.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin: 0 0 14px; }
+  /* primary cream button */
+  .btn-cream {
+    background: var(--color-cream-light);
+    color: var(--color-brown-deep);
+    padding: 15px 44px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: none;
+    box-shadow: 0 4px 28px rgba(0,0,0,.22);
+    transition: transform 200ms, box-shadow 200ms;
+    cursor: pointer;
+  }
+  .btn-cream:hover { transform: translateY(-2px); box-shadow: 0 8px 36px rgba(0,0,0,.30); }
+  /* ghost outline (nav) */
+  .btn-ghost {
+    background: transparent;
+    color: rgba(250,244,232,0.85);
+    padding: 9px 22px;
+    border: 1px solid rgba(250,244,232,0.35);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .btn-ghost:hover { background: rgba(250,244,232,0.10); color: var(--fg-on-dark); }
+  /* dark filled (mobile nav apply) */
+  .btn-deep {
+    background: var(--color-brown-deep);
+    color: var(--color-cream);
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  /* text link */
+  .link {
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+</style></head><body>
+  <div class="pane light">
+    <p class="label">On light</p>
+    <div class="cluster">
+      <button class="btn-cream">Apply Now</button>
+      <button class="btn-deep">Apply</button>
+      <a href="#" class="link">Read article →</a>
+    </div>
+  </div>
+  <div class="pane dark">
+    <p class="label">On dark</p>
+    <div class="cluster">
+      <button class="btn-cream">Apply Now</button>
+      <button class="btn-ghost">Apply</button>
+      <a href="#" class="link">Read article →</a>
+    </div>
+  </div>
+</body></html>
