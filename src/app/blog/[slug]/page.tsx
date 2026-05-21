@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getPostBySlug, getAllSlugs } from "@/lib/blog";
+import {
+  getPostBySlug,
+  getAllSlugs,
+  getPageNumber,
+  getSeasonLabel,
+} from "@/lib/blog";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import SoftLanding from "@/components/SoftLanding";
@@ -58,10 +63,8 @@ export default async function BlogPost({
   const { slug } = await params;
   const post = await getPostBySlug(slug);
   const { lead, emphasis } = splitTitleForCover(post.title);
-  const issueLabel = new Date(post.date).toLocaleDateString("en-US", {
-    month: "long",
-    year: "numeric",
-  });
+  const issueLabel = getSeasonLabel(post.date);
+  const pageNumber = getPageNumber(slug);
 
   return (
     <>
@@ -70,7 +73,7 @@ export default async function BlogPost({
         <article>
           {/* ============ EDITORIAL COVER ============ */}
           <section className="relative mt-20">
-            <div className="relative h-[560px] overflow-hidden bg-charcoal md:h-[680px] lg:h-[760px]">
+            <div className="relative h-[580px] overflow-hidden bg-charcoal md:h-[680px] lg:h-[760px]">
               <Image
                 src={post.cover}
                 alt=""
@@ -96,8 +99,22 @@ export default async function BlogPost({
                 Issue · {issueLabel}
               </span>
 
-              <div className="absolute top-[22%] right-0 left-0 z-10 mx-auto max-w-[980px] px-8 md:px-14">
-                <h1 className="font-serif font-semibold leading-[0.95] tracking-[-0.025em] text-cream text-[clamp(44px,8vw,110px)] drop-shadow-[0_4px_28px_rgba(0,0,0,0.25)]">
+              {/* Floral motifs — sparse decorative blooms, per editorial spec */}
+              <Bloom
+                size={22}
+                className="absolute top-[22%] left-[5%] z-[2] text-tan opacity-[0.95]"
+              />
+              <Bloom
+                size={18}
+                className="absolute top-[30%] right-[6%] z-[2] rotate-[18deg] text-tan opacity-[0.95]"
+              />
+              <Bloom
+                size={14}
+                className="absolute top-[40%] left-[12%] z-[2] text-crimson-warm opacity-[0.95]"
+              />
+
+              <div className="absolute top-[28%] right-0 left-0 z-10 mx-auto max-w-[980px] px-8 md:top-[24%] md:px-14">
+                <h1 className="font-serif font-semibold leading-[0.95] tracking-[-0.025em] text-cream text-[clamp(56px,8vw,110px)] drop-shadow-[0_4px_28px_rgba(0,0,0,0.25)]">
                   {lead && (
                     <>
                       {lead}
@@ -111,7 +128,7 @@ export default async function BlogPost({
 
                 <div className="mt-6 inline-block max-w-[680px]">
                   <span
-                    className="font-serif text-[clamp(18px,2.4vw,28px)] font-medium leading-[1.7] tracking-[-0.005em] text-brown-deep"
+                    className="font-serif text-[clamp(20px,2.6vw,30px)] font-medium leading-[1.7] tracking-[-0.005em] text-brown-deep"
                     style={{
                       background: "var(--color-cream-light)",
                       padding: "8px 14px 10px",
@@ -123,13 +140,17 @@ export default async function BlogPost({
                   </span>
                 </div>
               </div>
+
+              <div className="absolute right-9 bottom-6 z-10 font-serif text-[13px] font-semibold tracking-[0.02em] text-brown-deep">
+                {pageNumber}
+              </div>
             </div>
 
             {/* Curved cream-light band carrying byline + lede */}
             <div className="relative bg-cream-light px-8 pt-[68px] pb-14">
               <div
                 aria-hidden
-                className="absolute right-0 left-0 -top-14 h-14 bg-cream-light"
+                className="absolute right-0 left-0 -top-14 h-[60px] bg-cream-light"
                 style={{
                   borderTopLeftRadius: "50% 100%",
                   borderTopRightRadius: "50% 100%",
@@ -253,6 +274,26 @@ export default async function BlogPost({
       <SoftLanding />
       <Footer />
     </>
+  );
+}
+
+function Bloom({ size = 22, className }: { size?: number; className?: string }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden
+    >
+      <g fill="currentColor">
+        <ellipse cx="12" cy="6" rx="2.6" ry="4.6" />
+        <ellipse cx="12" cy="18" rx="2.6" ry="4.6" />
+        <ellipse cx="6" cy="12" rx="4.6" ry="2.6" />
+        <ellipse cx="18" cy="12" rx="4.6" ry="2.6" />
+        <circle cx="12" cy="12" r="2" fill="#faf4e8" />
+      </g>
+    </svg>
   );
 }
 

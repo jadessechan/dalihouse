@@ -129,3 +129,28 @@ export function getAllSlugs(): string[] {
     .filter((f) => f.endsWith(".md"))
     .map((f) => f.replace(/\.md$/, ""));
 }
+
+// 1-indexed chronological position (oldest = 01) — used for the editorial
+// page number in the post cover. Zero-padded to 2 digits.
+export function getPageNumber(slug: string): string {
+  const chronological = getAllPosts().sort(
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+  );
+  const idx = chronological.findIndex((p) => p.slug === slug);
+  const n = idx < 0 ? 1 : idx + 1;
+  return String(n).padStart(2, "0");
+}
+
+// Northern-hemisphere season label, named for the year the post was published.
+// "Issue · Spring 2026" feels closer to the magazine cadence than "April 2026".
+export function getSeasonLabel(iso: string): string {
+  const d = new Date(iso);
+  const m = d.getMonth(); // 0-indexed
+  const year = d.getFullYear();
+  let season: string;
+  if (m >= 2 && m <= 4) season = "Spring";
+  else if (m >= 5 && m <= 7) season = "Summer";
+  else if (m >= 8 && m <= 10) season = "Fall";
+  else season = "Winter";
+  return `${season} ${year}`;
+}
