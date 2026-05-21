@@ -1,0 +1,42 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin:0; padding:0; font-family: var(--font-sans); background: var(--bg); }
+  body { padding: 26px 32px; color: var(--fg); }
+  h4 { font-family: var(--font-sans); font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin: 0 0 14px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .col { display: flex; flex-direction: column; gap: 10px; }
+  .ex {
+    background: #fff;
+    border: 1px solid var(--border-on-light);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--fg);
+  }
+  .ex em { font-style: italic; color: var(--accent); }
+  .ex .em { color: var(--accent); }
+  .ex .bad { color: rgba(122, 28, 28, 0.75); }
+  .ex .good { color: #4a7a4a; }
+  .tag {
+    font-family: ui-monospace, monospace; font-size: 9.5px; color: var(--fg-soft); letter-spacing: 0.04em; margin-bottom: 4px;
+  }
+</style></head><body>
+  <div class="grid">
+    <div class="col">
+      <h4>Voice — use</h4>
+      <div class="ex">"A soft landing in Dallas."</div>
+      <div class="ex">"Everything handled, <em>from day one</em>."</div>
+      <div class="ex">"Your <em>relocation oasis</em> in Dallas."</div>
+      <div class="ex">"Not just a place to live — but a space to land, connect, and grow."</div>
+    </div>
+    <div class="col">
+      <h4>Voice — avoid</h4>
+      <div class="ex"><span class="bad">"Unlock your dream lifestyle today! 🔥"</span></div>
+      <div class="ex"><span class="bad">"Premium luxury coliving experience"</span></div>
+      <div class="ex"><span class="bad">"Don't miss out — limited spots!"</span></div>
+      <div class="ex"><span class="bad">"Disrupting the rental space for women"</span></div>
+    </div>
+  </div>
+</body></html>

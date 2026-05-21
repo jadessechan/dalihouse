@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Six spaces to land in — The Journal — Dali House</title>
+  <link rel="stylesheet" href="../../colors_and_type.css">
+  <link rel="icon" href="../../assets/favicon.ico">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); }
+    img { display: block; max-width: 100%; }
+
+    /* ============ NAV ============ */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: rgba(22,17,13,0.96); backdrop-filter: blur(10px); box-shadow: 0 1px 0 rgba(0,0,0,0.25); }
+    .nav-inner { max-width: 1120px; margin: 0 auto; height: 80px; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-brand img { height: 36px; opacity: 0.9; filter: brightness(0) invert(1); }
+    .nav-links { display: flex; align-items: center; gap: 36px; }
+    .nav-links a { font-size: 13px; letter-spacing: 0.04em; color: rgba(250,244,232,0.65); text-decoration: none; }
+    .nav-apply { border: 1px solid rgba(250,244,232,0.35); border-radius: 999px; padding: 9px 22px; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(250,244,232,0.85); }
+
+    /* ============ COVER ============ */
+    .cover { position: relative; margin-top: 80px; }
+    .cover-photo { position: relative; height: 720px; background: url(../../assets/room-living.jpg) center 40% / cover no-repeat; }
+    .cover-photo::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,7,5,0.55) 0%, rgba(10,7,5,0.30) 30%, rgba(10,7,5,0.35) 65%, rgba(10,7,5,0.70) 100%); }
+    .cover .section-label { position: absolute; top: 32px; left: 40px; z-index: 2; color: var(--fg-on-dark); font-size: 11px; font-weight: 600; letter-spacing: 0.30em; text-transform: uppercase; }
+    .cover .issue { position: absolute; top: 32px; right: 40px; z-index: 2; color: rgba(250,244,232,0.7); font-family: var(--font-serif); font-style: italic; font-size: 13px; }
+
+    .headline-wrap { position: absolute; left: 0; right: 0; top: 26%; padding: 0 56px; z-index: 2; color: var(--fg-on-dark); max-width: 980px; margin: 0 auto; }
+    .cover h1 {
+      font-family: var(--font-serif); font-weight: 600;
+      font-size: clamp(56px, 8vw, 108px);
+      line-height: 0.96; letter-spacing: -0.025em;
+      margin: 0; color: var(--fg-on-dark);
+      text-shadow: 0 4px 28px rgba(0,0,0,0.30);
+    }
+    .cover h1 em { font-family: var(--font-serif); font-style: italic; color: var(--color-tan-light); }
+    .subtitle-wrap { margin-top: 24px; display: inline-block; max-width: 680px; }
+    .subtitle {
+      display: inline; box-decoration-break: clone; -webkit-box-decoration-break: clone;
+      background: var(--color-cream-light); color: var(--color-brown-deep);
+      padding: 8px 14px 10px;
+      font-family: var(--font-serif); font-weight: 500;
+      font-size: clamp(20px, 2.6vw, 30px); line-height: 1.7;
+    }
+
+    .floral { position: absolute; color: var(--accent); z-index: 2; pointer-events: none; }
+
+    /* Curved bottom band */
+    .band { position: relative; background: var(--bg-warm); padding: 68px 32px 56px; margin-top: -1px; }
+    .band::before { content: ""; position: absolute; left: 0; right: 0; top: -56px; height: 60px; background: var(--bg-warm); border-top-left-radius: 50% 100%; border-top-right-radius: 50% 100%; }
+    .band-inner { max-width: 760px; margin: 0 auto; text-align: center; position: relative; }
+    .byline { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-brown-deep); margin: 0 0 16px; font-weight: 500; }
+    .byline .by-meta { color: var(--color-brown); font-weight: 400; }
+    .byline .by-strong { color: var(--color-crimson); font-weight: 600; }
+    .lede { font-family: var(--font-serif); font-style: italic; font-size: 16px; line-height: 1.7; color: var(--color-brown); margin: 0; }
+    .page-num { position: absolute; bottom: 24px; left: 36px; font-family: var(--font-serif); font-weight: 600; font-size: 13px; color: var(--color-brown-deep); }
+    .page-num.right { left: auto; right: 36px; color: var(--fg-on-dark); }
+
+    /* ============ ARTICLE SHELL ============ */
+    .article { max-width: 1080px; margin: 0 auto; padding: 64px 32px 80px; }
+
+    .meta-block { max-width: 760px; margin: 0 auto 36px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    .pill { display: inline-flex; align-items: center; padding: 5px 12px; border-radius: 999px; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+    .pill.tag { border: 1px solid var(--color-crimson); background: rgba(122,28,28,0.08); color: var(--color-crimson); }
+    .pill.read { border: 1px solid rgba(124,92,62,0.20); color: rgba(124,92,62,0.75); }
+
+    .author-block { max-width: 760px; margin: 0 auto; display: flex; align-items: center; gap: 16px; padding: 20px 0; border-top: 1px solid rgba(124,92,62,0.10); border-bottom: 1px solid rgba(124,92,62,0.10); }
+    .author-avatar { width: 44px; height: 44px; border-radius: 999px; overflow: hidden; flex-shrink: 0; }
+    .author-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+    .author-meta { display: flex; flex-direction: column; }
+    .author-meta .name { font-size: 14px; font-weight: 500; color: var(--color-brown-deep); }
+    .author-meta .role { font-size: 12px; font-weight: 300; color: rgba(124,92,62,0.60); }
+    .author-block .date-side { margin-left: auto; text-align: right; }
+    .author-block .date-side .label { display: block; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(124,92,62,0.45); }
+    .author-block .date-side time { display: block; font-size: 13px; font-weight: 300; color: rgba(124,92,62,0.80); }
+
+    /* TOC + body 2-col split */
+    .article-grid { max-width: 1080px; margin: 0 auto; display: grid; gap: 64px; grid-template-columns: 220px minmax(0, 720px); justify-content: center; }
+    .toc-aside { grid-column: 1; }
+    .toc { position: sticky; top: 108px; }
+    .toc .label { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(124,92,62,0.55); margin: 0 0 12px; }
+    .toc ul { list-style: none; padding: 0 0 0 16px; margin: 0; border-left: 1px solid rgba(124,92,62,0.15); display: flex; flex-direction: column; gap: 10px; }
+    .toc a { display: block; text-decoration: none; font-size: 13px; line-height: 1.5; color: rgba(124,92,62,0.75); transition: color 200ms; position: relative; padding-left: 2px; }
+    .toc a:hover { color: var(--color-brown-deep); }
+    .toc a.active { color: var(--color-crimson); font-weight: 500; }
+    .toc a.active::before { content: ""; position: absolute; top: 4px; left: -18px; width: 2px; height: 14px; background: var(--color-crimson); }
+    .toc .num { font-family: var(--font-serif); font-weight: 600; color: rgba(124,92,62,0.40); margin-right: 6px; }
+    .toc a.active .num { color: var(--color-crimson); }
+
+    .article-body { grid-column: 2; }
+
+    /* ============ LIST-STYLE PICKS ============ */
+    /* Intro paragraph */
+    .intro {
+      font-size: 16px; line-height: 1.78; font-weight: 300;
+      color: var(--color-brown); margin: 0 0 56px;
+    }
+    .intro::first-letter {
+      font-family: var(--font-serif); font-weight: 600;
+      font-size: 56px; line-height: 0.9;
+      float: left; margin: 6px 10px 0 0;
+      color: var(--color-crimson);
+    }
+
+    /* Each pick — magazine vendor entry */
+    .pick { margin: 56px 0; position: relative; }
+    .pick + .pick { padding-top: 56px; border-top: 1px dashed rgba(124,92,62,0.18); }
+
+    .pick-head {
+      display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .pick-num {
+      font-family: var(--font-serif); font-weight: 600; font-style: italic;
+      font-size: 56px; line-height: 0.9; color: var(--color-crimson);
+      margin-right: 4px;
+    }
+    .pick-label {
+      display: inline-block; background: var(--color-crimson); color: white;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 4px; white-space: nowrap;
+    }
+    .pick-label.tan { background: var(--accent); color: var(--color-brown-deep); }
+    .pick h2 {
+      font-family: var(--font-serif); font-style: italic; font-weight: 600;
+      font-size: clamp(32px, 4vw, 42px); line-height: 1.05;
+      letter-spacing: -0.015em;
+      color: var(--color-crimson);
+      margin: 4px 0 0;
+    }
+    .pick h2.tan { color: var(--color-brown-deep); }
+
+    /* Pick body — photo + text, alternating */
+    .pick-grid {
+      display: grid; grid-template-columns: 1fr 1.1fr; gap: 36px;
+      align-items: start; margin-top: 22px;
+    }
+    .pick-grid.reverse { grid-template-columns: 1.1fr 1fr; }
+    .pick-grid.reverse .pick-photo { order: 2; }
+    .pick-grid.reverse .pick-text { order: 1; }
+
+    .pick-photo {
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 10px 36px rgba(61,35,20,0.14);
+      position: relative;
+    }
+    .pick-photo img { width: 100%; height: 280px; object-fit: cover; display: block; }
+    .pick-photo .caption {
+      position: absolute; bottom: 12px; left: 14px;
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 12px; color: white;
+      background: rgba(10,7,5,0.55); padding: 4px 10px; border-radius: 4px;
+      backdrop-filter: blur(4px);
+    }
+
+    .pick-text p {
+      font-size: 14.5px; line-height: 1.78; font-weight: 300;
+      color: var(--color-brown); margin: 0 0 1em;
+    }
+    .pick-text strong { color: var(--color-brown-deep); font-weight: 500; }
+
+    /* Info card at the bottom of each pick — small, compact */
+    .pick-info {
+      margin-top: 18px;
+      border: 1.5px solid var(--accent);
+      border-radius: 12px;
+      padding: 16px 18px;
+      background: var(--bg);
+    }
+    .pick-info .nm {
+      font-family: var(--font-sans); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--color-brown-deep); margin: 0 0 10px;
+    }
+    .pick-info .nm span { color: var(--color-crimson); }
+    .pick-info ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 7px; }
+    .pick-info li { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; color: var(--color-brown); font-weight: 300; line-height: 1.5; }
+    .pick-info .ic { width: 18px; height: 18px; flex-shrink: 0; border-radius: 999px; background: var(--color-crimson); color: white; display: inline-flex; align-items: center; justify-content: center; margin-top: 1px; }
+
+    /* Floral accent inside pick */
+    .pick-bloom { position: absolute; opacity: 0.35; color: var(--accent); }
+
+    /* End divider */
+    .divider { margin: 72px auto 0; text-align: center; color: var(--accent); }
+    .divider .line { display: inline-block; width: 80px; height: 1px; background: rgba(124,92,62,0.20); vertical-align: middle; margin: 0 12px; }
+
+    /* ============ FOOTER ============ */
+    .footer { background: var(--bg-dark); border-top: 1px solid rgba(250,244,232,0.05); padding: 56px 32px; color: var(--fg-on-dark); margin-top: 80px; }
+    .footer-inner { max-width: 1080px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 40px; }
+    .footer .brand img { display: block; height: 40px; opacity: 0.75; filter: brightness(0) invert(1); margin-bottom: 8px; }
+    .footer .tagline { font-size: 12px; letter-spacing: 0.05em; color: rgba(250,244,232,0.35); margin: 0 0 12px; }
+    .footer-ic { display: inline-flex; align-items: center; gap: 6px; color: rgba(250,244,232,0.55); font-size: 13px; text-decoration: none; padding: 3px 0; }
+    .footer .col { display: flex; flex-direction: column; gap: 10px; }
+    .footer .col-title { font-size: 10px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(250,244,232,0.35); margin: 0; }
+    .footer .col a { font-size: 13px; color: rgba(250,244,232,0.55); text-decoration: none; }
+    .footer .copy { max-width: 1080px; margin: 36px auto 0; padding-top: 24px; border-top: 1px solid rgba(250,244,232,0.05); text-align: center; font-size: 11px; color: rgba(250,244,232,0.2); }
+
+    @media (max-width: 980px) {
+      .article-grid { grid-template-columns: 1fr; max-width: 760px; gap: 32px; }
+      .toc-aside { grid-column: 1; }
+      .article-body { grid-column: 1; }
+      .toc { position: static; padding: 16px 20px; border: 1px solid rgba(124,92,62,0.15); border-radius: 12px; background: rgba(255,255,255,0.5); }
+    }
+    @media (max-width: 820px) {
+      .cover-photo { height: 580px; }
+      .headline-wrap { padding: 0 32px; top: 28%; }
+      .pick-grid, .pick-grid.reverse { grid-template-columns: 1fr; }
+      .pick-grid.reverse .pick-photo { order: 1; }
+      .pick-grid.reverse .pick-text { order: 2; }
+      .nav-links a:not(.nav-apply) { display: none; }
+      .author-block { flex-wrap: wrap; }
+      .author-block .date-side { margin-left: 0; text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="bloom" viewBox="0 0 24 24">
+      <g fill="currentColor">
+        <ellipse cx="12" cy="6" rx="2.6" ry="4.6"/>
+        <ellipse cx="12" cy="18" rx="2.6" ry="4.6"/>
+        <ellipse cx="6" cy="12" rx="4.6" ry="2.6"/>
+        <ellipse cx="18" cy="12" rx="4.6" ry="2.6"/>
+        <circle cx="12" cy="12" r="2" fill="#faf4e8"/>
+      </g>
+    </symbol>
+  </svg>
+
+  <nav class="nav" data-screen-label="List Article">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../website/marketing.html"><img src="../../assets/logo-wordmark.png" alt="Dali House"></a>
+      <div class="nav-links">
+        <a href="../website/marketing.html#the-space">The Space</a>
+        <a href="../website/marketing.html#how-it-works">How It Works</a>
+        <a href="../website/marketing.html#meet-your-host">Your Host</a>
+        <a href="index.html">Journal</a>
+        <a href="#" class="nav-apply">Apply</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ============ COVER ============ -->
+    <section class="cover" data-screen-label="Article Cover (list)">
+      <div class="cover-photo">
+        <span class="section-label">Journal · The Space</span>
+        <span class="issue">Issue No. 06 · Summer</span>
+
+        <svg class="floral" width="22" height="22" style="top: 22%; left: 6%;"><use href="#bloom"/></svg>
+        <svg class="floral" width="16" height="16" style="top: 70%; right: 8%; color: var(--color-crimson-warm);"><use href="#bloom"/></svg>
+        <svg class="floral" width="14" height="14" style="top: 38%; right: 10%; transform: rotate(20deg);"><use href="#bloom"/></svg>
+
+        <div class="headline-wrap">
+          <h1>Six spaces<br>to <em>land</em> in.</h1>
+          <div class="subtitle-wrap">
+            <span class="subtitle">A room-by-room tour of Dali House.</span>
+          </div>
+        </div>
+        <div class="page-num right">06</div>
+      </div>
+
+      <div class="band">
+        <div class="band-inner">
+          <p class="byline">
+            <span class="by-meta">Words by</span> <span class="by-strong">Jadesse</span>
+            &nbsp;·&nbsp;
+            <span class="by-meta">Photography by</span> <span class="by-strong">Dali House</span>
+          </p>
+          <p class="lede">
+            A home is the sum of the small rooms inside it. Here are the six spaces that make
+            Dali House feel like a soft landing — what's inside each one, and what makes them
+            worth the rent.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ARTICLE ============ -->
+    <article class="article">
+      <div class="meta-block">
+        <span class="pill tag">The Space</span>
+        <span class="pill read">7 min read</span>
+      </div>
+
+      <div class="author-block">
+        <div class="author-avatar"><img src="../../assets/dali-house-host.jpg" alt="Jadesse"></div>
+        <div class="author-meta">
+          <span class="name">Jadesse</span>
+          <span class="role">Founder of Dali House</span>
+        </div>
+        <div class="date-side">
+          <span class="label">Published</span>
+          <time datetime="2026-06-18">June 18, 2026</time>
+        </div>
+      </div>
+
+      <div class="article-grid">
+        <aside class="toc-aside">
+          <nav class="toc" aria-label="Table of contents">
+            <p class="label">On this page</p>
+            <ul>
+              <li><a href="#bedroom-1"><span class="num">01</span>Bedroom 1</a></li>
+              <li><a href="#bedroom-2"><span class="num">02</span>Bedroom 2</a></li>
+              <li><a href="#living"><span class="num">03</span>Living Room</a></li>
+              <li><a href="#kitchen"><span class="num">04</span>Kitchen</a></li>
+              <li><a href="#bath"><span class="num">05</span>Shared Bath</a></li>
+              <li><a href="#laundry"><span class="num">06</span>Laundry</a></li>
+            </ul>
+          </nav>
+        </aside>
+
+        <div class="article-body">
+          <p class="intro">
+            Renting a room is mostly about the room. But a coliving home is about what's around
+            it — the kitchen you stand in at 8am, the couch where the conversations actually
+            happen, the bathroom that feels like your own. Every space at Dali House is
+            furnished, considered, and built to be lived in. Here's a walk through, one
+            doorway at a time.
+          </p>
+
+          <!-- 01 Bedroom 1 -->
+          <section class="pick" id="bedroom-1">
+            <div class="pick-head">
+              <span class="pick-num">01</span>
+              <span class="pick-label">Bedrooms</span>
+            </div>
+            <h2>Bedroom One</h2>
+            <div class="pick-grid">
+              <div class="pick-photo">
+                <img src="../../assets/room-bedroom1.jpg" alt="Bedroom 1">
+                <span class="caption">North-facing · warm light</span>
+              </div>
+              <div class="pick-text">
+                <p>
+                  The first bedroom is the larger of the two, sitting at the front of the house
+                  with morning light through linen curtains. Full-size bed, a proper writing
+                  desk (not a folding table, not a corner of the kitchen), full-length mirror,
+                  and original artwork on the wall.
+                </p>
+                <p>
+                  <strong>Everything is furnished.</strong> Bring your suitcase, your books, and
+                  whatever plant you can't bear to leave behind. The room is yours to make
+                  small adjustments to — Jadesse would rather you feel at home than feel like
+                  a tenant.
+                </p>
+                <div class="pick-info">
+                  <p class="nm">Bedroom 01 <span>· Includes</span></p>
+                  <ul>
+                    <li><span class="ic"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>Full-size bed, work station, TV</li>
+                    <li><span class="ic"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>Full-length mirror, closet space</li>
+                    <li><span class="ic"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>Original artwork on every wall</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 02 Bedroom 2 -->
+          <section class="pick" id="bedroom-2">
+            <div class="pick-head">
+              <span class="pick-num">02</span>
+              <span class="pick-label tan">Bedrooms</span>
+            </div>
+            <h2 class="tan">Bedroom Two</h2>
+            <div class="pick-grid reverse">
+              <div class="pick-photo">
+                <img src="../../assets/room-bedroom2.jpg" alt="Bedroom 2">
+                <span class="caption">South-facing · evening light</span>
+              </div>
+              <div class="pick-text">
+                <p>
+                  Bedroom two is a touch smaller and a touch quieter — set back from the
+                  street, with afternoon sun. Same setup as bedroom one: full bed, work
+                  station, TV, mirror, closet, art. The two rooms share a bath and a hallway
+                  that you'll probably linger in talking to your housemate.
+                </p>
+                <p>
+                  Residents who want a deeper retreat after work tend to pick this room.
+                  Residents who like being in the middle of everything tend to pick the other.
+                  <strong>Both are good answers.</strong>
+                </p>
+                <div class="pick-info">
+                  <p class="nm">Bedroom 02 <span>· Includes</span></p>
+                  <ul>
+                    <li><span class="ic"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>Full-size bed, work station, TV</li>
+                    <li><span class="ic"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>Quieter side of the house</li>
+                    <li><span class="ic"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>Afternoon light · closet space</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 03 Living Room -->
+          <section class="pick" id="living">
+            <div class="pick-head">
+              <span class="pick-num">03</span>
+              <span class="pick-label">Shared Space</span>
+            </div>
+            <h2>The Living Room</h2>
+            <div class="pick-grid">
+              <div class="pick-photo">
+                <img src="../../assets/room-living.jpg" alt="Living Room">
+                <span class="caption">Vintage pieces · original artwork</span>
+              </div>
+              <div class="pick-text">
+                <p>
+                  The living room is the heart of the house and where most of the residency
+                  actually happens. Vintage furniture, original artwork on the walls, soft
+                  lighting at night, a record player and a stack of books.
+                </p>
+                <p>
+                  This is the room where the work week thaws out — Sunday-night dinners,
+                  Wednesday evenings with a glass of wine, the long catch-up calls home. It's
+                  shared without ever feeling like a co-working lobby.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- 04 Kitchen -->
+          <section class="pick" id="kitchen">
+            <div class="pick-head">
+              <span class="pick-num">04</span>
+              <span class="pick-label tan">Shared Space</span>
+            </div>
+            <h2 class="tan">The Kitchen</h2>
+            <div class="pick-grid reverse">
+              <div class="pick-photo">
+                <img src="../../assets/room-kitchen.jpg" alt="Kitchen">
+                <span class="caption">Fully stocked · meal-prep ready</span>
+              </div>
+              <div class="pick-text">
+                <p>
+                  Fully stocked with the essentials — quality knives, sheet pans, a real
+                  coffee setup, mixing bowls in three sizes — so you can land on Sunday and
+                  have a meal cooked by Monday morning. No "we should buy a colander" texts.
+                </p>
+                <p>
+                  Cabinet space is divided so each resident has her own pantry and fridge
+                  shelf. The communal pantry holds shared basics. <strong>Cooking is one of
+                  the easiest ways to feel at home</strong> — the kitchen is set up to make
+                  that frictionless.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- 05 Bath -->
+          <section class="pick" id="bath">
+            <div class="pick-head">
+              <span class="pick-num">05</span>
+              <span class="pick-label">Shared Space</span>
+            </div>
+            <h2>The Shared Bath</h2>
+            <div class="pick-grid">
+              <div class="pick-photo">
+                <img src="../../assets/room-bathroom.jpg" alt="Shared Bathroom">
+                <span class="caption">Rain head · marble · bidet</span>
+              </div>
+              <div class="pick-text">
+                <p>
+                  The shared bathroom is the room residents are quietly the proudest of.
+                  Marble detailing, a rain showerhead, a handheld for the days you need it,
+                  and a bidet — a small luxury that surprises you the first morning and then
+                  you wonder how you lived without it.
+                </p>
+                <p>
+                  Cleaning is monthly and handled. You'll never have a conversation about the
+                  shower drain.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- 06 Laundry -->
+          <section class="pick" id="laundry">
+            <div class="pick-head">
+              <span class="pick-num">06</span>
+              <span class="pick-label tan">Utility</span>
+            </div>
+            <h2 class="tan">Laundry</h2>
+            <div class="pick-grid reverse">
+              <div class="pick-photo">
+                <img src="../../assets/room-laundry.jpg" alt="Laundry">
+                <span class="caption">In-home · all hours</span>
+              </div>
+              <div class="pick-text">
+                <p>
+                  In-home washer and dryer. No coins, no app, no driving across the parking
+                  lot at 9pm to fold someone else's towels.
+                </p>
+                <p>
+                  Small detail; large quality-of-life upgrade. <strong>Most residents say it's
+                  the one thing they didn't know to look for until they had it.</strong>
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <div class="divider">
+            <span class="line"></span>
+            <svg width="20" height="20" style="vertical-align: middle;"><use href="#bloom"/></svg>
+            <span class="line"></span>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <a class="brand" href="../website/marketing.html"><img src="../../assets/logo-wordmark.png" alt="Dali House"></a>
+        <p class="tagline">Coliving for women in Dallas</p>
+        <div><a class="footer-ic" href="#">dalihouse.dtx@gmail.com</a></div>
+        <div><a class="footer-ic" href="#">@dalihouse.dtx</a></div>
+      </div>
+      <div class="col">
+        <p class="col-title">Navigate</p>
+        <a href="../website/marketing.html">Home</a>
+        <a href="../website/marketing.html#the-space">The Space</a>
+        <a href="index.html">Journal</a>
+      </div>
+      <div class="col">
+        <p class="col-title">Apply</p>
+        <a href="#">Apply Now</a>
+      </div>
+    </div>
+    <p class="copy">&copy; 2026 Dali House. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Scroll-spy for TOC — position-based, robust across viewport heights
+    document.addEventListener('DOMContentLoaded', () => {
+      const links = Array.from(document.querySelectorAll('.toc a'));
+      const sections = links.map(a => document.getElementById(a.getAttribute('href').slice(1))).filter(Boolean);
+      if (!sections.length) return;
+      const setActive = (id) => {
+        links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+      };
+      const THRESHOLD = 160;
+      let lastId = null;
+      const update = () => {
+        let activeId = sections[0].id;
+        for (const s of sections) {
+          if (s.getBoundingClientRect().top <= THRESHOLD) activeId = s.id;
+        }
+        if (activeId !== lastId) { setActive(activeId); lastId = activeId; }
+      };
+      update();
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+    });
+  </script>
+</body>
+</html>

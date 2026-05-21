@@ -1,0 +1,74 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin:0; padding:0; font-family: var(--font-sans); background: var(--bg); }
+  body { padding: 24px 28px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: start; }
+
+  /* Category labels */
+  .cat {
+    display: inline-block;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 4px;
+    white-space: nowrap;
+  }
+  .cat.crimson { background: var(--color-crimson); color: white; }
+  .cat.tan { background: var(--accent); color: var(--color-brown-deep); }
+
+  /* Italic crimson heading */
+  .ed-h {
+    font-family: var(--font-serif); font-style: italic; font-weight: 600;
+    font-size: 30px; line-height: 1.05; letter-spacing: -0.015em;
+    margin: 10px 0 0;
+  }
+
+  /* Callout box */
+  .callout {
+    position: relative;
+    border: 1.5px solid var(--color-crimson);
+    border-radius: 14px;
+    padding: 16px 18px;
+    color: var(--color-brown);
+    font-size: 13px; line-height: 1.7; font-weight: 300;
+  }
+  .callout::after {
+    content: "✿";
+    position: absolute; top: -10px; left: 16px;
+    color: var(--color-crimson); font-size: 14px; line-height: 1;
+    background: var(--bg); padding: 0 4px;
+  }
+  .callout strong { color: var(--color-crimson); font-weight: 600; }
+
+  /* Info card */
+  .info-card { border: 1.5px solid var(--accent); border-radius: 14px; padding: 16px 18px; background: var(--bg); }
+  .info-card .name { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-brown-deep); margin: 0 0 10px; }
+  .info-card .name span { color: var(--color-crimson); }
+  .info-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 7px; }
+  .info-list li { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--color-brown); font-weight: 300; }
+  .info-list .ic { width: 18px; height: 18px; flex-shrink: 0; border-radius: 999px; background: var(--color-crimson); color: white; display: inline-flex; align-items: center; justify-content: center; }
+
+  .meta-label { font-family: ui-monospace, monospace; font-size: 9.5px; color: var(--fg-soft); margin-bottom: 6px; letter-spacing: 0.04em; }
+</style></head><body>
+<div class="grid">
+  <div>
+    <div class="meta-label">Section heading + category label</div>
+    <div><span class="cat crimson">Reality</span></div>
+    <h3 class="ed-h" style="color: var(--color-crimson);">The loneliness curve is real.</h3>
+    <div style="margin-top:14px"><span class="cat tan">The Difference</span></div>
+    <h3 class="ed-h" style="color: var(--color-brown-deep);">The coliving difference.</h3>
+  </div>
+  <div>
+    <div class="meta-label">Callout (crimson border)</div>
+    <div class="callout"><strong>The hardest part of relocating</strong> isn't logistics — it's the social gap. Six months to a year before you truly belong.</div>
+    <div class="meta-label" style="margin-top:14px;">Info card (tan border, crimson icons)</div>
+    <div class="info-card">
+      <p class="name">Dali House <span>· Dallas, TX</span></p>
+      <ul class="info-list">
+        <li><span class="ic"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span> Carrollton / Plano</li>
+        <li><span class="ic"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg></span> dalihouse.dtx@gmail.com</li>
+        <li><span class="ic"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/></svg></span> @dalihouse.dtx</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</body></html>

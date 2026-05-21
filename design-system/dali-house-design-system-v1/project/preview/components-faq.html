@@ -1,0 +1,41 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin:0; padding:0; font-family: var(--font-sans); background: var(--bg); }
+  body { padding: 30px 32px; }
+  .faq { max-width: 100%; }
+  .item { border-bottom: 1px solid rgba(124, 92, 62, 0.11); }
+  .q {
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    padding: 18px 0; font-family: var(--font-serif); font-size: 16px; font-weight: 500;
+    color: var(--fg); line-height: 1.45;
+  }
+  .q svg { color: var(--fg-muted); transition: transform 300ms ease; flex-shrink: 0; }
+  .a {
+    font-size: 14px; line-height: 1.78; font-weight: 300; color: var(--fg-muted);
+    padding: 0 0 20px;
+  }
+  .item.open .q svg { transform: rotate(180deg); }
+</style></head><body>
+  <div class="faq">
+    <div class="item open">
+      <div class="q">
+        Who is the ideal resident?
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="a">Young professional women who work in-office or hybrid roles and value a healthy work-life balance. She values meaningful connection, respects shared living, and is open to building genuine relationships within the home.</div>
+    </div>
+    <div class="item">
+      <div class="q">
+        Where is Dali House located?
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+    <div class="item">
+      <div class="q">
+        Are pets allowed?
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+  </div>
+</body></html>

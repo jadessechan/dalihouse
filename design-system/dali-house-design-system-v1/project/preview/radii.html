@@ -1,0 +1,20 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin:0; padding:0; background: var(--bg); font-family: var(--font-sans); }
+  body { padding: 24px; display: flex; gap: 18px; align-items: flex-end; flex-wrap: wrap; }
+  .item { display:flex; flex-direction:column; align-items:center; gap: 10px; }
+  .shape {
+    width: 90px; height: 70px;
+    background: linear-gradient(180deg, #fff, #f8f0e0);
+    border: 1px solid var(--border-on-light);
+  }
+  .label { font-size: 11px; font-weight: 500; color: var(--fg); }
+  .val { font-family: ui-monospace, monospace; font-size: 10px; color: var(--fg-soft); }
+</style></head><body>
+  <div class="item"><div class="shape" style="border-radius: 4px;"></div><div class="label">Sharp</div><div class="val">4px</div></div>
+  <div class="item"><div class="shape" style="border-radius: 14px;"></div><div class="label">Blog img</div><div class="val">14px</div></div>
+  <div class="item"><div class="shape" style="border-radius: 16px;"></div><div class="label">Card</div><div class="val">16px</div></div>
+  <div class="item"><div class="shape" style="border-radius: 18px;"></div><div class="label">Editorial card</div><div class="val">18px</div></div>
+  <div class="item"><div class="shape" style="width: 130px; border-radius: 999px;"></div><div class="label">Pill / button / chip</div><div class="val">999px</div></div>
+</body></html>
