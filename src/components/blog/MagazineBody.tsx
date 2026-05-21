@@ -119,13 +119,13 @@ export function SectionHead({
   return (
     <header className="not-prose mt-28">
       <span
-        className={`inline-block whitespace-nowrap rounded px-3 py-[5px] text-[11px] font-semibold uppercase tracking-[0.14em] ${pill}`}
+        className={`inline-block whitespace-nowrap rounded px-3 py-[5px] text-[11px] font-semibold leading-none uppercase tracking-[0.14em] ${pill}`}
       >
         {label}
       </span>
       <h2
         id={id}
-        className={`-mt-0.5 scroll-mt-28 font-serif font-semibold italic leading-[1.05] tracking-[-0.015em] text-[clamp(34px,4.5vw,46px)] ${heading}`}
+        className={`mt-3 scroll-mt-28 font-serif font-semibold italic leading-[1.05] tracking-[-0.015em] text-[clamp(34px,4.5vw,46px)] ${heading}`}
       >
         {children}
       </h2>
