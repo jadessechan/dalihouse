@@ -5,7 +5,6 @@ import {
   getPostBySlug,
   getAllSlugs,
   getPageNumber,
-  getSeason,
 } from "@/lib/blog";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -91,7 +90,6 @@ export default async function BlogPost({
   const coverSubtitle = post.coverSubtitle ?? post.description;
 
   const pageNumber = getPageNumber(slug);
-  const issueLabel = `Issue No. ${pageNumber} · ${getSeason(post.date)}`;
 
   return (
     <>
@@ -128,9 +126,6 @@ export default async function BlogPost({
 
               <span className="absolute top-8 left-10 z-10 text-[11px] font-semibold tracking-[0.30em] uppercase text-cream">
                 Journal · {post.tag}
-              </span>
-              <span className="absolute top-8 right-10 z-10 font-serif text-[13px] italic text-cream/70">
-                {issueLabel}
               </span>
 
               {/* Floral motifs — sparse decorative blooms, per editorial spec */}
@@ -186,13 +181,6 @@ export default async function BlogPost({
                 }}
               />
               <div className="relative mx-auto max-w-[760px] text-center">
-                <p className="mb-4 text-[12px] font-medium tracking-[0.18em] uppercase text-brown-deep">
-                  <span className="font-normal text-brown">Words by</span>{" "}
-                  <span className="font-semibold text-crimson">Jadesse</span>
-                  &nbsp;·&nbsp;
-                  <span className="font-normal text-brown">Photography by</span>{" "}
-                  <span className="font-semibold text-crimson">Dali House</span>
-                </p>
                 <p className="font-serif text-[16px] italic leading-[1.7] text-brown md:text-[17px]">
                   {post.description}
                 </p>

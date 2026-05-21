@@ -118,16 +118,14 @@ export function SectionHead({
     headingColor === "brown" ? "text-brown-deep" : "text-crimson";
   return (
     <header className="not-prose mt-16">
-      <div className="flex flex-wrap items-baseline gap-3">
-        <span
-          className={`inline-block whitespace-nowrap rounded px-3 py-[5px] text-[11px] font-semibold uppercase tracking-[0.14em] ${pill}`}
-        >
-          {label}
-        </span>
-      </div>
+      <span
+        className={`inline-block whitespace-nowrap rounded px-3 py-[5px] text-[11px] font-semibold uppercase tracking-[0.14em] ${pill}`}
+      >
+        {label}
+      </span>
       <h2
         id={id}
-        className={`mt-3 scroll-mt-28 font-serif font-semibold italic leading-[1.05] tracking-[-0.015em] text-[clamp(34px,4.5vw,46px)] ${heading}`}
+        className={`mt-1.5 scroll-mt-28 font-serif font-semibold italic leading-[1.05] tracking-[-0.015em] text-[clamp(34px,4.5vw,46px)] ${heading}`}
       >
         {children}
       </h2>
