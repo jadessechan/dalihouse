@@ -6,9 +6,7 @@ export default function MeetYourHost() {
       id="meet-your-host"
       className="bg-cream px-8 pt-24 pb-14"
     >
-      <p className="text-center text-[10px] font-medium tracking-[0.22em] uppercase text-tan">
-        Your host
-      </p>
+      <p className="eyebrow text-center text-green">Your host</p>
 
       <div className="mx-auto mt-14 grid max-w-[980px] items-start gap-9 md:grid-cols-[300px_1fr] md:gap-16">
         <div className="pl-0 md:pl-6">
@@ -28,16 +26,16 @@ export default function MeetYourHost() {
             height={200}
             className="mx-auto mt-5 block h-[110px] w-[110px] object-contain"
           />
-          <p className="mt-2 text-center text-xs italic text-brown/55">
+          <p className="mt-2 text-center text-xs italic text-ink/55">
             Permanent residents: Pookie &amp; Spooky 🐱
           </p>
         </div>
 
         <div>
-          <p className="mb-[22px] font-serif text-2xl font-medium text-tan">
+          <p className="mb-[22px] font-serif text-2xl font-medium text-pink">
             Hi, I&rsquo;m Jadesse
           </p>
-          <div className="text-[15px] leading-[1.82] font-light text-brown">
+          <div className="text-[16px] leading-[1.78] text-ink/75">
             <p className="mb-[18px]">
               Even though I grew up in Dallas, it took me years after moving
               back to truly feel a sense of belonging. I know firsthand that
@@ -52,7 +50,7 @@ export default function MeetYourHost() {
               community, exploring the city, and creating your dream life.
             </p>
           </div>
-          <blockquote className="mt-7 border-l-2 border-tan pl-5 font-serif text-[21px] leading-[1.6] italic text-brown-deep">
+          <blockquote className="mt-7 border-l-2 border-pink pl-5 font-serif text-[21px] leading-[1.6] italic text-green-deep">
             &ldquo;Home isn&rsquo;t just about where you live &mdash; it&rsquo;s
             about the people and the life you build.&rdquo;
           </blockquote>

@@ -1,29 +1,45 @@
 import Image from "next/image";
+import Button from "@/components/ui/Button";
+import StatusDot from "@/components/ui/StatusDot";
+import AsciiHero from "@/components/ui/AsciiHero";
+import Bloom from "@/components/ui/Bloom";
 
-const GRAIN =
-  "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")";
+// Brand-tinted ASCII palette: pink, pink-deep, cream, green-lite.
+const ASCII_PALETTE = ["#e89cb1", "#d27e96", "#efe7d4", "#3a5a36"];
 
 export default function Hero() {
   return (
-    <section
-      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-charcoal bg-cover bg-[center_85%] px-6 pt-[120px] pb-20 text-center text-cream"
-      style={{ backgroundImage: "url(/dali-house-hero.jpg)" }}
-    >
-      {/* Dark overlay */}
-      <div
-        aria-hidden
-        className="absolute inset-0 z-0 bg-[rgba(10,7,5,0.58)]"
-      />
-      {/* Grain overlay */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-[1] opacity-[0.06]"
-        style={{ backgroundImage: GRAIN, backgroundSize: "180px" }}
+    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-green-deep px-6 pt-[120px] pb-20 text-center text-cream">
+      {/* ASCII field background (reactive, cursor spotlight) */}
+      <AsciiHero
+        variant="bare"
+        palette={ASCII_PALETTE}
+        baseOpacity={0.18}
+        spotlightOpacity={0.85}
+        spotlightRadius={10}
+        fontSize={12}
+        className="z-0"
       />
 
-      <p className="relative z-[2] mb-6 text-[11px] font-normal tracking-[0.4em] uppercase text-cream/35">
-        Welcome to
-      </p>
+      {/* Legibility vignette */}
+      <div
+        aria-hidden
+        className="absolute inset-0 z-[1]"
+        style={{
+          background:
+            "radial-gradient(120% 90% at 50% 45%, rgba(20,30,18,0.35) 0%, rgba(20,30,18,0.66) 60%, rgba(20,30,18,0.82) 100%)",
+        }}
+      />
+
+      {/* Decorative blooms */}
+      <Bloom size={20} center="#243a21" className="absolute top-[20%] left-[8%] z-[2] text-pink/80" />
+      <Bloom
+        size={16}
+        center="#243a21"
+        className="absolute top-[28%] right-[10%] z-[2] rotate-[18deg] text-pink/70"
+      />
+
+      <p className="eyebrow relative z-[3] mb-6 text-cream/55">Welcome to</p>
 
       <Image
         src="/dali-house-title.png"
@@ -31,27 +47,33 @@ export default function Hero() {
         width={760}
         height={240}
         priority
-        className="relative z-[2] block h-auto w-[min(88vw,520px)] select-none"
+        className="relative z-[3] block h-auto w-[min(88vw,520px)] select-none"
       />
 
-      <h1 className="sr-only">Welcome to Dali House</h1>
+      <h1 className="sr-only">
+        Dali House — coliving in Dallas for women
+      </h1>
 
-      <p className="relative z-[2] mt-[22px] text-[12px] tracking-[0.28em] uppercase text-tan">
-        Coliving for women in Dallas
+      <p className="eyebrow relative z-[3] mt-[22px] tracking-[0.28em] text-pink">
+        Coliving for Women in Dallas
       </p>
 
-      <a
+      <StatusDot tone="pink" className="relative z-[3] mt-7">
+        Now accepting applications
+      </StatusDot>
+
+      <Button
         href="https://form.typeform.com/to/J9BtSauc"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="relative z-[2] mt-10 inline-block rounded-full bg-cream-light px-11 py-[15px] text-[11px] font-medium tracking-[0.2em] uppercase text-brown-deep shadow-[0_4px_28px_rgba(0,0,0,0.22)] transition-transform hover:-translate-y-0.5 hover:shadow-[0_8px_36px_rgba(0,0,0,0.3)]"
+        external
+        variant="primary"
+        className="relative z-[3] mt-9"
       >
         Apply Now
-      </a>
+      </Button>
 
       <div
         aria-hidden
-        className="absolute bottom-10 left-1/2 z-[2] -translate-x-1/2 animate-bounce text-cream/30"
+        className="absolute bottom-10 left-1/2 z-[3] -translate-x-1/2 animate-bounce text-cream/30"
       >
         <svg
           width="20"
@@ -61,11 +83,7 @@ export default function Hero() {
           strokeWidth="1.5"
           viewBox="0 0 24 24"
         >
-          <path
-            d="M19 9l-7 7-7-7"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
+          <path d="M19 9l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
     </section>

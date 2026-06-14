@@ -1,3 +1,5 @@
+import Button from "@/components/ui/Button";
+
 const steps = [
   {
     number: "1",
@@ -64,11 +66,9 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="bg-brown-deep px-8 py-24">
-      <p className="mb-3.5 text-center text-[10px] font-medium tracking-[0.22em] uppercase text-tan/70">
-        The process
-      </p>
-      <h2 className="text-center font-serif text-[clamp(30px,4vw,44px)] leading-[1.2] font-medium text-cream">
+    <section id="how-it-works" className="bg-green-deep px-8 py-24">
+      <p className="eyebrow mb-3.5 text-center text-pink">The process</p>
+      <h2 className="text-center font-serif text-[clamp(30px,4vw,44px)] leading-[1.08] font-medium tracking-[-0.02em] text-cream">
         How It Works
       </h2>
 
@@ -78,31 +78,26 @@ export default function HowItWorks() {
             key={s.number}
             className="flex flex-col items-center text-center"
           >
-            <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-tan/20 bg-tan/[0.12] text-tan">
+            <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-pink/30 bg-pink/[0.12] text-pink">
               {s.icon}
             </div>
-            <div className="mb-0.5 font-serif text-[11px] font-semibold tracking-[0.18em] uppercase text-tan/55">
-              Step {s.number}
-            </div>
-            <h3 className="mt-3 mb-2.5 font-serif text-lg font-semibold text-tan">
+            <div className="eyebrow mb-0.5 text-cream/55">Step {s.number}</div>
+            <h3 className="mt-3 mb-2.5 font-serif text-lg font-medium text-pink">
               {s.title}
             </h3>
-            <p className="text-sm leading-[1.72] font-light text-cream/60">
-              {s.description}
-            </p>
+            <p className="text-sm leading-[1.72] text-cream/65">{s.description}</p>
           </div>
         ))}
       </div>
 
       <div className="mt-[52px] text-center">
-        <a
+        <Button
           href="https://form.typeform.com/to/J9BtSauc"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block rounded-full bg-cream-light px-[38px] py-[14px] text-[11px] font-medium tracking-[0.18em] uppercase text-brown-deep transition-all hover:-translate-y-0.5 hover:bg-cream"
+          external
+          variant="primary"
         >
           Apply Now
-        </a>
+        </Button>
       </div>
     </section>
   );

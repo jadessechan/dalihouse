@@ -2,9 +2,10 @@ import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import ValueProposition from "@/components/ValueProposition";
 import Features from "@/components/Features";
-import TheSpace from "@/components/TheSpace";
+import TheSpaceTeaser from "@/components/TheSpaceTeaser";
 import HowItWorks from "@/components/HowItWorks";
-import MeetYourHost from "@/components/MeetYourHost";
+import AboutTeaser from "@/components/AboutTeaser";
+import AlumniTeaser from "@/components/AlumniTeaser";
 import FAQ from "@/components/FAQ";
 import SoftLanding from "@/components/SoftLanding";
 import Footer from "@/components/Footer";
@@ -19,9 +20,10 @@ export default function Home() {
         <Hero />
         <ValueProposition />
         <Features />
-        <TheSpace />
+        <TheSpaceTeaser />
         <HowItWorks />
-        <MeetYourHost />
+        <AboutTeaser />
+        <AlumniTeaser />
         <FAQ />
         <SoftLanding />
       </main>
