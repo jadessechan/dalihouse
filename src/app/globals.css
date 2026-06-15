@@ -54,20 +54,6 @@ body {
   line-height: 1.04;
 }
 
-/* Marquee strip (LogoMarquee) — track is duplicated, translate by 50% */
-@keyframes dh-marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: dh-marquee 28s linear infinite;
-}
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track { animation: none; }
-}
-
 /* WordRoll — vertical slot-roll of words (active slides in, prev rolls out).
    The sizer (current word, hidden) sets the inline box size; words are
    absolutely stacked and transformed. */
@@ -113,30 +99,6 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .dh-roll__word {
     transition: none;
-  }
-}
-
-/* Rotator (typewriter) caret */
-@keyframes dh-blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-}
-.dh-caret {
-  display: inline-block;
-  width: 0.5ch;
-  height: 0.9em;
-  margin-left: 0.12em;
-  transform: translateY(0.08em);
-  background: currentColor;
-  animation: dh-blink 1.05s step-end infinite;
-}
-.dh-caret-glyph {
-  animation: dh-blink 1.05s step-end infinite;
-}
-@media (prefers-reduced-motion: reduce) {
-  .dh-caret,
-  .dh-caret-glyph {
-    animation: none;
   }
 }
 

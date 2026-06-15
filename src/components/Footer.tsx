@@ -44,7 +44,7 @@ function EmailIcon() {
 
 export default function Footer() {
   return (
-    <footer className="border-t border-cream/10 bg-green-deep px-8 py-14">
+    <footer className="border-t border-cream/10 bg-[#000000] px-8 py-14">
       <div className="mx-auto flex max-w-[1080px] flex-wrap items-start justify-between gap-10">
         <div className="min-w-[220px]">
           <Image
