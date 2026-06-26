@@ -26,7 +26,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: "What makes Dali House different from a typical roommate situation?",
-    a: "Dali House is designed as an intentional living experience — not just a shared home. Each resident is thoughtfully selected to create a respectful, aligned, and supportive environment, offering the balance of community and personal space.",
+    a: "Dali House is designed as an intentional living experience. Each resident is thoughtfully selected to create a respectful, aligned, and supportive environment, offering the balance of community and personal space.",
   },
   {
     q: "Who is the ideal resident?",

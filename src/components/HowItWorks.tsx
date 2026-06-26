@@ -5,7 +5,7 @@ const steps = [
     number: "1",
     title: "Get to Know You",
     description:
-      "Share your lifestyle and what you're looking for — we're intentional about creating the right fit.",
+      "Share your lifestyle and what you're looking for. We're intentional about creating the right fit.",
     icon: (
       <svg
         width="22"

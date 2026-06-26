@@ -26,13 +26,13 @@ export default function ValueProposition() {
             land and grow.
           </p>
           <p className="text-[17px] leading-[1.7] text-ink/75">
-            We handle the friction of moving &mdash; furnished rooms, flexible
-            leases, utilities included &mdash; so you can pour your energy into
-            what actually matters.
+            We handle the friction of moving (furnished rooms, flexible leases,
+            utilities included) so you can pour your energy into what actually
+            matters.
           </p>
           <blockquote className="mt-9 border-l-2 border-pink pl-[22px] font-serif text-[21px] leading-[1.6] italic text-green-deep">
-            &ldquo;Not just a place to live &mdash; but a space to land,
-            connect, and grow.&rdquo;
+            &ldquo;Not just a place to live, but a space to land, connect, and
+            grow.&rdquo;
           </blockquote>
         </div>
       </div>

@@ -39,20 +39,20 @@ export default function MeetYourHost() {
             <p className="mb-[18px]">
               Even though I grew up in Dallas, it took me years after moving
               back to truly feel a sense of belonging. I know firsthand that
-              finding your people and your rhythm takes time &mdash; and
-              it&rsquo;s hard to do that when you&rsquo;re also dealing with
-              the stress of getting settled.
+              finding your people and your rhythm takes time, and it&rsquo;s
+              hard to do that when you&rsquo;re also dealing with the stress of
+              getting settled.
             </p>
             <p>
               That&rsquo;s why I created Dali House. Dali House is designed to
-              give you a soft landing &mdash; so you can skip the friction of
-              moving and focus your energy on what actually matters: building
+              give you a soft landing, so you can skip the friction of moving
+              and focus your energy on what actually matters: building
               community, exploring the city, and creating your dream life.
             </p>
           </div>
           <blockquote className="mt-7 border-l-2 border-pink pl-5 font-serif text-[21px] leading-[1.6] italic text-green-deep">
-            &ldquo;Home isn&rsquo;t just about where you live &mdash; it&rsquo;s
-            about the people and the life you build.&rdquo;
+            &ldquo;Home is about the people you find and the life you
+            build.&rdquo;
           </blockquote>
         </div>
       </div>
