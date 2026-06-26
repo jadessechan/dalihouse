@@ -25,8 +25,8 @@ export default function AboutTeaser() {
           </h2>
           <p className="mt-5 max-w-[460px] text-[17px] leading-[1.7] text-ink/75">
             I grew up in Dallas, and I know how long it can take to feel at home
-            here. I created Dali House to give women a soft landing &mdash; so
-            you can skip the friction of moving and focus on building your life.
+            here. I created Dali House to give women a soft landing, so you can
+            skip the friction of moving and focus on building your life.
           </p>
           <Button href="/about" variant="ghost" className="mt-8">
             Learn More

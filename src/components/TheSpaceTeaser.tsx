@@ -17,8 +17,8 @@ export default function TheSpaceTeaser() {
           </h2>
           <p className="mt-5 max-w-[440px] text-[17px] leading-[1.7] text-ink/75">
             Private bedrooms in a thoughtfully designed home near Carrollton /
-            Plano &mdash; utilities, cleaning, and shared essentials handled, so
-            you can simply move in.
+            Plano. Utilities, cleaning, and shared essentials handled, so you
+            can simply move in.
           </p>
           <Link
             href="/the-space"

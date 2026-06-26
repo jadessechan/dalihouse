@@ -8,7 +8,7 @@ import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 export const metadata: Metadata = {
   title: "The Space — Rooms, Pricing & Amenities",
   description:
-    "Private furnished rooms from $900/month near Carrollton/Plano, Dallas. Utilities, cleaning, and shared essentials included — a calm, move-in-ready home for women.",
+    "Private furnished rooms from $900/month near Carrollton/Plano, Dallas. Utilities, cleaning, and shared essentials included. A calm, move-in-ready home for women.",
   alternates: { canonical: "/the-space" },
   openGraph: {
     title: "The Space — Rooms, Pricing & Amenities | Dali House",
