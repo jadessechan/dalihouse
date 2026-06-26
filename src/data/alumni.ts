@@ -4,6 +4,8 @@
 // having her name + LinkedIn shown. Replace the placeholders below with real,
 // consented profiles. `photo` is optional — omit it to render a monogram.
 
+import type { SchoolKey } from "@/components/ui/SchoolCrest";
+
 export interface AlumniProfile {
   name: string;
   /** When they stayed, e.g. "2024 · 8 months" */
@@ -16,39 +18,31 @@ export interface AlumniProfile {
   role?: string;
   /** Optional headshot in /public. Falls back to a monogram. */
   photo?: string;
+  /** University attended, shown with a small crest. */
+  university?: string;
+  /** Crest key for the school icon (see SchoolCrest). */
+  school?: SchoolKey;
 }
 
 export const alumni: AlumniProfile[] = [
   {
-    name: "Placeholder Name",
-    role: "Product Designer",
-    stayed: "2024 · 8 months",
+    name: "Lexi Sederopoulos",
+    role: "Incoming J.D. Candidate, UF Law",
+    university: "University of Florida",
+    school: "uf",
+    stayed: "Summer 2026",
     blurb:
-      "Relocated from the East Coast for a new role and wanted a calm place to land while she found her footing in Dallas.",
-    linkedin: "https://www.linkedin.com/",
+      "A recent University of Florida grad heading to UF Levin College of Law this fall, Lexi spent her summer interning in Dallas and wanted a calm, focused place to land between graduation and law school.",
+    linkedin: "https://www.linkedin.com/in/lexisederopoulos/",
   },
   {
-    name: "Placeholder Name",
-    role: "Nurse",
-    stayed: "2023 · 1 year",
+    name: "Valerie Rodriguez",
+    role: "Procurement Intern, PepsiCo",
+    university: "Texas A&M University",
+    school: "tamu",
+    stayed: "Summer 2026",
     blurb:
-      "Moved to Dallas for a hospital residency and stayed through her first year while building a community here.",
-    linkedin: "https://www.linkedin.com/",
-  },
-  {
-    name: "Placeholder Name",
-    role: "Software Engineer",
-    stayed: "2024 · 6 months",
-    blurb:
-      "Between leases and starting a new job, she needed a furnished, drama-free home with other focused women.",
-    linkedin: "https://www.linkedin.com/",
-  },
-  {
-    name: "Placeholder Name",
-    role: "Grad Student",
-    stayed: "2023 · 10 months",
-    blurb:
-      "Came to Dallas for school and wanted somewhere intentional rather than a random roommate situation.",
-    linkedin: "https://www.linkedin.com/",
+      "A Texas A&M student spending her summer in Dallas as a procurement intern at PepsiCo, Valerie wanted a welcoming, low-stress home base close to her internship while she's away from home.",
+    linkedin: "https://www.linkedin.com/in/valrdz/",
   },
 ];

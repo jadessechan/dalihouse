@@ -1,5 +1,6 @@
 import Image from "next/image";
 import EyebrowPill from "@/components/ui/EyebrowPill";
+import SchoolCrest from "@/components/ui/SchoolCrest";
 import { alumni, type AlumniProfile } from "@/data/alumni";
 
 function LinkedInIcon() {
@@ -57,7 +58,13 @@ export function AlumniCard({ profile }: { profile: AlumniProfile }) {
         </div>
       </div>
 
-      <p className="eyebrow mt-4 text-green">{profile.stayed}</p>
+      {profile.university && profile.school && (
+        <p className="mt-4 flex items-center gap-1.5 text-[13px] text-ink/65">
+          <SchoolCrest school={profile.school} size={16} />
+          {profile.university}
+        </p>
+      )}
+      <p className="eyebrow mt-3 text-green">{profile.stayed}</p>
       <p className="mt-2 flex-1 text-[14px] leading-[1.65] text-ink/75">
         {profile.blurb}
       </p>
