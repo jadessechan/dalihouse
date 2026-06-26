@@ -60,62 +60,69 @@ function UsersIcon() {
   );
 }
 
+// Rotating tile fills per the Editorial Forest language — no two cards repeat.
 const features = [
   {
     Icon: SofaIcon,
     title: "Fully Furnished",
     description:
       "Move in with just your suitcase. Every room is thoughtfully furnished and ready to go.",
+    fill: "bg-green text-cream",
+    iconClass: "text-pink",
+    titleClass: "text-cream",
+    bodyClass: "text-cream/70",
   },
   {
     Icon: CalendarIcon,
     title: "Flexible Lease",
     description:
       "No long-term commitment required. Stay as long as you need with month-to-month flexibility.",
+    fill: "bg-cream-2 border border-ink/10 text-ink",
+    iconClass: "text-green",
+    titleClass: "text-ink",
+    bodyClass: "text-ink/70",
   },
   {
     Icon: UsersIcon,
     title: "Built-in Community",
     description:
       "Connect with like-minded women who are building their careers and lives in Dallas.",
+    fill: "bg-pink text-green-deep",
+    iconClass: "text-green-deep",
+    titleClass: "text-green-deep",
+    bodyClass: "text-green-deep/75",
   },
 ];
 
 export default function Features() {
   return (
-    <section className="bg-cream-light px-8 py-24">
-      <p className="mb-3.5 text-center text-[10px] font-medium tracking-[0.22em] uppercase text-tan">
-        What&rsquo;s included
-      </p>
-      <h2 className="text-center font-serif text-[clamp(30px,4vw,44px)] leading-[1.2] font-medium text-brown-deep">
+    <section className="bg-cream-2 px-8 py-24">
+      <p className="eyebrow mb-3.5 text-center text-green">What&rsquo;s included</p>
+      <h2 className="text-center font-serif text-[clamp(30px,4vw,44px)] leading-[1.08] font-medium tracking-[-0.02em] text-ink">
         Everything handled,
         <br />
         from day one.
       </h2>
 
       <div className="mx-auto mt-14 grid max-w-[1080px] gap-6 sm:grid-cols-3">
-        {features.map(({ Icon, title, description }) => (
-          <div
-            key={title}
-            className="rounded-2xl bg-white p-10 text-center shadow-[0_2px_20px_rgba(61,35,20,0.055)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_10px_36px_rgba(61,35,20,0.1)]"
-          >
+        {features.map(
+          ({ Icon, title, description, fill, iconClass, titleClass, bodyClass }) => (
             <div
-              className="mx-auto mb-[22px] flex h-16 w-16 items-center justify-center rounded-full text-tan"
-              style={{
-                background: "rgba(201,169,110,0.12)",
-                border: "1px solid rgba(201,169,110,0.20)",
-              }}
+              key={title}
+              className={`rounded-2xl p-10 text-center transition-transform duration-200 hover:-translate-y-1 ${fill}`}
             >
-              <Icon />
+              <div
+                className={`mx-auto mb-[22px] flex h-16 w-16 items-center justify-center rounded-full border border-current/25 ${iconClass}`}
+              >
+                <Icon />
+              </div>
+              <h3 className={`mb-2.5 font-serif text-lg font-medium ${titleClass}`}>
+                {title}
+              </h3>
+              <p className={`text-[15px] leading-[1.7] ${bodyClass}`}>{description}</p>
             </div>
-            <h3 className="mb-2.5 font-serif text-lg font-semibold text-brown-deep">
-              {title}
-            </h3>
-            <p className="text-sm leading-[1.75] font-light text-brown">
-              {description}
-            </p>
-          </div>
-        ))}
+          ),
+        )}
       </div>
     </section>
   );

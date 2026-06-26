@@ -34,7 +34,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     // any accidental `##` is visually obvious during authoring.
     h3: ({ children, ...rest }) => (
       <h3
-        className="mt-8 mb-2 font-serif text-[22px] font-medium leading-[1.35] tracking-[-0.005em] text-brown-deep"
+        className="mt-8 mb-2 font-serif text-[22px] font-semibold leading-[1.35] tracking-[-0.005em] text-ink"
         {...rest}
       >
         {children}
@@ -52,12 +52,12 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     a: ({ children, ...rest }) => (
       <a
-        className="text-crimson underline decoration-1 underline-offset-[3px] transition-colors hover:text-brown-deep"
+        className="text-pink-deep underline decoration-1 underline-offset-[3px] transition-colors hover:text-green-deep"
         {...rest}
       >
         {children}
       </a>
     ),
-    hr: () => <hr className="my-12 border-0 border-t border-brown/15" />,
+    hr: () => <hr className="my-12 border-0 border-t border-ink/12" />,
   };
 }

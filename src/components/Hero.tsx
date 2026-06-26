@@ -1,27 +1,34 @@
 import Image from "next/image";
+import Button from "@/components/ui/Button";
 
-const GRAIN =
-  "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")";
+/* Hero background: a cozy lofi-illustration scene — side/profile view of a
+   girl in a red sweater at her lamp-lit desk by a white-framed window, the
+   Dallas skyline at sunset beyond, a gray cat, and a single melting clock —
+   generated with the banana skill and optimized to /public/hero-room.jpg.
+   Until that file exists, the dusk-tone fallback shows (CSS background-image
+   fails gracefully). */
 
 export default function Hero() {
   return (
     <section
-      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-charcoal bg-cover bg-[center_85%] px-6 pt-[120px] pb-20 text-center text-cream"
-      style={{ backgroundImage: "url(/dali-house-hero.jpg)" }}
+      className="relative flex min-h-screen flex-col items-center justify-start overflow-hidden bg-[#1f2640] bg-cover bg-center px-6 pt-[14vh] pb-20 text-center text-cream"
+      style={{ backgroundImage: "url(/hero-room.jpg)" }}
     >
-      {/* Dark overlay */}
+      {/* Legibility scrim — darker over the open upper sky (nav + title),
+          clearing toward the lamp-lit desk below. */}
       <div
         aria-hidden
-        className="absolute inset-0 z-0 bg-[rgba(10,7,5,0.58)]"
-      />
-      {/* Grain overlay */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-[1] opacity-[0.06]"
-        style={{ backgroundImage: GRAIN, backgroundSize: "180px" }}
+        className="absolute inset-0 z-0"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(14,16,34,0.60) 0%, rgba(14,16,34,0.34) 28%, rgba(14,16,34,0.08) 48%, rgba(14,16,34,0) 64%)",
+        }}
       />
 
-      <p className="relative z-[2] mb-6 text-[11px] font-normal tracking-[0.4em] uppercase text-cream/35">
+      <p
+        className="eyebrow relative z-[2] mb-6 text-cream/80"
+        style={{ textShadow: "0 1px 10px rgba(0,0,0,0.5)" }}
+      >
         Welcome to
       </p>
 
@@ -31,27 +38,30 @@ export default function Hero() {
         width={760}
         height={240}
         priority
-        className="relative z-[2] block h-auto w-[min(88vw,520px)] select-none"
+        className="relative z-[2] block h-auto w-[min(86vw,480px)] select-none drop-shadow-[0_3px_16px_rgba(0,0,0,0.45)]"
       />
 
-      <h1 className="sr-only">Welcome to Dali House</h1>
+      <h1 className="sr-only">Dali House — coliving in Dallas for women</h1>
 
-      <p className="relative z-[2] mt-[22px] text-[12px] tracking-[0.28em] uppercase text-tan">
-        Coliving for women in Dallas
+      <p
+        className="relative z-[2] mt-5 font-mono text-[14px] font-medium uppercase tracking-[0.2em] text-cream sm:text-[16px]"
+        style={{ textShadow: "0 1px 3px rgba(0,0,0,0.75), 0 2px 18px rgba(0,0,0,0.6)" }}
+      >
+        Coliving for Women in Dallas
       </p>
 
-      <a
+      <Button
         href="https://form.typeform.com/to/J9BtSauc"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="relative z-[2] mt-10 inline-block rounded-full bg-cream-light px-11 py-[15px] text-[11px] font-medium tracking-[0.2em] uppercase text-brown-deep shadow-[0_4px_28px_rgba(0,0,0,0.22)] transition-transform hover:-translate-y-0.5 hover:shadow-[0_8px_36px_rgba(0,0,0,0.3)]"
+        external
+        variant="primary"
+        className="relative z-[2] mt-9 shadow-[0_6px_24px_rgba(0,0,0,0.28)]"
       >
         Apply Now
-      </a>
+      </Button>
 
       <div
         aria-hidden
-        className="absolute bottom-10 left-1/2 z-[2] -translate-x-1/2 animate-bounce text-cream/30"
+        className="absolute bottom-10 left-1/2 z-[2] -translate-x-1/2 animate-bounce text-cream/40"
       >
         <svg
           width="20"
@@ -61,11 +71,7 @@ export default function Hero() {
           strokeWidth="1.5"
           viewBox="0 0 24 24"
         >
-          <path
-            d="M19 9l-7 7-7-7"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
+          <path d="M19 9l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
     </section>

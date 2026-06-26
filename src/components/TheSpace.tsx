@@ -1,4 +1,5 @@
 import Image from "next/image";
+import StatCounter from "@/components/ui/StatCounter";
 
 const highlights = [
   "Utilities included",
@@ -56,7 +57,7 @@ const rooms = [
   },
 ];
 
-function CheckIcon({ className = "text-[#6bcb77]" }: { className?: string }) {
+function CheckIcon({ className = "text-pink-deep" }: { className?: string }) {
   return (
     <svg
       width="13"
@@ -76,54 +77,50 @@ function CheckIcon({ className = "text-[#6bcb77]" }: { className?: string }) {
 
 export default function TheSpace() {
   return (
-    <section id="the-space" className="bg-charcoal-mid px-8 py-24">
-      <p className="mb-3.5 text-center text-[10px] font-medium tracking-[0.22em] uppercase text-tan">
-        Pricing & amenities
-      </p>
-      <h2 className="text-center font-serif text-[clamp(30px,4vw,44px)] leading-[1.2] font-medium text-cream">
+    <section id="the-space" className="bg-cream px-8 py-24">
+      <p className="eyebrow mb-3.5 text-center text-green">Pricing &amp; amenities</p>
+      <h2 className="text-center font-serif text-[clamp(30px,4vw,44px)] leading-[1.08] font-medium tracking-[-0.02em] text-ink">
         The Space
       </h2>
 
       <div className="mt-7 text-center">
-        <span className="font-serif text-[clamp(52px,8vw,72px)] leading-none font-bold text-tan">
-          $900
+        <span className="font-serif text-[clamp(52px,8vw,72px)] leading-none font-medium tracking-[-0.03em] text-green">
+          <StatCounter value={900} prefix="$" />
         </span>
-        <span className="ml-1.5 text-[15px] text-cream/45">/month</span>
+        <span className="ml-1.5 eyebrow text-ink/55">/month</span>
       </div>
 
       <div className="mx-auto mt-7 flex max-w-[720px] flex-wrap justify-center gap-2.5">
         {highlights.map((h) => (
           <span
             key={h}
-            className="flex items-center gap-[7px] rounded-full border border-cream/15 px-4 py-2 text-[13px] text-cream/75"
+            className="flex items-center gap-[7px] rounded-full border border-ink/15 px-4 py-2 text-[13px] text-ink/75"
           >
-            <CheckIcon />
+            <CheckIcon className="text-green" />
             {h}
           </span>
         ))}
       </div>
 
-      <p className="mt-[18px] text-center text-[13px] font-light text-cream/40">
+      <p className="mt-[18px] text-center text-[13px] text-ink/55">
         Near Carrollton/Plano &middot; &plusmn;20 min from downtown Dallas,
         major suburbs &amp; DFW airport
       </p>
 
-      <div className="mx-auto mt-[52px] max-w-[820px] rounded-[18px] border border-cream/10 bg-cream/[0.04] px-9 py-8">
-        <p className="mb-[18px] text-center text-[10px] font-medium tracking-[0.2em] uppercase text-tan">
-          Every room includes
-        </p>
+      <div className="mx-auto mt-[52px] max-w-[820px] rounded-[18px] border border-ink/10 bg-cream-2 px-9 py-8">
+        <p className="eyebrow mb-[18px] text-center text-green">Every room includes</p>
         <div className="flex flex-wrap justify-center gap-2.5">
           {amenities.map((a) => (
             <span
               key={a}
-              className="flex items-center gap-2 rounded-full border border-cream/20 bg-white/[0.08] px-4 py-2 text-[13px] text-cream/80"
+              className="flex items-center gap-2 rounded-full border border-ink/10 bg-cream px-4 py-2 text-[13px] text-ink/80"
             >
-              <CheckIcon className="text-cream/70" />
+              <CheckIcon className="text-pink-deep" />
               {a}
             </span>
           ))}
         </div>
-        <p className="mt-4 text-center text-xs leading-[1.6] italic text-cream/40">
+        <p className="mt-4 text-center text-xs leading-[1.6] italic text-ink/55">
           Shared bathroom: rain showerhead, hand-held showerhead, bidet, and
           marble detailing.
         </p>
@@ -133,7 +130,7 @@ export default function TheSpace() {
         {rooms.map((r) => (
           <div
             key={r.name}
-            className="overflow-hidden rounded-2xl border border-cream/10 bg-cream/[0.04] transition-colors hover:border-cream/20"
+            className="overflow-hidden rounded-2xl border border-ink/10 bg-cream-2 transition-colors hover:border-pink/40"
           >
             <div className="relative aspect-[4/3] w-full overflow-hidden">
               <Image
@@ -145,10 +142,10 @@ export default function TheSpace() {
               />
             </div>
             <div className="px-[22px] pt-5 pb-6">
-              <h4 className="mb-1.5 font-serif text-base font-medium text-tan">
+              <h4 className="mb-1.5 font-serif text-base font-medium text-pink-deep">
                 {r.name}
               </h4>
-              <p className="text-[13px] leading-[1.65] font-light text-cream/55">
+              <p className="text-[13px] leading-[1.65] text-ink/70">
                 {r.description}
               </p>
             </div>
@@ -156,7 +153,7 @@ export default function TheSpace() {
         ))}
       </div>
 
-      <p className="mt-9 text-center text-xs italic text-cream/25">
+      <p className="mt-9 text-center text-xs italic text-ink/45">
         Vintage pieces &middot; original artwork &middot; modern living
       </p>
     </section>

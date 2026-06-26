@@ -1,19 +1,19 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-charcoal: #1a1612;
-  --color-charcoal-mid: #241d16;
-  --color-cream: #faf4e8;
-  --color-cream-light: #f3ead6;
-  --color-tan: #c9a96e;
-  --color-tan-light: #e8d5b0;
-  --color-brown: #7c5c3e;
-  --color-brown-deep: #3d2314;
-  --color-crimson: #7a1c1c;
-  --color-crimson-warm: #9a2828;
-  --color-crimson-deep: #5a1414;
-  --font-serif: var(--font-playfair);
-  --font-sans: var(--font-dm-sans);
+  /* === Editorial Forest palette (new) === */
+  --color-green: #2e4a2a;
+  --color-green-deep: #243a21;
+  --color-green-lite: #3a5a36;
+  --color-pink: #e89cb1;
+  --color-pink-deep: #d27e96;
+  --color-cream: #efe7d4;      /* paper ground */
+  --color-cream-2: #e6dcc4;
+  --color-ink: #1a1a17;
+
+  --font-serif: var(--font-source-serif);
+  --font-mono: var(--font-jetbrains);
+  --font-sans: var(--font-source-serif);
 }
 
 html {
@@ -23,28 +23,102 @@ html {
 
 body {
   background: var(--color-cream);
-  color: var(--color-brown-deep);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  color: var(--color-ink);
+  font-family: var(--font-serif), Georgia, serif;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Editorial chrome: mono uppercase eyebrow/label, used site-wide */
+.eyebrow {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* Display type scale (frame-showcase tokens; responsive clamps for web) */
+.display-hero {
+  font-family: var(--font-serif), Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(56px, 12vw, 168px);
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+}
+.headline-xl {
+  font-family: var(--font-serif), Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(30px, 5vw, 60px);
+  letter-spacing: -0.02em;
+  line-height: 1.04;
+}
+
+/* WordRoll — vertical slot-roll of words (active slides in, prev rolls out).
+   The sizer (current word, hidden) sets the inline box size; words are
+   absolutely stacked and transformed. */
+.dh-roll {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  line-height: 1.05;
+}
+.dh-roll__sizer {
+  visibility: hidden;
+  white-space: nowrap;
+}
+.dh-roll__word {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  transform: translateY(110%);
+  opacity: 0;
+  transition:
+    transform var(--dh-roll-ms, 520ms) cubic-bezier(0.16, 1, 0.3, 1),
+    opacity var(--dh-roll-ms, 520ms) ease;
+}
+.dh-roll__word--active {
+  transform: translateY(0);
+  opacity: 1;
+}
+.dh-roll__word--past {
+  transform: translateY(-110%);
+  opacity: 0;
+}
+.dh-roll--down .dh-roll__word {
+  transform: translateY(-110%);
+}
+.dh-roll--down .dh-roll__word--active {
+  transform: translateY(0);
+}
+.dh-roll--down .dh-roll__word--past {
+  transform: translateY(110%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .dh-roll__word {
+    transition: none;
+  }
 }
 
 /* =========================================================================
    Editorial post content — magazine dialect of the brand
-   - Italic crimson H2 section headings (paired w/ crimson "cat" pill in the
-     page chrome above), warm brown body, decorative pull-quotes with a giant
-     soft crimson quote mark.
+   - Italic pink-deep H2 section headings (paired w/ a pink pill in the page
+     chrome above), ink body, decorative pull-quotes with a giant soft
+     pink-deep quote mark.
    ========================================================================= */
 .post-content {
-  color: var(--color-brown);
-  font-size: 17px;
-  line-height: 1.78;
-  font-weight: 300;
+  color: var(--color-ink);
+  font-size: 18px;
+  line-height: 1.75;
+  font-weight: 400;
 }
 
 .post-content h2 {
   font-family: var(--font-serif);
   font-style: italic;
-  color: var(--color-crimson);
+  color: var(--color-pink-deep);
   font-size: clamp(28px, 3.4vw, 38px);
   line-height: 1.15;
   font-weight: 600;
@@ -54,10 +128,10 @@ body {
 
 .post-content h3 {
   font-family: var(--font-serif);
-  color: var(--color-brown-deep);
+  color: var(--color-ink);
   font-size: 22px;
   line-height: 1.35;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: -0.005em;
   margin-top: 2em;
   margin-bottom: 0.2em;
@@ -75,11 +149,11 @@ body {
   line-height: 0.9;
   float: left;
   margin: 6px 10px 0 0;
-  color: var(--color-crimson);
+  color: var(--color-pink-deep);
 }
 
 .post-content a {
-  color: var(--color-crimson);
+  color: var(--color-pink-deep);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
@@ -87,12 +161,12 @@ body {
 }
 
 .post-content a:hover {
-  color: var(--color-brown-deep);
+  color: var(--color-green-deep);
 }
 
 .post-content strong {
-  color: var(--color-brown-deep);
-  font-weight: 500;
+  color: var(--color-green-deep);
+  font-weight: 600;
 }
 
 .post-content em {
@@ -116,7 +190,7 @@ body {
   margin-top: 0.5em;
 }
 
-/* Editorial pull-quote: centered, italic, with a giant decorative crimson
+/* Editorial pull-quote: centered, italic, with a giant decorative pink-deep
    quote mark above. No left rule — the magazine quote is *louder* than the
    inline rule used elsewhere. */
 .post-content blockquote {
@@ -129,7 +203,7 @@ body {
   font-style: italic;
   font-size: clamp(22px, 2.4vw, 28px);
   line-height: 1.45;
-  color: var(--color-brown-deep);
+  color: var(--color-green-deep);
   font-weight: 400;
   letter-spacing: -0.01em;
   position: relative;
@@ -142,8 +216,8 @@ body {
   font-style: italic;
   font-size: 96px;
   line-height: 0.4;
-  color: var(--color-crimson);
-  opacity: 0.35;
+  color: var(--color-pink-deep);
+  opacity: 0.45;
   margin-bottom: 22px;
 }
 
@@ -153,20 +227,20 @@ body {
 
 .post-content hr {
   border: 0;
-  border-top: 1px solid rgba(124, 92, 62, 0.15);
+  border-top: 1px solid rgba(26, 26, 23, 0.15);
   margin: 3em 0;
 }
 
 .post-content img {
   border-radius: 14px;
   margin: 2em 0;
-  box-shadow: 0 12px 40px rgba(61, 35, 20, 0.14);
 }
 
 .post-content code {
-  background: var(--color-cream-light);
-  color: var(--color-brown-deep);
+  background: var(--color-cream-2);
+  color: var(--color-green-deep);
   padding: 0.15em 0.45em;
   border-radius: 4px;
   font-size: 0.92em;
+  font-family: var(--font-mono), ui-monospace, monospace;
 }

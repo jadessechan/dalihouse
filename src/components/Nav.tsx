@@ -6,10 +6,10 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const links = [
-  { label: "The Space", href: "/#the-space" },
-  { label: "How It Works", href: "/#how-it-works" },
-  { label: "Your Host", href: "/#meet-your-host" },
-  { label: "FAQ", href: "/#faq" },
+  { label: "The Space", href: "/the-space" },
+  { label: "About", href: "/about" },
+  { label: "Alumni", href: "/alumni" },
+  { label: "Blog", href: "/blog" },
 ];
 
 export default function Nav() {
@@ -30,12 +30,12 @@ export default function Nav() {
   }, [isHome]);
 
   const bar = scrolled
-    ? "bg-[rgba(22,17,13,0.96)] backdrop-blur-md shadow-[0_1px_0_rgba(0,0,0,0.25)]"
+    ? "bg-green-deep/70 backdrop-blur-xl backdrop-saturate-150 border-b border-cream/15"
     : "bg-transparent";
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-[background,box-shadow] duration-300 ${bar}`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background,backdrop-filter] duration-300 ${bar}`}
     >
       <div className="mx-auto flex h-20 max-w-[1120px] items-center justify-between px-8">
         <Link href="/" className="flex items-center" aria-label="Dali House — home">
@@ -49,12 +49,12 @@ export default function Nav() {
           />
         </Link>
 
-        <div className="hidden items-center gap-9 md:flex">
+        <div className="hidden items-center gap-6 md:flex lg:gap-7">
           {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              className="text-[13px] tracking-[0.04em] text-cream/65 transition-colors hover:text-cream"
+              className="font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-cream/70 transition-colors hover:text-pink"
             >
               {l.label}
             </Link>
@@ -63,7 +63,7 @@ export default function Nav() {
             href="https://form.typeform.com/to/J9BtSauc"
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full border border-cream/35 px-[22px] py-[9px] text-[12px] font-medium tracking-[0.1em] uppercase text-cream/85 transition-colors hover:bg-cream/10 hover:text-cream"
+            className="rounded-full border border-pink px-[20px] py-[9px] font-mono text-[11px] font-medium tracking-[0.1em] uppercase text-pink transition-colors hover:bg-pink hover:text-green-deep"
           >
             Apply
           </a>
@@ -95,13 +95,13 @@ export default function Nav() {
       </div>
 
       {open && (
-        <div className="flex flex-col border-t border-cream/10 bg-[rgba(22,17,13,0.97)] px-7 pb-6 md:hidden">
+        <div className="flex flex-col border-t border-cream/10 bg-green-deep/90 px-7 pb-6 backdrop-blur-xl backdrop-saturate-150 md:hidden">
           {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
-              className="border-b border-cream/10 py-3 text-[15px] text-cream/70 transition-colors hover:text-cream"
+              className="border-b border-cream/10 py-3 font-mono text-[13px] uppercase tracking-[0.1em] text-cream/70 transition-colors hover:text-pink"
             >
               {l.label}
             </Link>
@@ -111,7 +111,7 @@ export default function Nav() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setOpen(false)}
-            className="mt-4 inline-block self-start rounded-full bg-brown-deep px-6 py-3 text-[12px] font-medium tracking-[0.1em] uppercase text-cream"
+            className="mt-4 inline-block self-start rounded-full bg-pink px-6 py-3 font-mono text-[12px] font-medium tracking-[0.1em] uppercase text-green-deep"
           >
             Apply
           </a>

@@ -7,14 +7,14 @@ function FAQItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border-b border-[rgba(124,92,62,0.11)]">
+    <div className="border-b border-ink/12">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
         className="flex w-full items-center justify-between gap-4 py-5 text-left"
         aria-expanded={open}
       >
-        <span className="font-serif text-base leading-[1.45] font-medium text-brown-deep">
+        <span className="font-serif text-[17px] leading-[1.45] font-medium text-ink">
           {q}
         </span>
         <svg
@@ -22,7 +22,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
-          className={`h-[17px] w-[17px] shrink-0 text-brown transition-transform duration-300 ${
+          className={`h-[17px] w-[17px] shrink-0 text-green transition-transform duration-300 ${
             open ? "rotate-180" : ""
           }`}
           aria-hidden
@@ -40,7 +40,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
         }`}
       >
         <div className="overflow-hidden">
-          <p className="text-sm leading-[1.78] font-light text-brown">{a}</p>
+          <p className="text-[15px] leading-[1.78] text-ink/75">{a}</p>
         </div>
       </div>
     </div>
@@ -50,7 +50,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 export default function FAQ() {
   return (
     <section id="faq" className="scroll-mt-24 bg-cream px-8 pt-14 pb-24">
-      <h2 className="text-center font-serif text-[clamp(30px,4vw,44px)] leading-[1.2] font-medium text-brown-deep">
+      <h2 className="text-center font-serif text-[clamp(30px,4vw,44px)] leading-[1.08] font-medium tracking-[-0.02em] text-ink">
         FAQs
       </h2>
       <div className="mx-auto mt-12 max-w-[660px]">
