@@ -1,0 +1,30 @@
+{
+  "slug": "salary-to-live-comfortably-in-dallas-single-woman",
+  "state": "awaiting_final_approval",
+  "topic": "You Don't Need Six Figures to Move to Dallas (The $100K Headline Is Scaring You for No Reason)",
+  "primaryKeyword": "salary needed to live comfortably in Dallas single woman",
+  "secondaryKeywords": [
+    "how much money do I need saved to move to Dallas alone",
+    "how much does it cost to furnish a first apartment from scratch 2026",
+    "Dallas apartment move-in costs 2026 deposit application admin fee",
+    "is $60k enough to live in Dallas"
+  ],
+  "assignedPillar": "Cost of living",
+  "workingBranch": "blog-content",
+  "publishTargetBranch": "dev",
+  "source": "auto-trend-pipeline",
+  "generatedAt": "2026-06-29T00:00:00Z",
+  "heroImage": {
+    "promptFile": "hero-image-prompt.txt",
+    "state": "generated"
+  },
+  "socialPackage": {
+    "enabled": true,
+    "state": "pending_after_publish"
+  },
+  "createdAt": "2026-06-29T00:00:00Z",
+  "updatedAt": "2026-06-29T00:00:00Z",
+  "needsHuman": true,
+  "nextAction": "Approve draft, revise draft, or reject",
+  "announcedStates": []
+}

@@ -1,0 +1,31 @@
+{
+  "slug": "summer-intern-dallas-housing-and-friends-no-12-month-lease",
+  "state": "awaiting_final_approval",
+  "topic": "Summer Intern in Dallas? How to Find Furnished Housing and Friends Before Week 10 Hits",
+  "primaryKeyword": "summer intern housing Dallas furnished short term no 12-month lease",
+  "secondaryKeywords": [
+    "summer intern in Dallas how to make friends and find housing",
+    "furnished summer sublet Dallas 3 months",
+    "do I need a car for a Dallas internship DART",
+    "summer intern Dallas budget cost",
+    "women only coliving Dallas furnished room"
+  ],
+  "assignedPillar": "Coliving explained",
+  "workingBranch": "blog-content",
+  "publishTargetBranch": "dev",
+  "source": "auto-trend-pipeline",
+  "generatedAt": "2026-06-28T00:00:00Z",
+  "heroImage": {
+    "promptFile": "hero-image-prompt.txt",
+    "state": "pending_generation_on_approval"
+  },
+  "socialPackage": {
+    "enabled": true,
+    "state": "pending_after_publish"
+  },
+  "createdAt": "2026-06-28T00:00:00Z",
+  "updatedAt": "2026-06-28T00:00:00Z",
+  "needsHuman": true,
+  "nextAction": "Approve draft, revise draft, or reject",
+  "announcedStates": []
+}

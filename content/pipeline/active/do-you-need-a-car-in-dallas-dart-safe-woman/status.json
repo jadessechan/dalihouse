@@ -1,0 +1,31 @@
+{
+  "slug": "do-you-need-a-car-in-dallas-dart-safe-woman",
+  "state": "awaiting_final_approval",
+  "topic": "Do You Actually Need a Car in Dallas? (And Is DART Safe After Dark?)",
+  "primaryKeyword": "do you need a car in Dallas",
+  "secondaryKeywords": [
+    "is DART safe for a woman alone at night",
+    "is the DART Silver Line worth it",
+    "most walkable Dallas neighborhoods without a car 2026",
+    "cost of living in Dallas without a car vs owning a car",
+    "how does DART GoLink work"
+  ],
+  "assignedPillar": "Dallas relocation support",
+  "workingBranch": "blog-content",
+  "publishTargetBranch": "dev",
+  "source": "auto-trend-pipeline",
+  "generatedAt": "2026-06-29T00:00:00Z",
+  "heroImage": {
+    "promptFile": "hero-image-prompt.txt",
+    "state": "generated"
+  },
+  "socialPackage": {
+    "enabled": true,
+    "state": "pending_after_publish"
+  },
+  "createdAt": "2026-06-29T00:00:00Z",
+  "updatedAt": "2026-06-29T00:00:00Z",
+  "needsHuman": true,
+  "nextAction": "Approve draft, revise draft, or reject",
+  "announcedStates": []
+}

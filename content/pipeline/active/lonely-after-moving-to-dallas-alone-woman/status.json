@@ -1,0 +1,31 @@
+{
+  "slug": "lonely-after-moving-to-dallas-alone-woman",
+  "state": "awaiting_final_approval",
+  "topic": "Is It Normal to Feel This Lonely After Moving to Dallas Alone? (You're Not Broken)",
+  "primaryKeyword": "is it normal to feel this lonely after moving to Dallas alone",
+  "secondaryKeywords": [
+    "relocation depression Dallas",
+    "how to make friends in Dallas after moving alone",
+    "moving to Dallas alone as a woman lonely",
+    "feeling lonely after relocating for a job Dallas",
+    "how to build community in Dallas in your 20s"
+  ],
+  "assignedPillar": "Community and belonging",
+  "workingBranch": "blog-content",
+  "publishTargetBranch": "dev",
+  "source": "auto-trend-pipeline",
+  "generatedAt": "2026-06-28T00:00:00Z",
+  "heroImage": {
+    "promptFile": "hero-image-prompt.txt",
+    "state": "pending_generation_on_approval"
+  },
+  "socialPackage": {
+    "enabled": true,
+    "state": "pending_after_publish"
+  },
+  "createdAt": "2026-06-28T00:00:00Z",
+  "updatedAt": "2026-06-28T00:00:00Z",
+  "needsHuman": true,
+  "nextAction": "Approve draft, revise draft, or reject",
+  "announcedStates": []
+}
