@@ -1,27 +1,29 @@
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 
-/* Hero background: a cozy lofi-illustration scene — side/profile view of a
-   girl in a red sweater at her lamp-lit desk by a white-framed window, the
-   Dallas skyline at sunset beyond, a gray cat, and a single melting clock —
-   generated with the banana skill and optimized to /public/hero-room.jpg.
-   Until that file exists, the dusk-tone fallback shows (CSS background-image
-   fails gracefully). */
+/* Hero background: an impressionist plein air oil painting of the Dallas
+   skyline at sunset — Reunion Tower low on the left, the Margaret Hunt Hill
+   Bridge on the right, and small peach-lit clouds scattered evenly across a
+   lavender-blue sky, painted in the same loose oil brushwork as the city so
+   the cream title floats over open sky. Generated with the banana skill and optimized to
+   /public/hero-skyline-dusk-warm.jpg (meadow/amber alternate:
+   hero-skyline-dusk.jpg). Until that file exists, the dusk-tone fallback
+   shows (CSS background-image fails gracefully). */
 
 export default function Hero() {
   return (
     <section
-      className="relative flex min-h-screen flex-col items-center justify-start overflow-hidden bg-[#1f2640] bg-cover bg-center px-6 pt-[14vh] pb-20 text-center text-cream"
-      style={{ backgroundImage: "url(/hero-room.jpg)" }}
+      className="relative flex min-h-screen flex-col items-center justify-start overflow-hidden bg-[#a06d52] bg-cover bg-center px-6 pt-[14vh] pb-20 text-center text-cream"
+      style={{ backgroundImage: "url(/hero-skyline-dusk-warm.jpg)" }}
     >
-      {/* Legibility scrim — darker over the open upper sky (nav + title),
-          clearing toward the lamp-lit desk below. */}
+      {/* Light legibility scrim — the painted sky is already deep; this only
+          steadies the nav band and fades out above the horizon. */}
       <div
         aria-hidden
         className="absolute inset-0 z-0"
         style={{
           background:
-            "linear-gradient(180deg, rgba(14,16,34,0.60) 0%, rgba(14,16,34,0.34) 28%, rgba(14,16,34,0.08) 48%, rgba(14,16,34,0) 64%)",
+            "linear-gradient(180deg, rgba(24,20,36,0.30) 0%, rgba(24,20,36,0.12) 30%, rgba(24,20,36,0) 55%)",
         }}
       />
 
